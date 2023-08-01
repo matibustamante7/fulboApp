@@ -1,0 +1,20 @@
+.container_header{
+    background-color: #000;
+    color:#fff;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.title_logo{
+    font-size: 40px;
+    font-weight: 700;
+}
+.searchbar{
+    width: 100%;
+
+}
+.btn_login{
+    background-color: #569d15;
+    padding: 1em;
+    margin:1em
+}
