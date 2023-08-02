@@ -21,9 +21,10 @@ function App() {
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/countries" element={<Countries />} />
         <Route path="/transfers" element={<Transfers />} />
-        <Route path="/:idCompetition" element={<CardCompetitionDetail />} />
+        <Route path="/competitions" element={<Competitions />} />
+        <Route path="/competitions/:idCompetition" element={<CardCompetitionDetail />} />
       </Routes>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }

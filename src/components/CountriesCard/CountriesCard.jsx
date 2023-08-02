@@ -1,12 +1,14 @@
 import { Card, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function CountriesCard() {
-    // console.log(nation);
+export default function CountriesCard({nations}) {
+    console.log(nations);
+    // const dispatch = useDispatch()
     const navigate = useNavigate();
     const handleDetailLeaguesCountry =()=>{
         navigate(`/leaguesPais`);
     }
+    // const
     return (
         <Card
             onClick={handleDetailLeaguesCountry} sx={{
@@ -17,9 +19,9 @@ export default function CountriesCard() {
                 padding: 2,
                 cursor: 'pointer'
             }}>
-            <Typography variant="h4">nombre pais</Typography>
+            <Typography variant="h4">{nations.name}</Typography>
 
-            <img src='..ad' alt='bandera pais' />
+            <img className="img_cards" src={nations.flag} alt='bandera pais' />
 
         </Card>
     )

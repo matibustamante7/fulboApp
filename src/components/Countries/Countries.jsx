@@ -16,16 +16,16 @@ export default function Countries() {
     console.log(allNations);
     return(
         <Container>
-            {/* {
+            {
                 allNations?.map((nations)=>{
                    return(
                      <Box>
                         <CountriesCard key={nations.code} nations={nations}/>
                     </Box>
                 )})
-            } */}
+            }
             <Box>
-                <CountriesCard />
+                {/* <CountriesCard /> */}
             </Box>
         </Container>
     )

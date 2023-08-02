@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFixtureInlive } from "../../redux/actions";
 import './matchs.css'
-export default function YourComponent() {
+export default function Matchs() {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -12,17 +12,17 @@ export default function YourComponent() {
     }, [dispatch])
 
     const matchesInLive = useSelector((state) => state.fixtureInLive);
-    console.log(matchesInLive);
+    // console.log(matchesInLive);
 
     return (
         <>
             {matchesInLive?.map((match) => (
-                <TableContainer key={match.fixture.id} component={Paper}>
-                    <Table sx={{ minWidth: 650, border: 2 }} >
+                <TableContainer key={match.fixture.id} component={Paper} sx={{m:5}}>
+                    <Table sx={{  border: 2 }} >
                         <TableHead>
                             <TableRow sx={{ border: 1 }}>
                                 <TableCell colSpan={7} align="center" sx={{ border: 1 }}>
-                                    <Link href="/competicionId">
+                                    <Link href={`/competitions/${match.league.id}`}>
                                         <Typography variant="h5">{match.league.name} </Typography>
                                     </Link>
                                     <img className="team_logo" src={match.league?.flag}></img>

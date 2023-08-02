@@ -5,7 +5,8 @@ export default function CardCompetition(competitions) {
     // console.log(competitions.competitions.league.name);
     const navigate = useNavigate();
     const handleDetailCompetititon = () => {
-        navigate(`/${competitions.competitions.league.name}`)
+        let idCompetition = competitions.competitions.league.id;
+        navigate(`/competitions/${idCompetition}`)
     }
 
     return (
@@ -28,7 +29,7 @@ export default function CardCompetition(competitions) {
                 <Typography variant="h6">Country: {competitions.competitions.country.name}</Typography>
             </Box>
 
-            <img src={competitions.competitions.league.logo} alt={competitions.competitions.league.name} />
+            <img className="img_cards" src={competitions.competitions.league.logo} alt={competitions.competitions.league.name} />
 
         </Card>
     )

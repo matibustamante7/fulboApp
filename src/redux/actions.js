@@ -1,17 +1,19 @@
 import axios from 'axios';
-import { FILTER_COMP_BY_COUNTRY, GET_COMPETITION_DETAIL, GET_FIXTURE_LIVE, GET_INFO_TEAM, GET_LEAGUES, GET_NATIONS, GET_SCORER } from './actionsTypes';
+import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_LIVE, GET_INFO_TEAM, GET_LEAGUES, GET_NATIONS, GET_SCORER, GET_SCORERS, GET_TABLE_COMPETITION } from './actionsTypes';
 
+const apiKey = "bba95c3060msh4930064c3cfdd21p15954fjsnaf0242dc11db";
+const host = 'api-football-v1.p.rapidapi.com'
 // Acción para hacer la petición
 export const getLeagues = () => {
   return (dispatch) => {
     // Despachamos una acción para indicar que se está haciendo la petición
     // Puedes definir estos tipos de acción según tus necesidades
 
-    fetch("https://v3.football.api-sports.io/leagues", {
+    fetch("https://api-football-v1.p.rapidapi.com/v3/leagues", {
       method: "GET",
       headers: {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": "a7af544a62f1e095ce165675f7feb720",
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
       },
     })
       .then((response) => response.json())
@@ -28,17 +30,80 @@ export const getLeagues = () => {
   };
 };
 
+export const getCompetitionById = (idCompetition) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/leagues?id=${idCompetition}`, {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({ type: GET_COMPETITION_DETAIL, payload: data.response })
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+}
+
+export const getTableCompetition = (idCompetition) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&league=${idCompetition}`, {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_TABLE_COMPETITION, payload: data.response })
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+}
+
+export const getFixtureByCompetition = (idCompetition) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=2022`, {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_FIXTURE_COMPETITION, payload: data.response })
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+}
+
 export const filterCompByCountry = (country) => {
   return ({ type: FILTER_COMP_BY_COUNTRY, payload: country })
+}
+export const handleChangeCompetition = (competitionId) =>{
+  return({type: CHANGE_COMPETITION, payload: competitionId})
 }
 
 export const getNations = () => {
   return (dispatch) => {
-    fetch("https://v3.football.api-sports.io/countries", {
+    fetch("https://api-football-v1.p.rapidapi.com/v3/countries", {
       "method": "GET",
       "headers": {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": "a7af544a62f1e095ce165675f7feb720"
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
       }
     })
       .then((response) => response.json())
@@ -58,8 +123,8 @@ export const getPlayer = (idTeam) => {
     fetch(`c${idTeam}`, {
       "method": "GET",
       "headers": {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": "a7af544a62f1e095ce165675f7feb720"
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
       }
     })
       .then((response) => response.json())
@@ -73,20 +138,44 @@ export const getPlayer = (idTeam) => {
   }
 }
 
-//peticion para obtener EL GOLEADOR de cada competicion
+//peticion para obtener goleadores de cada competicion
 
-export const getScorersCompetition = ({ anoTemporada, idLeague }) => {
+export const getScorersCompetition = (idCompetition) => {
   return (dispatch) => {
-    fetch(`https://v3.football.api-sports.io/players/topscorers?season=${anoTemporada}&league=${idLeague}`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topscorers?league=${idCompetition}&season=2022`, {
       "method": "GET",
       "headers": {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": "a7af544a62f1e095ce165675f7feb720"
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
       }
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch({ type: GET_SCORER, payload: data.response })
+        // console.log(data);
+        dispatch({ type: GET_SCORERS, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+}
+
+//peticion para obtener asistidores de cada competicion
+
+export const getAssistsCompetition = (idCompetition) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topassists?league=${idCompetition}&season=2022`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({ type: GET_ASSISTS, payload: data.response })
       })
       .catch(err => {
         console.log(err);
@@ -97,17 +186,17 @@ export const getScorersCompetition = ({ anoTemporada, idLeague }) => {
 
 export const getFixtureInlive = () => {
   return (dispatch) => {
-    fetch("https://v3.football.api-sports.io/fixtures?live=all", {
+    fetch("https://api-football-v1.p.rapidapi.com/v3/fixtures?live=all", {
       "method": "GET",
       "headers": {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": "a7af544a62f1e095ce165675f7feb720"
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
       }
     })
-      .then(response =>  response.json())
-      .then((data)=>{
+      .then(response => response.json())
+      .then((data) => {
         // console.log(data.response);
-        dispatch({type: GET_FIXTURE_LIVE, payload: data.response})
+        dispatch({ type: GET_FIXTURE_LIVE, payload: data.response })
       })
       .catch(err => {
         console.log(err);
@@ -116,23 +205,23 @@ export const getFixtureInlive = () => {
   }
 }
 
-export const getCompetitionDetail =(nameCompetition)=>{
-  console.log(nameCompetition);
-  // return(dispatch)=>{
-  //   fetch(`https://api-football.com/v3/leagues?name=${nameCompetition}`, {
-  //     "method": "GET",
-  //     "headers": {
-  //       "x-rapidapi-host": "v3.football.api-sports.io",
-  //       "x-rapidapi-key": "a7af544a62f1e095ce165675f7feb720"
-  //     }
-  //   })
-  //     .then(response =>  response.json())
-  //     .then((data)=>{
-  //       console.log(data.response);
-  //       dispatch({type: GET_COMPETITION_DETAIL, payload: data.response})
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }
+export const getCompetitionDetail = (idCompetition) => {
+  console.log(idCompetition);
+  return (dispatch) => {
+    fetch(`https://v3.football.api-sports.io/leagues?id=${idCompetition}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data.response);
+        dispatch({ type: GET_COMPETITION_DETAIL, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 }
