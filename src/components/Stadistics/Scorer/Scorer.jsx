@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { getScorersCompetition } from "../../../redux/actions";
+
 import { Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import "../../../app.css"
+import { getScorersCompetition } from "../../../redux/actions";
 export default function Scorer({ idCompetition }) {
     // console.log(idCompetition);
     const dispatch = useDispatch();

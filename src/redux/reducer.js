@@ -1,4 +1,5 @@
-import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_LIVE, GET_INFO_TEAM, GET_LEAGUES, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION } from "./actionsTypes";
+import { searchBar } from "./actions";
+import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR } from "./actionsTypes";
 
 const initialState = {
     competitions: [],
@@ -7,6 +8,8 @@ const initialState = {
     allNations: [],
     // fixture de competicion
     fixtureByCompetition: [],
+    // partidos de hoy 
+    fixtureToday: [],
     //resultados en vivo
     fixtureInLive: [],
     //detalle de la competicion
@@ -18,7 +21,9 @@ const initialState = {
     //scorer el goleaadores de la tempodada
     scorers: [],
     //assists asistestes de la competicion
-    assists:[]
+    assists: [],
+    //alineaciones del partido del dia o en vivo
+    lineUpsByMatch: []
 
 }
 
@@ -52,6 +57,11 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 assists: payload
             }
+        case GET_FIXTURE_TODAY:
+            return {
+                ...state,
+                fixtureToday: payload
+            }
         case GET_FIXTURE_LIVE:
             return {
                 ...state,
@@ -72,6 +82,11 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 fixtureByCompetition: payload
             }
+        case GET_LINEUPS_ID_MATCH:
+            return {
+                ...state,
+                lineUpsByMatch: payload
+            }
         case CHANGE_COMPETITION:
             let allCompetitions = state.allCompetitions;
             let handleChangeCompetition = payload === '' ? allCompetitions : allCompetitions.filter(competitionId => competitionId.id === payload)
@@ -80,11 +95,22 @@ const reducer = (state = initialState, { type, payload }) => {
                 competitions: handleChangeCompetition
             }
         case FILTER_COMP_BY_COUNTRY:
-            let allCompe = state.allCompetitions;
-            let filterComByCountry = payload === '' ? allCompe : allCompe.filter(country => country.country.name === payload)
+            
+            // console.log(filterComByCountry);
             return {
                 ...state,
-                competitions: filterComByCountry
+                competitions: payload
+            }
+        case SEARCH_BAR:
+            // solo busca competiciones paises no
+            let search = state.allCompetitions.filter((competition) => competition.league.name.toLowerCase().includes(payload)) ?
+            state.allCompetitions.filter((competition) => competition.league.name.toLowerCase().includes(payload)) :
+            state.allNations.filter((nation) => nation.name.toLowerCase().includes(payload))
+            // console.log(search);
+            return {
+                ...state,
+                allCompetitions: search,
+                allNations: search
             }
         default:
             return { ...state }

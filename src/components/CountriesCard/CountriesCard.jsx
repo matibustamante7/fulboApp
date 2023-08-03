@@ -6,7 +6,9 @@ export default function CountriesCard({nations}) {
     // const dispatch = useDispatch()
     const navigate = useNavigate();
     const handleDetailLeaguesCountry =()=>{
-        navigate(`/leaguesPais`);
+        let idCountry = nations.code;
+        console.log(idCountry);
+        navigate(`/countries/${idCountry}`);
     }
     // const
     return (
@@ -20,7 +22,7 @@ export default function CountriesCard({nations}) {
                 cursor: 'pointer'
             }}>
             <Typography variant="h4">{nations.name}</Typography>
-
+            {/* <p>{nations.code}</p> */}
             <img className="img_cards" src={nations.flag} alt='bandera pais' />
 
         </Card>

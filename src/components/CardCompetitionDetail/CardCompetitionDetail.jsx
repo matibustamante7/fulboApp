@@ -12,13 +12,6 @@ export default function CardCompetitionDetail() {
     const { idCompetition } = useParams()
     const dispatch = useDispatch();
     // console.log(nameCompetition);
-
-    useEffect(() => {
-        dispatch(getTableCompetition(idCompetition))
-        dispatch(getFixtureByCompetition(idCompetition))
-        
-    }, [dispatch])
-
     const competition = useSelector((state) => state.tableCompetition)
     //agregar filtro para cambiar competiciones con un select
     const allCompetitions = useSelector((state) => state.allCompetitions)
@@ -27,15 +20,29 @@ export default function CardCompetitionDetail() {
     // console.log(fixture);
 
 
+    let numRound;
+    
+    console.log(numRound);
+    
+    useEffect(() => {
+        dispatch(getTableCompetition(idCompetition))
+        dispatch(getFixtureByCompetition({idCompetition, numRound}))
+        
+    }, [dispatch])
+
+  
+    
+
     const handleFilterByCountry = (e) => {
         let competitionId = e.target.value;
         dispatch(handleChangeCompetition(competitionId));
         dispatch(getTableCompetition(competitionId))
-        dispatch(getFixtureByCompetition(competitionId))
+        dispatch(getFixtureByCompetition({competitionId, numRound }))
         dispatch(getScorersCompetition(competitionId))
         dispatch(getAssistsCompetition(competitionId))
         // console.log(`cambie la competicioon a ${competitionId}`);
     };
+    
     return (
 
         <>
@@ -107,19 +114,22 @@ export default function CardCompetitionDetail() {
                                 </TableContainer>
                                 {/* tabla de fixture resultados */}
                                 <TableContainer component={Paper} sx={{ display: 'flex', flexDirection: 'row', width: '30%', flexShrink: 0 }}>
-                                    {/* <Table>
+                                    <Table>
                                         <TableBody>
-                                            {fixture?.map((partido, index) => (
+                                            {fixture?.map((partido, index) => {
+                                                const numRound = partido.league.round
+                                                console.log(numRound);
+                                                return(
                                                 <TableRow key={index}>
-                                                    <TableCell>{partido.league.round}</TableCell>
+                                                    <TableCell>{numRound}</TableCell>
                                                     <TableCell sx={{ textAlign: 'right' }}>{partido.teams.home.name} <img className="img_mini_logo" src={partido.teams.home.logo} /></TableCell>
                                                     <TableCell sx={{ textAlign: 'center' }}>{partido.goals.home}</TableCell>
                                                     <TableCell sx={{ textAlign: 'center' }}>{partido.goals.away}</TableCell>
                                                     <TableCell sx={{ textAlign: 'left' }}><img className="img_mini_logo" src={partido.teams.away.logo} /> {partido.teams.away.name}</TableCell>
                                                 </TableRow>
-                                            ))}
+                                            )})}
                                         </TableBody>
-                                    </Table> */}
+                                    </Table>
                                 </TableContainer>
                             </Box>
                             <Box sx={{display:'flex', justifyContent:'space-between', gap:2}}>

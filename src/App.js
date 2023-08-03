@@ -9,6 +9,8 @@ import Competitions from "./components/Competitions/Competitions.jsx";
 import Home from "./components/Home/Home.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import CardCompetitionDetail from "./components/CardCompetitionDetail/CardCompetitionDetail.jsx";
+import MatchDetail from "./components/Matchs/MatchDetail/MatchDetail.jsx";
+import LeaguesXCountry from "./components/Countries/LeaguesXCountry/LeaguesXCountry.jsx";
 
 function App() {
 
@@ -20,9 +22,11 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/countries" element={<Countries />} />
+        <Route path="/countries/:idCountry" element={<LeaguesXCountry />} />
         <Route path="/transfers" element={<Transfers />} />
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/competitions/:idCompetition" element={<CardCompetitionDetail />} />
+        <Route path="/:idMatch" element={<MatchDetail />} />
       </Routes>
       {/* <Footer/> */}
     </div>

@@ -11,7 +11,7 @@ export default function Leagues() {
         dispatch(getLeagues())
     }, [dispatch])
 
-    const allLeagues = useSelector((state) => state.competitions)
+    const allLeagues = useSelector((state) => state.allCompetitions)
 
      
     return (

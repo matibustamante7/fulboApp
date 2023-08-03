@@ -11,7 +11,7 @@ export default function Countries() {
     useEffect(()=>{
         dispatch(getNations())    
     },[dispatch])
-    const allNations = useSelector((state)=> state.nations)
+    const allNations = useSelector((state)=> state.allNations)
 
     console.log(allNations);
     return(

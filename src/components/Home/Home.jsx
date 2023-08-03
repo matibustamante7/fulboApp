@@ -1,5 +1,6 @@
 import { Container, Typography } from "@mui/material";
 import Matchs from "../Matchs/Matchs";
+import MatchsToday from "./MatchsToday/MatchsToday";
 
 
 export default function Home() {
@@ -9,6 +10,8 @@ export default function Home() {
             
             {/* mostrar un aside con el top 10 ligas del mundo, libertadores, sudamericana, champions, europa league, conference league, concachampions, mls, qualed mundial */}
             <Matchs />
+            <Typography variant="h4">Matchs Today</Typography>
+            <MatchsToday/>
         </Container>
     )
 }
