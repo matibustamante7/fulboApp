@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom"
-import { filterCompByCountry, getAssistsCompetition, getCompetitionById, getFixtureByCompetition, getScorersCompetition, getTableCompetition, handleChangeCompetition } from "../../redux/actions";
+import { useNavigate, useParams, useHistory } from "react-router-dom"
+import { filterCompByCountry, getAssistsCompetition, getCompetitionById, getFixtureByCompetition, getFixtureByCompetitionAllRounds, getScorersCompetition, getTableCompetition, handleChangeCompetition } from "../../redux/actions";
 import { Box, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import './CardCompetitionDetail.css'
 import { all } from "axios";
@@ -18,37 +18,61 @@ export default function CardCompetitionDetail() {
     // console.log(allCompetitions);
     const fixture = useSelector((state) => state.fixtureByCompetition)
     // console.log(fixture);
-
-
+    const allRoundsFixture = useSelector((state) => state.fixtureCompetitionAllRounds)
+    // console.log(allRoundsFixture); 
+    const [selectedRound, setSelectedRound] = useState("");
+    const navigate = useNavigate();
     let numRound;
-    
-    console.log(numRound);
-    
-    useEffect(() => {
-        dispatch(getTableCompetition(idCompetition))
-        dispatch(getFixtureByCompetition({idCompetition, numRound}))
-        
-    }, [dispatch])
+    fixture?.forEach((partido) => {
+        numRound = partido.league.round;
+    });
+    console.log(fixture);
 
-  
-    
+    const handleRoundChange = (e) => {
+        const selectedRoundValue = e.target.value;
+        setSelectedRound(selectedRoundValue);
+    };
+
+    useEffect(() => {
+        dispatch(handleChangeCompetition(idCompetition));
+        dispatch(getTableCompetition(idCompetition))
+        dispatch(getFixtureByCompetitionAllRounds(idCompetition))
+        dispatch(getFixtureByCompetition({ idCompetition, numRound: selectedRound }))
+        dispatch(getScorersCompetition(idCompetition))
+        dispatch(getAssistsCompetition(idCompetition))
+    }, [dispatch, idCompetition, selectedRound])
+
 
     const handleFilterByCountry = (e) => {
         let competitionId = e.target.value;
+        // Obtener la ubicación actual
+        const location = navigate();
+        // Crear una nueva ubicación con el parámetro reemplazado
+        const newLocation = { ...location, pathname: `/competitions/${competitionId}` };
+        // Reemplazar la URL sin agregar una nueva entrada en el historial
+        navigate(newLocation, { replace: true });
         dispatch(handleChangeCompetition(competitionId));
         dispatch(getTableCompetition(competitionId))
-        dispatch(getFixtureByCompetition({competitionId, numRound }))
+        dispatch(getFixtureByCompetitionAllRounds(idCompetition))
+        dispatch(getFixtureByCompetition({ competitionId, numRound }))
         dispatch(getScorersCompetition(competitionId))
         dispatch(getAssistsCompetition(competitionId))
         // console.log(`cambie la competicioon a ${competitionId}`);
     };
-    
+
+    const uniqueRounds = new Set();
+
+    // Filtramos y guardamos solo las rondas únicas en el conjunto
+    allRoundsFixture?.forEach((round) => {
+        uniqueRounds.add(round.league.round);
+    });
+
     return (
 
         <>
 
             {
-                competition.map((comp) => {
+                competition?.map((comp) => {
                     return (
                         <Container maxWidth='xl' margin='auto'>
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -58,13 +82,28 @@ export default function CardCompetitionDetail() {
                                 <Typography variant="h3" sx={{ fontWeight: 600 }}>{comp.league.name}</Typography>
 
                             </Box>
-                            <select onChange={handleFilterByCountry}>
-                                <option value="">Alls</option>
-                                {allCompetitions.map((competition, index) => (
-                                    <option key={index} value={competition.league.id}>{competition.league.name} - {competition.country.name}</option>
-                                    // <option>hola</option>
-                                ))}
-                            </select>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                                <select onChange={handleFilterByCountry}>
+                                    <option value="">Alls</option>
+                                    {allCompetitions.map((competition, index) => (
+                                        <option key={index} value={competition.league.id}>{competition.league.name} - {competition.country.name}</option>
+                                        // <option>hola</option>
+                                    ))}
+                                </select>
+                                {
+
+                                }
+                                <select value={selectedRound} onChange={handleRoundChange}>
+                                    <option value=''>Seleccionar Ronda</option>
+                                    {
+                                        [...uniqueRounds].map((round) => (
+                                            <option key={round} value={round}>
+                                                {round}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </Box>
                             {/* {console.log(comp.league)} */}
                             <Box maxWidth='110%' sx={{ display: 'flex', gap: 2, mt: 2 }}>
                                 {/* tabla de posiciones */}
@@ -113,28 +152,30 @@ export default function CardCompetitionDetail() {
                                     </Table>
                                 </TableContainer>
                                 {/* tabla de fixture resultados */}
+
                                 <TableContainer component={Paper} sx={{ display: 'flex', flexDirection: 'row', width: '30%', flexShrink: 0 }}>
+
                                     <Table>
                                         <TableBody>
                                             {fixture?.map((partido, index) => {
-                                                const numRound = partido.league.round
-                                                console.log(numRound);
-                                                return(
-                                                <TableRow key={index}>
-                                                    <TableCell>{numRound}</TableCell>
-                                                    <TableCell sx={{ textAlign: 'right' }}>{partido.teams.home.name} <img className="img_mini_logo" src={partido.teams.home.logo} /></TableCell>
-                                                    <TableCell sx={{ textAlign: 'center' }}>{partido.goals.home}</TableCell>
-                                                    <TableCell sx={{ textAlign: 'center' }}>{partido.goals.away}</TableCell>
-                                                    <TableCell sx={{ textAlign: 'left' }}><img className="img_mini_logo" src={partido.teams.away.logo} /> {partido.teams.away.name}</TableCell>
-                                                </TableRow>
-                                            )})}
+                                                // numRound = partido.league.round
+                                                // console.log(numRound);
+                                                return (
+                                                    <TableRow key={index}>
+                                                        <TableCell sx={{ textAlign: 'right' }}>{partido.teams.home.name} <img className="img_mini_logo" src={partido.teams.home.logo} /></TableCell>
+                                                        <TableCell sx={{ textAlign: 'center' }}>{partido.goals.home}</TableCell>
+                                                        <TableCell sx={{ textAlign: 'center' }}>{partido.goals.away}</TableCell>
+                                                        <TableCell sx={{ textAlign: 'left' }}><img className="img_mini_logo" src={partido.teams.away.logo} /> {partido.teams.away.name}</TableCell>
+                                                    </TableRow>
+                                                )
+                                            })}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
                             </Box>
-                            <Box sx={{display:'flex', justifyContent:'space-between', gap:2}}>
-                                <Scorer idCompetition={idCompetition}/>
-                                <Assists idCompetition={idCompetition}/>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+                                <Scorer idCompetition={idCompetition} />
+                                <Assists idCompetition={idCompetition} />
                             </Box>
                         </Container>
                     )

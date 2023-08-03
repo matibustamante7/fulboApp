@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITIONS_X_NATION, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORER, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR } from './actionsTypes';
+import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITIONS_X_NATION, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORER, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR } from './actionsTypes';
 
 // constantes de conexion a la api
 const apiKey = "bba95c3060msh4930064c3cfdd21p15954fjsnaf0242dc11db";
@@ -133,7 +133,7 @@ export const getPlayer = (idTeam) => {
 
 export const getScorersCompetition = (idCompetition) => {
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topscorers?league=${idCompetition}&season=${year}`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topscorers?league=${idCompetition}&season=2022`, {
       "method": "GET",
       "headers": {
         "X-RapidAPI-Host": host,
@@ -156,7 +156,7 @@ export const getScorersCompetition = (idCompetition) => {
 
 export const getAssistsCompetition = (idCompetition) => {
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topassists?league=${idCompetition}&season=${year}`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topassists?league=${idCompetition}&season=2022`, {
       "method": "GET",
       "headers": {
         "X-RapidAPI-Host": host,
@@ -216,11 +216,34 @@ export const getFixtureToday = () => {
 
   }
 }
+// fixture de todas las fechas
+export const getFixtureByCompetitionAllRounds = ( idCompetition) => {
+  // console.log(season)
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=2022`, {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_FIXTURE_COMPETITION_ALL_ROUNDS, payload: data.response })
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+}
+
 //fixture detail competition
 export const getFixtureByCompetition = ({idCompetition,numRound}) => {
-  console.log(idCompetition, numRound);
+  // console.log(idCompetition, numRound);
+  const numRoundEncoded = encodeURIComponent(numRound);
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=2022&round=Regular%20Season%20-%2032`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=2022&round=${numRoundEncoded}`, {
       method: "GET",
       headers: {
         "X-RapidAPI-Host": host,
@@ -250,7 +273,7 @@ export const getLineUpsMatchDetail = (idMatch) => {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data.response);
+        // console.log(data.response);
         dispatch({ type: GET_LINEUPS_ID_MATCH, payload: data.response })
       })
       .catch(err => {
@@ -280,7 +303,7 @@ export const getCompetitionDetail = (idCompetition) => {
 }
 
 export const getCompetitionByCountry = (idCountry) => {
-  console.log(idCountry);
+  // console.log(idCountry);
   return (dispatch) => {
     fetch(`https://api-football-v1.p.rapidapi.com/v3/leagues?code=${idCountry}`, {
       "method": "GET",

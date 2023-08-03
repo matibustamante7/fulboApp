@@ -1,5 +1,5 @@
 import { searchBar } from "./actions";
-import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR } from "./actionsTypes";
+import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR } from "./actionsTypes";
 
 const initialState = {
     competitions: [],
@@ -12,6 +12,8 @@ const initialState = {
     fixtureToday: [],
     //resultados en vivo
     fixtureInLive: [],
+    // fixture de todas las rodas de la competicion
+    fixtureCompetitionAllRounds:[],
     //detalle de la competicion
     competitionDetail: [],
     //tabla de posiciones
@@ -81,6 +83,11 @@ const reducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 fixtureByCompetition: payload
+            }
+        case GET_FIXTURE_COMPETITION_ALL_ROUNDS:
+            return{
+                ...state,
+                fixtureCompetitionAllRounds: payload
             }
         case GET_LINEUPS_ID_MATCH:
             return {
