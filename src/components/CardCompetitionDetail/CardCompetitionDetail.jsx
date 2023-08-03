@@ -7,6 +7,7 @@ import './CardCompetitionDetail.css'
 import { all } from "axios";
 import Scorer from "../Stadistics/Scorer/Scorer";
 import Assists from "../Stadistics/Assists/Assists";
+import LinearProgress from '@mui/material/LinearProgress';
 
 export default function CardCompetitionDetail() {
     const { idCompetition } = useParams()
@@ -21,12 +22,16 @@ export default function CardCompetitionDetail() {
     const allRoundsFixture = useSelector((state) => state.fixtureCompetitionAllRounds)
     // console.log(allRoundsFixture); 
     const [selectedRound, setSelectedRound] = useState("");
+
+    //loader
+    const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
     let numRound;
     fixture?.forEach((partido) => {
         numRound = partido.league.round;
     });
-    console.log(fixture);
+    // console.log(fixture);
 
     const handleRoundChange = (e) => {
         const selectedRoundValue = e.target.value;
@@ -34,12 +39,17 @@ export default function CardCompetitionDetail() {
     };
 
     useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false)
+        }, 3000)
+
         dispatch(handleChangeCompetition(idCompetition));
         dispatch(getTableCompetition(idCompetition))
         dispatch(getFixtureByCompetitionAllRounds(idCompetition))
         dispatch(getFixtureByCompetition({ idCompetition, numRound: selectedRound }))
         dispatch(getScorersCompetition(idCompetition))
         dispatch(getAssistsCompetition(idCompetition))
+        return () => clearTimeout(timer);
     }, [dispatch, idCompetition, selectedRound])
 
 
@@ -69,7 +79,11 @@ export default function CardCompetitionDetail() {
 
     return (
 
-        <>
+        <>{loading && (
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress />
+            </Box>
+          )}
 
             {
                 competition?.map((comp) => {
@@ -82,32 +96,21 @@ export default function CardCompetitionDetail() {
                                 <Typography variant="h3" sx={{ fontWeight: 600 }}>{comp.league.name}</Typography>
 
                             </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                                <select onChange={handleFilterByCountry}>
-                                    <option value="">Alls</option>
-                                    {allCompetitions.map((competition, index) => (
-                                        <option key={index} value={competition.league.id}>{competition.league.name} - {competition.country.name}</option>
-                                        // <option>hola</option>
-                                    ))}
-                                </select>
-                                {
 
-                                }
-                                <select value={selectedRound} onChange={handleRoundChange}>
-                                    <option value=''>Seleccionar Ronda</option>
-                                    {
-                                        [...uniqueRounds].map((round) => (
-                                            <option key={round} value={round}>
-                                                {round}
-                                            </option>
-                                        ))
-                                    }
-                                </select>
-                            </Box>
                             {/* {console.log(comp.league)} */}
-                            <Box maxWidth='110%' sx={{ display: 'flex', gap: 2, mt: 2 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-around', gap: 2 }}>
                                 {/* tabla de posiciones */}
-                                <TableContainer component={Paper} sx={{ width: '70%' }} >
+                                {/* <Box sx={{width:"100%"}}> */}
+
+
+                                <TableContainer component={Paper} >
+                                    <select onChange={handleFilterByCountry}>
+                                        <option value="">Alls</option>
+                                        {allCompetitions.map((competition, index) => (
+                                            <option key={index} value={competition.league.id}>{competition.league.name} - {competition.country.name}</option>
+                                            // <option>hola</option>
+                                        ))}
+                                    </select>
                                     <Table>
                                         <TableHead>
                                             <TableCell sx={{ fontWeight: 600 }}>Position</TableCell>
@@ -151,10 +154,19 @@ export default function CardCompetitionDetail() {
 
                                     </Table>
                                 </TableContainer>
-                                {/* tabla de fixture resultados */}
 
-                                <TableContainer component={Paper} sx={{ display: 'flex', flexDirection: 'row', width: '30%', flexShrink: 0 }}>
 
+                                <TableContainer component={Paper} >
+                                    <select value={selectedRound} onChange={handleRoundChange}>
+                                        <option value=''>Seleccionar Ronda</option>
+                                        {
+                                            [...uniqueRounds].map((round) => (
+                                                <option key={round} value={round}>
+                                                    {round}
+                                                </option>
+                                            ))
+                                        }
+                                    </select>
                                     <Table>
                                         <TableBody>
                                             {fixture?.map((partido, index) => {

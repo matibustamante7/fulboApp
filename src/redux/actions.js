@@ -314,7 +314,7 @@ export const getCompetitionByCountry = (idCountry) => {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data.response);
+        // console.log(data.response);
         dispatch({ type: FILTER_COMP_BY_COUNTRY, payload: data.response })
       })
       .catch(err => {
