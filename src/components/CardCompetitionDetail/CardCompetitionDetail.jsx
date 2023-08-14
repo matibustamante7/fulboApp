@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useHistory } from "react-router-dom"
 import { filterCompByCountry, getAssistsCompetition, getCompetitionById, getFixtureByCompetition, getFixtureByCompetitionAllRounds, getScorersCompetition, getTableCompetition, handleChangeCompetition } from "../../redux/actions";
-import { Box, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Container, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import './CardCompetitionDetail.css'
 import { all } from "axios";
 import Scorer from "../Stadistics/Scorer/Scorer";
@@ -81,9 +81,9 @@ export default function CardCompetitionDetail() {
 
         <>{loading && (
             <Box sx={{ width: '100%' }}>
-              <LinearProgress />
+                <LinearProgress />
             </Box>
-          )}
+        )}
 
             {
                 competition?.map((comp) => {
@@ -107,7 +107,7 @@ export default function CardCompetitionDetail() {
                                     <select onChange={handleFilterByCountry}>
                                         <option value="">Alls</option>
                                         {allCompetitions.map((competition, index) => (
-                                            <option key={index} value={competition.league.id}>{competition.league.name} - {competition.country.name}</option>
+                                            <option key={index} value={competition.league.id}>{competition.country.name} - {competition.league.name}</option>
                                             // <option>hola</option>
                                         ))}
                                     </select>
@@ -126,13 +126,16 @@ export default function CardCompetitionDetail() {
                                         {
                                             comp.league.standings[0].map((teams) => {
                                                 // teams.map((team) => {
-                                                // console.log(teams);
+                                                // console.log(comp.league.id);
                                                 return (
                                                     <TableRow>
                                                         {/* posicion */}
                                                         <TableCell sx={{ fontWeight: 600 }}>{teams.rank}</TableCell>
                                                         {/* equipo */}
-                                                        <TableCell><img className="img_mini_logo" src={teams.team.logo}></img> {teams.team.name}</TableCell>
+                                                        <TableCell><img className="img_mini_logo" src={teams.team.logo}></img>
+                                                            <Link href={`/${comp.league.id}/${teams.team.name}/${teams.team.id}`}>
+                                                                {teams.team.name}
+                                                            </Link></TableCell>
                                                         {/* puntos */}
                                                         <TableCell>{teams.points}</TableCell>
                                                         {/* partidos jugados */}
@@ -156,7 +159,7 @@ export default function CardCompetitionDetail() {
                                 </TableContainer>
 
 
-                                <TableContainer component={Paper} >
+                                <TableContainer component={Paper} sx={{ width: '40%', height: '50%' }} >
                                     <select value={selectedRound} onChange={handleRoundChange}>
                                         <option value=''>Seleccionar Ronda</option>
                                         {

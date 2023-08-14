@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { getAssistsCompetition} from "../../../redux/actions";
 import { Container, Paper, Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import "../../../app.css"
+import "../../../App.css"
 export default function Assists({ idCompetition }) {
     const dispatch = useDispatch();
     useEffect(() => {

@@ -18,10 +18,10 @@ export default function Countries() {
         <Container>
             {
                 allNations?.map((nations)=>{
-                   return(
-                     <Box>
-                        <CountriesCard key={nations.code} nations={nations}/>
-                    </Box>
+                    return(
+                        <Box>
+                            <CountriesCard key={nations.code} nations={nations}/>
+                        </Box>
                 )})
             }
             <Box>

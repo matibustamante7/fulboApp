@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Box, Container, LinearProgress, Typography } from '@mui/material';
+import { Box, Container, LinearProgress} from '@mui/material';
 import Matchs from '../Matchs/Matchs';
 import MatchsToday from './MatchsToday/MatchsToday';
+import ImportantComp from '../ImportantComp/ImportantComp';
 
 export default function Home() {
   // Estado para controlar si se muestra el indicador de progreso o no
@@ -17,15 +18,20 @@ export default function Home() {
   }, []);
 
   return (
-    <Container sx={{display:'flex', flexDirection:'column', justifyContent:'center', textAlign: 'center', marginTop: 4 }}>
+    <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', marginTop: 4 }}>
       {loading && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>
       )}
       {/* mostrar un aside con el top 10 ligas del mundo, libertadores, sudamericana, champions, europa league, conference league, concachampions, mls, qualed mundial */}
-      <Matchs />
-      <MatchsToday />
+      <Box sx={{display:'flex', justifyContent:'space-evenly'}}>
+        <ImportantComp/>
+        <Box sx={{display:'flex', flexDirection:'column', gap:3}}>
+          <Matchs />
+          <MatchsToday />
+        </Box>
+      </Box>
     </Container>
   );
 }

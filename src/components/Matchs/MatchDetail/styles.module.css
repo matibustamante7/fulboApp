@@ -1,0 +1,18 @@
+
+
+.field-background{
+    /* background-image: url(); */
+    background-color: #2d9440;
+    width: 100%;
+    display: grid;
+      grid-template-rows: repeat(var(--player-row), 1fr);
+      grid-template-columns: repeat(var(--player-col), 1fr);
+      gap: 10px;
+      height: 400px;
+      background-color: green;
+      padding: 10px;
+}
+.player{
+  background-color: #fff;
+  
+}

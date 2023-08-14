@@ -10,3 +10,15 @@
 .img_mini_logo{
     width: 10px;
 }
+.img_player{
+    width: 50px;
+}
+.img_stadium{
+    width: 350px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 3%;
+}
+.ul_list{
+    list-style: none;
+    border:1px solid #000;
+}

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITIONS_X_NATION, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORER, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR } from './actionsTypes';
+import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITIONS_X_NATION, GET_COMPETITION_DETAIL, GET_EVENTS_MATCH, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_FIXTURE_TODAY_BY_COMPETITION, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_PLAYER, GET_SCORER, GET_SCORERS, GET_TABLE_COMPETITION, GET_TEAM_COACH, GET_TEAM_SQUAD, GET_TEAM_STADISTICS, GET_TEAM_STADIUM, SEARCH_BAR, SEARCH_BAR_COUNTRIES } from './actionsTypes';
 
 // constantes de conexion a la api
 const apiKey = "bba95c3060msh4930064c3cfdd21p15954fjsnaf0242dc11db";
@@ -8,8 +8,8 @@ const host = 'api-football-v1.p.rapidapi.com'
 //constantes del dia de la fecha
 const today = new Date();
 const year = today.getFullYear();
-  // Agregar cero al mes si es menor a 10s
-const month = String(today.getMonth() + 1).padStart(2, '0'); 
+// Agregar cero al mes si es menor a 10s
+const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
 
 // Acción para hacer la petición
@@ -61,7 +61,7 @@ export const getCompetitionById = (idCompetition) => {
 
 export const getTableCompetition = (idCompetition) => {
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&league=${idCompetition}`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/standings?season=${year}&league=${idCompetition}`, {
       method: "GET",
       headers: {
         "X-RapidAPI-Host": host,
@@ -109,31 +109,31 @@ export const getNations = () => {
 }
 //peticion que trae informacion basica del equipo y los jugadores
 // "idTeam" es el id del equipo que quiero informacion
-export const getPlayer = (idTeam) => {
-  return (dispatch) => {
-    fetch(`c${idTeam}`, {
-      "method": "GET",
-      "headers": {
-        "X-RapidAPI-Host": host,
-        "X-RapidAPI-Key": apiKey,
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({ type: GET_INFO_TEAM, payload: data.response })
-      })
-      .catch(err => {
-        console.log(err);
-      });
+// export const getPlayer = (idTeam) => {
+//   return (dispatch) => {
+//     fetch(`c${idTeam}`, {
+//       "method": "GET",
+//       "headers": {
+//         "X-RapidAPI-Host": host,
+//         "X-RapidAPI-Key": apiKey,
+//       }
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         dispatch({ type: GET_INFO_TEAM, payload: data.response })
+//       })
+//       .catch(err => {
+//         console.log(err);
+//       });
 
-  }
-}
+//   }
+// }
 
 //peticion para obtener goleadores de cada competicion
 
 export const getScorersCompetition = (idCompetition) => {
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topscorers?league=${idCompetition}&season=2022`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topscorers?league=${idCompetition}&season=${year}`, {
       "method": "GET",
       "headers": {
         "X-RapidAPI-Host": host,
@@ -156,7 +156,7 @@ export const getScorersCompetition = (idCompetition) => {
 
 export const getAssistsCompetition = (idCompetition) => {
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topassists?league=${idCompetition}&season=2022`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/topassists?league=${idCompetition}&season=${year}`, {
       "method": "GET",
       "headers": {
         "X-RapidAPI-Host": host,
@@ -175,9 +175,12 @@ export const getAssistsCompetition = (idCompetition) => {
 
 }
 // partidos en vivo
-export const getFixtureInlive = () => {
+export const getFixtureInlive = (idCompetition) => {
+  // console.log(idCompetition);
+  const endpoint = `https://api-football-v1.p.rapidapi.com/v3/fixtures?live=${idCompetition ? `all&league=${idCompetition}` : 'all'}`;
+
   return (dispatch) => {
-    fetch("https://api-football-v1.p.rapidapi.com/v3/fixtures?live=all", {
+    fetch(endpoint, {
       "method": "GET",
       "headers": {
         "X-RapidAPI-Host": host,
@@ -188,6 +191,28 @@ export const getFixtureInlive = () => {
       .then((data) => {
         // console.log(data.response);
         dispatch({ type: GET_FIXTURE_LIVE, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
+}
+
+export const getFixtureTodayByCompetition = (idCompetition) => {
+  console.log(idCompetition);
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${year}-${month}-${day}&league=${idCompetition}&season=${year}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_FIXTURE_TODAY_BY_COMPETITION, payload: data.response })
       })
       .catch(err => {
         console.log(err);
@@ -217,10 +242,10 @@ export const getFixtureToday = () => {
   }
 }
 // fixture de todas las fechas
-export const getFixtureByCompetitionAllRounds = ( idCompetition) => {
+export const getFixtureByCompetitionAllRounds = (idCompetition) => {
   // console.log(season)
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=2022`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=${year}`, {
       method: "GET",
       headers: {
         "X-RapidAPI-Host": host,
@@ -239,11 +264,11 @@ export const getFixtureByCompetitionAllRounds = ( idCompetition) => {
 }
 
 //fixture detail competition
-export const getFixtureByCompetition = ({idCompetition,numRound}) => {
+export const getFixtureByCompetition = ({ idCompetition, numRound }) => {
   // console.log(idCompetition, numRound);
   const numRoundEncoded = encodeURIComponent(numRound);
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=2022&round=${numRoundEncoded}`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idCompetition}&season=${year}&round=${numRoundEncoded}`, {
       method: "GET",
       headers: {
         "X-RapidAPI-Host": host,
@@ -281,6 +306,28 @@ export const getLineUpsMatchDetail = (idMatch) => {
       });
   }
 }
+// incidencias del partido
+export const getEventsOnMatch = (idMatch, idteam) => {
+
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures/events?fixture=${idMatch}&team=${idteam}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_EVENTS_MATCH, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+}
+
 export const getCompetitionDetail = (idCompetition) => {
   console.log(idCompetition);
   return (dispatch) => {
@@ -323,6 +370,7 @@ export const getCompetitionByCountry = (idCountry) => {
   }
 }
 
+
 // searchbar para buscar solo ligas por ahora
 export const searchBar = (searching) => {
   // console.log(searching);
@@ -330,4 +378,116 @@ export const searchBar = (searching) => {
     type: SEARCH_BAR,
     payload: searching
   })
+}
+// export const searchBarCountries = (searching) => {
+//   return({
+//     type: SEARCH_BAR_COUNTRIES,
+//     payload: searching
+//   })
+// }
+
+
+export const getTeamSquad = (idTeam) =>{
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players/squads?team=${idTeam}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_TEAM_SQUAD, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+}
+
+export const getTeamStadium = (idTeam) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/teams?id=${idTeam}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_TEAM_STADIUM, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+}
+// entrenador por id de equipo
+
+export const getCoachByTeam = (idTeam) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/coachs?team=${idTeam}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_TEAM_COACH, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+}
+
+// detalle del jugador
+export const getPlayer = (idPlayer, season) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/players?id=${idPlayer}&season=${season}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data.response);
+        dispatch({ type: GET_PLAYER, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+}
+
+
+// endpoint para estadisticas del equipo por temporada
+
+export const getTeamStadistics = (idCompetition, idTeam) => {
+  return (dispatch) => {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=${idCompetition}&season=${year-1}&team=${idTeam}`, {
+      "method": "GET",
+      "headers": {
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": apiKey,
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data.response);
+        dispatch({ type: GET_TEAM_STADISTICS, payload: data.response })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 }

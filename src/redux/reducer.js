@@ -1,5 +1,5 @@
 import { searchBar } from "./actions";
-import { CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR } from "./actionsTypes";
+import { SEARCH_BAR_COUNTRIES, CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR, GET_FIXTURE_TODAY_BY_COMPETITION, GET_TEAM_SQUAD, GET_TEAM_STADIUM, GET_TEAM_STADISTICS, GET_TEAM_COACH, GET_EVENTS_MATCH, GET_PLAYER } from "./actionsTypes";
 
 const initialState = {
     competitions: [],
@@ -13,7 +13,7 @@ const initialState = {
     //resultados en vivo
     fixtureInLive: [],
     // fixture de todas las rodas de la competicion
-    fixtureCompetitionAllRounds:[],
+    fixtureCompetitionAllRounds: [],
     //detalle de la competicion
     competitionDetail: [],
     //tabla de posiciones
@@ -25,8 +25,21 @@ const initialState = {
     //assists asistestes de la competicion
     assists: [],
     //alineaciones del partido del dia o en vivo
-    lineUpsByMatch: []
-
+    lineUpsByMatch: [],
+    // eventos del partido
+    eventsOnTheMatch: [],
+    // resultado de searchbar
+    searchResults: [],
+    // squad del equipo
+    teamSquad: [],
+    // team stadium
+    teamStadium: [],
+    // estadisticas de la temporada anterior del equipo
+    teamStadistics: [],
+    // entrenador by id team
+    teamCoach: [],
+    // detalle del player
+    player: [],
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -84,8 +97,13 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 fixtureByCompetition: payload
             }
+        case GET_FIXTURE_TODAY_BY_COMPETITION:
+            return {
+                ...state,
+                fixtureToday: payload
+            }
         case GET_FIXTURE_COMPETITION_ALL_ROUNDS:
-            return{
+            return {
                 ...state,
                 fixtureCompetitionAllRounds: payload
             }
@@ -93,6 +111,36 @@ const reducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 lineUpsByMatch: payload
+            }
+        case GET_EVENTS_MATCH:
+            return {
+                ...state,
+                eventsOnTheMatch: payload
+            }
+        case GET_TEAM_SQUAD:
+            return {
+                ...state,
+                teamSquad: payload
+            }
+        case GET_TEAM_STADIUM:
+            return {
+                ...state,
+                teamStadium: payload
+            }
+        case GET_TEAM_STADISTICS:
+            return {
+                ...state,
+                teamStadistics: payload,
+            }
+        case GET_TEAM_COACH:
+            return {
+                ...state,
+                teamCoach: payload
+            }
+        case GET_PLAYER:
+            return {
+                ...state,
+                player: payload
             }
         case CHANGE_COMPETITION:
             let allCompetitions = state.allCompetitions;
@@ -102,23 +150,37 @@ const reducer = (state = initialState, { type, payload }) => {
                 competitions: handleChangeCompetition
             }
         case FILTER_COMP_BY_COUNTRY:
-            
+
             // console.log(filterComByCountry);
             return {
                 ...state,
                 competitions: payload
             }
         case SEARCH_BAR:
-            // solo busca competiciones paises no
-            let search = state.allCompetitions.filter((competition) => competition.league.name.toLowerCase().includes(payload)) ?
-            state.allCompetitions.filter((competition) => competition.league.name.toLowerCase().includes(payload)) :
-            state.allNations.filter((nation) => nation.name.toLowerCase().includes(payload))
-            // console.log(search);
+            // console.log(payload);
+            const keyword = payload.toLowerCase();
+            const competitions = state.allCompetitions;
+            const nations = state.allNations;
+            const filteredCompetitions = competitions.filter((competition) => competition.league.name.toLowerCase().includes(keyword));
+            const filteredNations = nations.filter((nation) => nation.name.toLowerCase().includes(keyword));
+
+            const combinedResults = [...filteredCompetitions, ...filteredNations];
+
             return {
                 ...state,
-                allCompetitions: search,
-                allNations: search
+                allCompetitions: combinedResults
             }
+        // case SEARCH_BAR_COUNTRIES:
+        //     // solo busca competiciones paises no
+        //     let search_countries = state.allNations.filter((nation) => nation.name.toLowerCase().includes(payload)) ?
+        //         state.allNations.filter((competition) => competition.league.name.toLowerCase().includes(payload)) :
+        //         state.allNations.filter((nation) => nation.name.toLowerCase().includes(payload))
+        //     // console.log(search);
+        //     return {
+        //         ...state,
+        //         allCompetitions: search,
+        //         allNations: search
+        //     }
         default:
             return { ...state }
     }

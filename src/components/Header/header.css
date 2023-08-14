@@ -18,3 +18,17 @@
     padding: 1em;
     margin:1em
 }
+.results-searchbar {
+    display: none; /* Inicialmente oculta los resultados */
+    max-height: 300px; /* Establece la altura máxima de 300px */
+    overflow-y: auto; /* Habilita el scroll vertical si hay más resultados que los visibles */
+    border: 1px solid #ccc; /* Añade un borde para mayor claridad */
+    padding: 0; /* Quita el padding predeterminado de la lista */
+  }
+  .results-li{
+    display: none;
+  }
+  .results-searchbar.show {
+    display: block; /* Muestra los resultados cuando se aplique la clase .show */
+  }
+  

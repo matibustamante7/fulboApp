@@ -1,9 +1,9 @@
 import { useState } from "react";
 import './header.css'
-import { useDispatch } from "react-redux";
-import { getLeagues, searchBar } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { searchBar } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
-import { Box, Container, InputBase, Typography, alpha } from "@mui/material";
+import { Box, Container, InputBase, Link, Typography, alpha } from "@mui/material";
 import theme from "../../theme";
 import styled from "@emotion/styled";
 import SearchIcon from '@mui/icons-material/Search';
@@ -31,34 +31,38 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  }));
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+}));
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '50ch',
-      },
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '50ch',
+        },
     },
-  }));
+}));
 
 export default function Headr() {
 
+    const [searchTerm, setSearchTerm] = useState('');
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleSearchBar = (e) => {
-        let searching = e.target.value;
-        console.log(searching);
+        let searching = e.target.value.toLowerCase();
+        setSearchTerm(searching)
+        // console.log(searching);
         //generar el dispatch, action y reducer correspondiente
         dispatch(searchBar(searching))
     }
     const navHome = () => {
         navigate('/')
     }
+    const resultadosBusqueda = useSelector((state) => state.searchResults)
+    // console.log(resultadosBusqueda);
     return (
         <Container maxWidth sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', backgroundColor: theme.palette.primary.main }}>
 
@@ -71,9 +75,34 @@ export default function Headr() {
                     <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
-                    placeholder="Search competitions, countries and players…"
+                    placeholder="Search competitions or countries..."
                     inputProps={{ 'aria-label': 'search' }}
                 />
+                {/* <input type="text" value={searchTerm} onChange={handleSearchBar} /> */}
+                {/* Resto del código para mostrar los resultados posibles */}
+                <ul className="results-searchbar show">
+                    {resultadosBusqueda.map((result) => {
+                        // console.log(result)
+                        const leagueId = result.league?.id || ''; // Validar si existe el id de la liga
+                        const countryCode = result.code || ''; // Validar si existe el código del país
+
+                        return (
+                            <li className="results-li" key={result.id}>
+                                <Link className="results-li"
+                                    href={
+                                        result.league?.name
+                                            ? `/competitions/${leagueId}`
+                                            : `/countries/${countryCode}`
+                                    }
+                                >
+                                    {result.league?.name ? result.league.name : result.name} -{' '}
+                                    {result.league?.name ? result.country.name : ''}
+                                </Link>
+                            </li>
+                        );
+                    })}
+                </ul>
+
             </Search>
 
             <form action="#">
