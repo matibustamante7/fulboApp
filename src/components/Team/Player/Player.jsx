@@ -84,8 +84,11 @@ export default function Player() {
                                                                 <TableCell sx={{ fontWeight: 600 }}>Minutes</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Position</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Rating</TableCell>
+                                                                <TableCell sx={{ fontWeight: 600 }}>Goals</TableCell>
+                                                                <TableCell sx={{ fontWeight: 600 }}>Goals conceded</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Shots total</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Shots on target</TableCell>
+                                                                <TableCell sx={{ fontWeight: 600 }}>Assists</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Passes total</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Passes key</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Passes accuracy</TableCell>
@@ -110,8 +113,11 @@ export default function Player() {
                                                                 <TableCell>{statis.games.minutes ? statis.games.minutes : '-'}'</TableCell>
                                                                 <TableCell>{statis.games.position ? statis.games.position : '-'}</TableCell>
                                                                 <TableCell sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}><StarIcon /> {statis.games.rating ? statis.games.rating : '-'}</TableCell>
+                                                                <TableCell>{statis.goals.total ? statis.goals.total : '-'}</TableCell>
+                                                                <TableCell>{statis.goals.conceded ? statis.shots.conceded : '-'}</TableCell>
                                                                 <TableCell>{statis.shots.total ? statis.shots.total : '-'}</TableCell>
                                                                 <TableCell>{statis.shots.on ? statis.shots.on : '-'}</TableCell>
+                                                                <TableCell>{statis.goals.assists ? statis.goals.assists : '-'}</TableCell>
                                                                 <TableCell>{statis.passes.total ? statis.passes.total : '-'}</TableCell>
                                                                 <TableCell>{statis.passes.key ? statis.passes.key : '-'}</TableCell>
                                                                 <TableCell>{statis.passes.accuracy ? statis.passes.accuracy : '-'}</TableCell>
