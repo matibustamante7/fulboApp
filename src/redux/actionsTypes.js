@@ -25,3 +25,4 @@ export const GET_TEAM_STADISTICS = 'GET_TEAM_STADISTICS';
 export const GET_TEAM_COACH = 'GET_TEAM_COACH';
 export const GET_EVENTS_MATCH = 'GET_EVENTS_MATCH';
 export const GET_PLAYER = 'GET_PLAYER';
+export const GET_SEASONS = 'GET_SEASONS';

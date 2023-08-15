@@ -24,10 +24,11 @@ export default function MatchDetail() {
         idTeam = teams.team.id;
     })
     const eventsMatch = useSelector((state) => state.eventsOnTheMatch)
-    console.log(eventsMatch);
+    // console.log(eventsMatch);
     return (
         <Container maxWidth>
-            {
+            {   matchDetail.length === 0 ? 
+                <Typography variant="h3" sx={{textAlign:'center'}}>No match data yet</Typography> :
                 matchDetail.map((teams) => {
                     // console.log(teams.team.id);
                     // let idTeam = teams.team.id;

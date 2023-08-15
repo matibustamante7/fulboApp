@@ -22,7 +22,7 @@ export default function MatchsToday() {
     }
     matchesByCompetition[leagueId].push(match);
   });
-  console.log(matchesByCompetition);
+  // console.log(matchesByCompetition);
   return (
     <Container sx={{ marginBottom: 20 }}>
         <Typography variant="h5">Matches today</Typography>

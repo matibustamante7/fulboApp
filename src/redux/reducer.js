@@ -1,5 +1,5 @@
 import { searchBar } from "./actions";
-import { SEARCH_BAR_COUNTRIES, CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR, GET_FIXTURE_TODAY_BY_COMPETITION, GET_TEAM_SQUAD, GET_TEAM_STADIUM, GET_TEAM_STADISTICS, GET_TEAM_COACH, GET_EVENTS_MATCH, GET_PLAYER } from "./actionsTypes";
+import { SEARCH_BAR_COUNTRIES, CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR, GET_FIXTURE_TODAY_BY_COMPETITION, GET_TEAM_SQUAD, GET_TEAM_STADIUM, GET_TEAM_STADISTICS, GET_TEAM_COACH, GET_EVENTS_MATCH, GET_PLAYER, GET_SEASONS } from "./actionsTypes";
 
 const initialState = {
     competitions: [],
@@ -40,6 +40,8 @@ const initialState = {
     teamCoach: [],
     // detalle del player
     player: [],
+    // temporadas con datos
+    seasons:[],
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -141,6 +143,11 @@ const reducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 player: payload
+            }
+        case GET_SEASONS:
+            return{
+                ...state,
+                seasons: payload
             }
         case CHANGE_COMPETITION:
             let allCompetitions = state.allCompetitions;
