@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { Link } from '@mui/material';
 import theme from "../../theme";
 import * as React from 'react';
@@ -34,9 +34,9 @@ export default function SubHeader() {
         return nameA.localeCompare(nameB);
     })
     return (
-        <Container maxWidth sx={{display:'flex', alignItems:'center', justifyContent:'space-evenly', margin:'4rem'}}>
+        <Grid container sx={{alignItems:'center', padding:2, gap:1}}>
 
-            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-around', gap:'3rem'}}>
+            <Grid item xs={12} sm={5} sx={{display:'flex', justifyContent:'space-evenly'}}>
                 
                 <Link href={'/competitions'} sx={{textDecoration:'none',  color:theme.palette.success.main}}>
                     <Button variant="contained">Competitions</Button>
@@ -44,10 +44,9 @@ export default function SubHeader() {
                 <Link href={'/countries'} sx={{textDecoration:'none',  color:theme.palette.success.main}}>
                     <Button variant="contained">Countries</Button>
                 </Link>
-            </Box>
-            <Box sx={{ minWidth: 120, width:'20rem' }}>
-                <FormControl fullWidth>
-
+            </Grid>
+            <Grid item xs={12} sm={5} md={3}>
+                
                     <select onChange={handleChange}>
                         <option value="">Alls</option>
                         {
@@ -57,8 +56,7 @@ export default function SubHeader() {
                         }
 
                     </select>
-                </FormControl>
-            </Box>
-        </Container>
+            </Grid>
+        </Grid>
     )
 }

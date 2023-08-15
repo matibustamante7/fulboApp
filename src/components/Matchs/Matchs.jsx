@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFixtureInlive } from "../../redux/actions";
 import './matchs.css'
 import TouchAppIcon from '@mui/icons-material/TouchApp';
+
+
 export default function Matchs() {
   const dispatch = useDispatch();
 
@@ -25,17 +27,18 @@ export default function Matchs() {
   });
 
   return (
-    < >
-      <Typography variant="h5">Matches live</Typography>
+    <Grid container columns={12} >
+      <Typography variant="h5" sx={{textAlign:'center'}}>Matches live</Typography>
 
       {Object.keys(matchesByCompetition).length === 0 ? (
         <Typography variant="body1">No hay eventos en vivo para mostrar</Typography>
       ) : (
         Object.entries(matchesByCompetition).map(([leagueName, matches]) => (
+          <Grid item xs={12}>
           <TableContainer key={leagueName} component={Paper} sx={{mt:1}}>
             <Table >
                 <TableHead >
-                  <TableCell colSpan={6} align="center" sx={{ border: 1, }}>
+                  <TableCell colSpan={12} align="center" >
                     {/* nombre de la liga */}
                     <Link href={`/competitions/${matches[0].league.id}`}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -46,50 +49,51 @@ export default function Matchs() {
                   </TableCell>
                 </TableHead>
                 {matches.map((match) => (
-                  <TableBody key={match.fixture.id}>
+                  <TableRow key={match.fixture.id} >
                     {/* tiempo de juego */}
-                    <TableCell sx={{ border: 1, backgroundColor: theme.palette.primary.main, textAlign: "center", color: theme.palette.background.default, fontWeight: 600 }}>
+                    <TableCell sx={{p:1, backgroundColor: theme.palette.primary.main, color: theme.palette.background.default, fontWeight: 600 }}>
                       {match.fixture.status.elapsed}'
                     </TableCell>
 
-                    <TableCell sx={{ border: 1, backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
-                      <Grid container alignItems="center" justifyContent="center">
+                    <TableCell sx={{ p:1, backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
+                      <Box sx={{display:'flex', alignItems:'center', flexDirection:'column'}}>
+                      <img className="team_logo" src={match.teams.home.logo} />
                         <Link href={`/team/${match.teams.home.name}/${match.teams.home.id}`}>
-                          <Typography variant="body2">{match.teams.home.name}</Typography>
+                          {match.teams.home.name}
                         </Link>
-                        <img className="team_logo" src={match.teams.home.logo} />
-                      </Grid>
+                      </Box>
                     </TableCell>
 
-                    <TableCell sx={{  border: 1, textAlign: "center" }}>
+                    <TableCell sx={{p:1, borderRight:1, textAlign: "center" }}>
                       {match.goals.home}
                     </TableCell>
 
-                    <TableCell sx={{  border: 1, textAlign: "center" }}>
+                    <TableCell sx={{ p:1, textAlign: "center" }}>
                       {match.goals.away}
                     </TableCell>
 
-                    <TableCell sx={{ border: 1, backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
-                      <Grid container alignItems="center" justifyContent="center">
+                    <TableCell sx={{ p:1, backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
+                      <Box sx={{display:'flex', alignItems:'center', flexDirection:'column'}}>
                         <img className="team_logo" src={match.teams.away.logo} />
                         <Link href={`/team/${match.teams.away.name}/${match.teams.away.id}`}>
                           {match.teams.away.name}
                         </Link>
-                      </Grid>
+                      </Box>
                     </TableCell>
 
-                    <TableCell sx={{  border: 1, backgroundColor: theme.palette.success.main, textAlign: "center" }}>
+                    <TableCell sx={{p:1, backgroundColor: theme.palette.success.main, textAlign: "center" }}>
                       <Link href={`/${match.fixture?.id}`}>
                         <TouchAppIcon/>
                       </Link>
                     </TableCell>
-                  </TableBody>
+                  </TableRow>
                 ))}
               
               {/* Resto del contenido de la tabla */}
             </Table>
           </TableContainer>
+        </Grid>
         )))}
-    </>
+    </Grid>
   );
 }

@@ -3,7 +3,7 @@ import './header.css'
 import { useDispatch, useSelector } from "react-redux";
 import { searchBar } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
-import { Box, Container, InputBase, Link, Typography, alpha } from "@mui/material";
+import { Box, Container, Grid, InputBase, Link, Typography, alpha } from "@mui/material";
 import theme from "../../theme";
 import styled from "@emotion/styled";
 import SearchIcon from '@mui/icons-material/Search';
@@ -64,11 +64,24 @@ export default function Headr() {
     const resultadosBusqueda = useSelector((state) => state.searchResults)
     // console.log(resultadosBusqueda);
     return (
-        <Container maxWidth sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', backgroundColor: theme.palette.primary.main }}>
-
-            <Typography variant="h3" onClick={navHome}
-                sx={{ color: theme.palette.success.main, fontWeight: 600 }}>FulboApp</Typography>
-
+        <Grid container sx={{backgroundColor:theme.palette.primary.main, alignItems:'center'}}>
+            <Grid item xs={3} >
+            <Typography variant="body" onClick={navHome}
+                sx={{
+                    color: theme.palette.success.main,
+                    fontWeight: 600,
+                    margin:'auto',
+                    fontSize: '1rem',  // Tamaño de fuente base
+                    [theme.breakpoints.up('sm')]: {
+                        fontSize: '1.2rem',  // Tamaño de fuente para pantallas pequeñas (sm) y más grandes
+                    },
+                    [theme.breakpoints.up('md')]: {
+                        fontSize: '2.5rem',  // Tamaño de fuente para pantallas medianas (md) y más grandes
+                    },
+                    // Puedes seguir agregando breakpoints según tus necesidades
+                }}>FulboApp</Typography>
+            </Grid>
+            <Grid item xs={6}>
             <Search sx={{ width: 'xl' }}
                 onChange={handleSearchBar}>
                 <SearchIconWrapper>
@@ -77,7 +90,7 @@ export default function Headr() {
                 <StyledInputBase
                     placeholder="Search competitions or countries..."
                     inputProps={{ 'aria-label': 'search' }}
-                />
+                />  
                 {/* <input type="text" value={searchTerm} onChange={handleSearchBar} /> */}
                 {/* Resto del código para mostrar los resultados posibles */}
                 <ul className="results-searchbar show">
@@ -104,11 +117,14 @@ export default function Headr() {
                 </ul>
 
             </Search>
-
+            </Grid>
+            <Grid item xs={3}>
             <form action="#">
-                <div className="btn_login">Login</div>
+                <div className="btn_login">Ligas top</div>
                 {/* <div></div> */}
             </form>
-        </Container>
+            </Grid>
+        </Grid>
+        
     )
 }
