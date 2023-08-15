@@ -27,8 +27,8 @@ export default function MatchDetail() {
     // console.log(eventsMatch);
     return (
         <Container maxWidth>
-            {   matchDetail.length === 0 ? 
-                <Typography variant="h3" sx={{textAlign:'center'}}>No match data yet</Typography> :
+            {matchDetail.length === 0 ?
+                <Typography variant="h3" sx={{ textAlign: 'center' }}>No match data yet</Typography> :
                 matchDetail.map((teams) => {
                     // console.log(teams.team.id);
                     // let idTeam = teams.team.id;
@@ -124,22 +124,24 @@ export default function MatchDetail() {
                                             );
                                         })}
                                     </div>
-                                    <Box component={Paper} sx={{width:'100%', textAlign:'center'}}>
-                                        <Typography>incidencias</Typography>
-                                            {
-                                                eventsMatch.map((event) => {
-                                                    if (event.team.id===idTeam) {
-                                                        return(
-                                                            <Box sx={{display:'flex', flexWrap:'nowrap', justifyContent:'center', }}>
-                                                                <p>{event.time.elapsed}'</p> <p> {event.player.name}</p> 
-                                                                <p>{event.type==='subst' ? <CompareArrowsSharpIcon/> : event.type==='Goal'? <SportsSoccerSharpIcon/>: event.type==="Card" ? <SimCardAlertIcon/>: event.type}</p>
-                                                                <p>{event.assist.name}</p>
-                                                            </Box>
-                                                        )
-                                                    }
-                                                })
+
+                                    {   
+                                    eventsMatch.length===0? '' :
+                                        eventsMatch.map((event) => {
+                                            if (event.team.id === idTeam) {
+                                                return (
+                                                    <Box component={Paper} sx={{ width: '100%', textAlign: 'center' }}>
+                                                        <Typography>incidencias</Typography>
+                                                        <Box sx={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', }}>
+                                                            <p>{event.time.elapsed}'</p> <p> {event.player.name}</p>
+                                                            <p>{event.type === 'subst' ? <CompareArrowsSharpIcon /> : event.type === 'Goal' ? <SportsSoccerSharpIcon /> : event.type === "Card" ? <SimCardAlertIcon /> : event.type}</p>
+                                                            <p>{event.assist.name}</p>
+                                                        </Box>
+                                                    </Box>
+                                                )
                                             }
-                                    </Box>
+                                        })
+                                    }
                                 </Box>
 
                             </Box>
