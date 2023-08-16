@@ -3,4 +3,10 @@
 }
 .img_mini_logo{
     width: 16px;
+    height: 16px;
+}
+.tableContainer{
+    max-width: 100%;
+    font-size: 0.8em;
+    background-color: red;
 }

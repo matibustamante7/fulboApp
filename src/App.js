@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Countries from "./components/Countries/Countries.jsx";
 import SubHeader from "./components/SubHeader/SubHeader.jsx";

@@ -13,10 +13,8 @@ export default function Leagues() {
 
     const allLeagues = useSelector((state) => state.allCompetitions)
 
-     
     return (
-        <div>
-           
+        <div>           
             {
                 allLeagues?.map((competitions) => {
                     return (

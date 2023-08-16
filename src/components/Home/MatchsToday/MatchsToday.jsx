@@ -50,13 +50,13 @@ export default function MatchsToday() {
               <TableRow key={match.fixture.id} sx={{ height: '5px' }}>
                 <TableCell
                   sx={{
-                    p:1, backgroundColor: theme.palette.primary.main, color: theme.palette.background.default, fontWeight: 600
+                    p:1,width:'15%', backgroundColor: theme.palette.primary.main, color: theme.palette.background.default, fontWeight: 600
                   }}
                 >
                   {match.status?.elapsed ? match.status.elapsed : <p>-</p>}
                 </TableCell>
 
-                <TableCell sx={{ p:1, backgroundColor: theme.palette.secondary.main, textAlign: "center"  }}>
+                <TableCell sx={{ p:1,width:'30%', backgroundColor: theme.palette.secondary.main, textAlign: "center"  }}>
                   <Box sx={{display:'flex', alignItems:'center', flexDirection:'column'}}>
                   <img className="team_logo" src={match.teams.home.logo} />
                     <Link href={`/team/${match.teams.home.name}/${match.teams.home.id}`}>
@@ -65,15 +65,15 @@ export default function MatchsToday() {
                   </Box>
                 </TableCell>
 
-                <TableCell sx={{ p:1, borderRight:1, textAlign: "center" }}>
+                <TableCell sx={{ p:1,width:'7%', borderRight:1, textAlign: "center" }}>
                   {match.goals?.home ? match.goals.home : 0}
                 </TableCell>
 
-                <TableCell sx={{p:1, textAlign: "center"}}>
+                <TableCell sx={{p:1,width:'7%', textAlign: "center"}}>
                   {match.goals?.away ? match.goals.away : 0}
                 </TableCell>
 
-                <TableCell sx={{ p:1, backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
+                <TableCell sx={{ p:1,width:'30%', backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
                   <Box sx={{display:'flex', alignItems:'center', flexDirection:'column'}}>
                     <img className="team_logo" src={match.teams.away.logo} />
                     <Link href={`/team/${match.teams.away.name}/${match.teams.away.id}`}>
@@ -82,7 +82,7 @@ export default function MatchsToday() {
                   </Box>
                 </TableCell>
 
-                <TableCell sx={{ p:1, backgroundColor: theme.palette.success.main, textAlign: "center"  }}>
+                <TableCell sx={{ p:1,width:'10%', backgroundColor: theme.palette.success.main, textAlign: "center"  }}>
                   <Link href={`/${match.fixture?.id}`}>
                     <TouchAppIcon/>
                   </Link>

@@ -13,35 +13,34 @@ export default function Scorer({ idCompetition }) {
     const players = useSelector((state) => state.scorers)
     // console.log(players);
     return (
-        <Container sx={{margin:4, width:'45%'}}>
-            <TableContainer component={Paper} sx={{textAlign:'center', padding:2, maxHeight:600}}>
+            <TableContainer component={Paper}>
                 <Typography variant="h4">Scorers</Typography>
                 <Table>
                     <TableHead>
                         {/* <TableCell>Position</TableCell> */}
-                        <TableCell sx={{ fontWeight: 600 }}>Player</TableCell>
-                        <TableCell sx={{ fontWeight: 600 }}>Team</TableCell>
-                        <TableCell sx={{ fontWeight: 600 }}>Goals</TableCell>
-                        <TableCell sx={{ fontWeight: 600 }}>Penalty</TableCell>
-                        <TableCell sx={{ fontWeight: 600 }}>Shots</TableCell>
-                        <TableCell sx={{ fontWeight: 600 }}>Shots on goal</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Player</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Goals</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Penalty</TableCell>
+                        {/* <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots on goal</TableCell> */}
                     </TableHead>
                     {
                         players?.map((player) => {
                             // console.log(player.statistics);
                             return (
                                 <TableRow key={player.player.id}>
-                                    <TableCell sx={{ fontWeight: 600 }}>{player.player.name}</TableCell>
+                                    <TableCell sx={{ fontWeight: 600,  p: 1, m: 0 }}>{player.player.name}</TableCell>
                                     {
                                         player.statistics.map((statistic) => {
                                             // console.log(statistic);
                                             return (
                                                 <>
-                                                    <TableCell><img className="img_mini_logo" src={statistic.team.logo} /> {statistic.team.name}</TableCell >
-                                                    <TableCell sx={{ fontWeight: 600 }}>{statistic.goals?.total}</TableCell>
-                                                    <TableCell>{statistic.penalty?.scored}</TableCell>
-                                                    <TableCell>{statistic.shots?.total}</TableCell>
-                                                    <TableCell>{statistic.shots?.on}</TableCell>
+                                                    <TableCell sx={{ p: 1, m: 0 }}><img className="img_mini_logo" src={statistic.team.logo} /> {statistic.team.name}</TableCell >
+                                                    <TableCell sx={{ fontWeight: 600,  p: 1, m: 0 }}>{statistic.goals?.total}</TableCell>
+                                                    <TableCell sx={{ p: 1, m: 0 }}>{statistic.penalty?.scored}</TableCell>
+                                                    {/* <TableCell sx={{ p: 1, m: 0 }}>{statistic.shots?.total}</TableCell>
+                                                    <TableCell sx={{ p: 1, m: 0 }}>{statistic.shots?.on}</TableCell> */}
                                                 </>
                                             )
                                         })
@@ -52,6 +51,5 @@ export default function Scorer({ idCompetition }) {
                     }
                 </Table>
             </TableContainer>
-        </Container >
     )
 }

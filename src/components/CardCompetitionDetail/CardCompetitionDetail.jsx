@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useHistory } from "react-router-dom"
 import { filterCompByCountry, getAssistsCompetition, getCompetitionById, getFixtureByCompetition, getFixtureByCompetitionAllRounds, getScorersCompetition, getTableCompetition, handleChangeCompetition } from "../../redux/actions";
-import { Box, Container, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Container, Grid, Link, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import './CardCompetitionDetail.css'
 import { all } from "axios";
 import Scorer from "../Stadistics/Scorer/Scorer";
@@ -98,29 +98,26 @@ export default function CardCompetitionDetail() {
                             </Box>
 
                             {/* {console.log(comp.league)} */}
-                            <Box sx={{ display: 'flex', justifyContent: 'space-around', gap: 2 }}>
-                                {/* tabla de posiciones */}
-                                {/* <Box sx={{width:"100%"}}> */}
+                            <Grid container columns={12} spacing={2}>
 
-
-                                <TableContainer component={Paper} >
-                                    <select onChange={handleFilterByCountry}>
+                                <Grid item xs={12} md={8}>
+                                    <select onChange={handleFilterByCountry} label='Competitions'>
                                         <option value="">Alls</option>
                                         {allCompetitions.map((competition, index) => (
                                             <option key={index} value={competition.league.id}>{competition.country.name} - {competition.league.name}</option>
                                             // <option>hola</option>
                                         ))}
                                     </select>
-                                    <Table>
+                                    <Table component={Paper}>
                                         <TableHead>
-                                            <TableCell sx={{ fontWeight: 600 }}>Position</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Team</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Points</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>MP</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>W</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>D</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>L</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Ratio goals</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>MP</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>W</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>D</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>L</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goals</TableCell>
                                         </TableHead>
                                         {/* el contenido de la tabla va mapeado, este es hardcodeado*/}
                                         {
@@ -130,24 +127,25 @@ export default function CardCompetitionDetail() {
                                                 return (
                                                     <TableRow>
                                                         {/* posicion */}
-                                                        <TableCell sx={{ fontWeight: 600 }}>{teams.rank}</TableCell>
+                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>{teams.rank}</TableCell>
                                                         {/* equipo */}
-                                                        <TableCell><img className="img_mini_logo" src={teams.team.logo}></img>
+                                                        <TableCell sx={{ display: 'flex', alignItems: 'center', p: 1, m: 0, gap: 1 }}>
+                                                            <img className="img_mini_logo" src={teams.team.logo} />
                                                             <Link href={`/${comp.league.id}/${teams.team.name}/${teams.team.id}`}>
                                                                 {teams.team.name}
                                                             </Link></TableCell>
                                                         {/* puntos */}
-                                                        <TableCell>{teams.points}</TableCell>
+                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.points}</TableCell>
                                                         {/* partidos jugados */}
-                                                        <TableCell>{teams.all.played}</TableCell>
+                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.played}</TableCell>
                                                         {/* partidos ganados */}
-                                                        <TableCell>{teams.all.win}</TableCell>
+                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.win}</TableCell>
                                                         {/* partidos empatados */}
-                                                        <TableCell>{teams.all.draw}</TableCell>
+                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.draw}</TableCell>
                                                         {/* partidos perdidos */}
-                                                        <TableCell>{teams.all.lose}</TableCell>
+                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.lose}</TableCell>
                                                         {/* ratio de goles a favor y contra */}
-                                                        <TableCell>{teams.all.goals.for}:{teams.all.goals.against}</TableCell>
+                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.goals.for}:{teams.all.goals.against}</TableCell>
                                                         {/* ultimos partidos */}
                                                     </TableRow>
                                                 )
@@ -156,10 +154,10 @@ export default function CardCompetitionDetail() {
                                         }
 
                                     </Table>
-                                </TableContainer>
+                                </Grid>
 
 
-                                <TableContainer component={Paper} sx={{ width: '40%', height: '50%' }} >
+                                <Grid item xs={12} md={4}>
                                     <select value={selectedRound} onChange={handleRoundChange}>
                                         <option value=''>Seleccionar Ronda</option>
                                         {
@@ -170,28 +168,38 @@ export default function CardCompetitionDetail() {
                                             ))
                                         }
                                     </select>
-                                    <Table>
+                                    <Table component={Paper}>
                                         <TableBody>
                                             {fixture?.map((partido, index) => {
                                                 // numRound = partido.league.round
                                                 // console.log(numRound);
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell sx={{ textAlign: 'right' }}>{partido.teams.home.name} <img className="img_mini_logo" src={partido.teams.home.logo} /></TableCell>
-                                                        <TableCell sx={{ textAlign: 'center' }}>{partido.goals.home}</TableCell>
-                                                        <TableCell sx={{ textAlign: 'center' }}>{partido.goals.away}</TableCell>
-                                                        <TableCell sx={{ textAlign: 'left' }}><img className="img_mini_logo" src={partido.teams.away.logo} /> {partido.teams.away.name}</TableCell>
+                                                        <TableCell sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                                            {partido.teams.home.name}
+                                                            <img className="img_mini_logo" src={partido.teams.home.logo} />
+                                                        </TableCell>
+                                                        <TableCell>{partido.goals.home}</TableCell>
+                                                        <TableCell >{partido.goals.away}</TableCell>
+                                                        <TableCell sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                                            <img className="img_mini_logo" src={partido.teams.away.logo} />
+                                                            {partido.teams.away.name}
+                                                        </TableCell>
                                                     </TableRow>
                                                 )
                                             })}
                                         </TableBody>
                                     </Table>
-                                </TableContainer>
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-                                <Scorer idCompetition={idCompetition} />
-                                <Assists idCompetition={idCompetition} />
-                            </Box>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={4} columns={12} marginTop={2}>
+                                <Grid item xs={12} md={6}>
+                                    <Scorer idCompetition={idCompetition} />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <Assists idCompetition={idCompetition} />
+                                </Grid>
+                            </Grid>
                         </Container>
                     )
                 })
