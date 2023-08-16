@@ -5,26 +5,20 @@ import { Box } from "@mui/material";
 import CardCompetition from "../CardCompetition/CardCompetition";
 
 export default function Leagues() {
-
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getLeagues())
-    }, [dispatch])
+        dispatch(getLeagues());
+    }, []);
 
-    const allLeagues = useSelector((state) => state.allCompetitions)
+    const allLeagues = useSelector((state) => state.searchResults.length > 0 ? state.searchResults : state.allCompetitions);
 
     return (
-        <div>           
-            {
-                allLeagues?.map((competitions) => {
-                    return (
-                        <Box>
-                            <CardCompetition key={competitions.league.id} competitions={competitions}/>
-                        </Box>
-                    )
-                })
-            }
+        <div>
+            {allLeagues.map((competitions) => (
+                <Box key={competitions.league.id}>
+                    <CardCompetition competitions={competitions} />
+                </Box>
+            ))}
         </div>
     );
 }
-

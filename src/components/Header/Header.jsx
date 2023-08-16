@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './header.css'
 import { useDispatch, useSelector } from "react-redux";
 import { searchBar } from "../../redux/actions";
@@ -49,19 +49,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Headr() {
 
     const [searchTerm, setSearchTerm] = useState('');
+
+    const resultadosBusqueda = useSelector((state) => state.searchResults)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        dispatch(searchBar())
+    },[])
     const handleSearchBar = (e) => {
-        let searching = e.target.value.toLowerCase();
-        setSearchTerm(searching)
-        // console.log(searching);
-        //generar el dispatch, action y reducer correspondiente
-        dispatch(searchBar(searching))
+        const searchTerm = e.target.value.toLowerCase();
+        setSearchTerm(searchTerm)
+        dispatch(searchBar(searchTerm))
     }
     const navHome = () => {
         navigate('/')
     }
-    const resultadosBusqueda = useSelector((state) => state.searchResults)
     // console.log(resultadosBusqueda);
     return (
         <Grid container sx={{backgroundColor:theme.palette.primary.main, alignItems:'center'}}>
@@ -115,8 +119,14 @@ export default function Headr() {
                         );
                     })}
                 </ul>
-
             </Search>
+            
+            <StyledInputBase
+                    placeholder="Search competitions or countries..."
+                    inputProps={{ 'aria-label': 'search' }}
+                    value={searchTerm} // Agrega esto para mantener el valor del input controlado
+                    onChange={handleSearchBar}
+                />
             </Grid>
             <Grid item xs={3}>
             <form action="#">

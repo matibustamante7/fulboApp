@@ -1,5 +1,5 @@
-import { searchBar } from "./actions";
-import { SEARCH_BAR_COUNTRIES, CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR, GET_FIXTURE_TODAY_BY_COMPETITION, GET_TEAM_SQUAD, GET_TEAM_STADIUM, GET_TEAM_STADISTICS, GET_TEAM_COACH, GET_EVENTS_MATCH, GET_PLAYER, GET_SEASONS } from "./actionsTypes";
+
+import { SEARCH_BAR_COUNTRIES, CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR, GET_FIXTURE_TODAY_BY_COMPETITION, GET_TEAM_SQUAD, GET_TEAM_STADIUM, GET_TEAM_STADISTICS, GET_TEAM_COACH, GET_EVENTS_MATCH, GET_PLAYER, GET_SEASONS, GET_COMPETITION_SEARCHBAR } from "./actionsTypes";
 
 const initialState = {
     competitions: [],
@@ -163,19 +163,11 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 competitions: payload
             }
-        case SEARCH_BAR:
-            // console.log(payload);
-            const keyword = payload.toLowerCase();
-            const competitions = state.allCompetitions;
-            const nations = state.allNations;
-            const filteredCompetitions = competitions.filter((competition) => competition.league.name.toLowerCase().includes(keyword));
-            const filteredNations = nations.filter((nation) => nation.name.toLowerCase().includes(keyword));
-
-            const combinedResults = [...filteredCompetitions, ...filteredNations];
-
+        case GET_COMPETITION_SEARCHBAR:
+           
             return {
                 ...state,
-                allCompetitions: combinedResults
+                allCompetitions: payload
             }
         // case SEARCH_BAR_COUNTRIES:
         //     // solo busca competiciones paises no
