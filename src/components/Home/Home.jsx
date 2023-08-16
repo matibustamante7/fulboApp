@@ -24,7 +24,6 @@ export default function Home() {
           <LinearProgress />
         </Box>
       ) : <Container>
-        {/* <ImportantComp /> */}
         <Grid container>
           <Grid item xs={12}>
             <Matchs />

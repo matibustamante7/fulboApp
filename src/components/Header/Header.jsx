@@ -7,6 +7,7 @@ import { Box, Container, Grid, InputBase, Link, Typography, alpha } from "@mui/m
 import theme from "../../theme";
 import styled from "@emotion/styled";
 import SearchIcon from '@mui/icons-material/Search';
+import ImportantComp from "../ImportantComp/ImportantComp";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -75,6 +76,7 @@ export default function Headr() {
                     color: theme.palette.success.main,
                     fontWeight: 600,
                     margin:'auto',
+                    cursor:'pointer',
                     fontSize: '1rem',  // Tamaño de fuente base
                     [theme.breakpoints.up('sm')]: {
                         fontSize: '1.2rem',  // Tamaño de fuente para pantallas pequeñas (sm) y más grandes
@@ -121,18 +123,15 @@ export default function Headr() {
                 </ul>
             </Search>
             
-            <StyledInputBase
+            {/* <StyledInputBase
                     placeholder="Search competitions or countries..."
                     inputProps={{ 'aria-label': 'search' }}
                     value={searchTerm} // Agrega esto para mantener el valor del input controlado
                     onChange={handleSearchBar}
-                />
+                /> */}
             </Grid>
             <Grid item xs={3}>
-            <form action="#">
-                <div className="btn_login">Ligas top</div>
-                {/* <div></div> */}
-            </form>
+            <ImportantComp/>
             </Grid>
         </Grid>
         

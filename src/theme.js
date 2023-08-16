@@ -17,6 +17,10 @@ const theme = createTheme({
     error: {
       main: "#ff0000", // Rojo para otros detalles
     },
+    menu: {
+      primary:'#2f744b',
+      secondary:'#76bd8f',
+    }
   },
 });
 

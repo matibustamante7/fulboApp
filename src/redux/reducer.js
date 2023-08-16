@@ -164,7 +164,6 @@ const reducer = (state = initialState, { type, payload }) => {
                 competitions: payload
             }
         case GET_COMPETITION_SEARCHBAR:
-           
             return {
                 ...state,
                 allCompetitions: payload
