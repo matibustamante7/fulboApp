@@ -70,9 +70,9 @@ export default function Headr() {
     // console.log(resultadosBusqueda);
     return (
         <Grid container sx={{backgroundColor:theme.palette.primary.main, alignItems:'center'}}>
-            <Grid item xs={3} >
+            <Grid item xs={6} >
             <Typography variant="body" onClick={navHome}
-                sx={{
+                sx={{display:'flex', justifyContent:'center', alignItems:'center',
                     color: theme.palette.success.main,
                     fontWeight: 600,
                     margin:'auto',
@@ -87,8 +87,8 @@ export default function Headr() {
                     // Puedes seguir agregando breakpoints según tus necesidades
                 }}>FulboApp</Typography>
             </Grid>
-            <Grid item xs={6}>
-            <Search sx={{ width: 'xl' }}
+            {/* <Grid item xs={6}> */}
+            {/* <Search sx={{ width: 'xl' }}
                 onChange={handleSearchBar}>
                 <SearchIconWrapper>
                     <SearchIcon />
@@ -97,8 +97,6 @@ export default function Headr() {
                     placeholder="Search competitions or countries..."
                     inputProps={{ 'aria-label': 'search' }}
                 />  
-                {/* <input type="text" value={searchTerm} onChange={handleSearchBar} /> */}
-                {/* Resto del código para mostrar los resultados posibles */}
                 <ul className="results-searchbar show">
                     {resultadosBusqueda.map((result) => {
                         // console.log(result)
@@ -121,7 +119,7 @@ export default function Headr() {
                         );
                     })}
                 </ul>
-            </Search>
+            </Search> */}
             
             {/* <StyledInputBase
                     placeholder="Search competitions or countries..."
@@ -129,8 +127,8 @@ export default function Headr() {
                     value={searchTerm} // Agrega esto para mantener el valor del input controlado
                     onChange={handleSearchBar}
                 /> */}
-            </Grid>
-            <Grid item xs={3}>
+            {/* </Grid> */}
+            <Grid item xs={6}>
             <ImportantComp/>
             </Grid>
         </Grid>

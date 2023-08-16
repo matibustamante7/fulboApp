@@ -67,7 +67,7 @@ export default function ImportantComp() {
 
 
     return (
-        <Box sx={{pl:10, alignItems:'right'}}>
+        <Box sx={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
             <MenuIcon
             cursor='pointer'
             color='success'
