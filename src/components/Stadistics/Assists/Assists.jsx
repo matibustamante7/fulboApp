@@ -9,9 +9,9 @@ export default function Assists({ idCompetition }) {
         dispatch(getAssistsCompetition(idCompetition))
     }, [dispatch])
     const players = useSelector((state) => state.assists)
-
+    console.log(players);
     return (
-            <TableContainer component={Paper} sx={{ textAlign: 'center', padding: 2, maxHeight: 600 }}>
+            <TableContainer component={Paper} sx={{ textAlign: 'center'}}>
                 <Typography variant="h4">Assistants</Typography>
                 <Table>
                     <TableHead>
@@ -23,7 +23,8 @@ export default function Assists({ idCompetition }) {
                         {/* <TableCell sx={{ fontWeight: 600 }}>Passes accuracy</TableCell> */}
                     </TableHead>
                     {/* <TableBody> */}
-                        {players?.map((player) => (
+                        {   
+                            players?.map((player) => (
                             <TableRow key={player.player.id}>
                                 <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>{player.player.name}</TableCell>
                                 {player.statistics.map((statistic) => (

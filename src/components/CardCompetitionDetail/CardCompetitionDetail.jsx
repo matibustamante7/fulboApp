@@ -77,6 +77,13 @@ export default function CardCompetitionDetail() {
         uniqueRounds.add(round.league.round);
     });
 
+    const sortedCompetitions = [...allCompetitions]?.sort((a, b) => {
+        // Compara los nombres de liga y país en minúsculas para garantizar una ordenación sin distinción entre mayúsculas y minúsculas
+        const nameA = `${a.country.name.toLowerCase()} - ${a.league.name.toLowerCase()}`;
+        const nameB = `${b.country.name.toLowerCase()} - ${b.league.name.toLowerCase()}`;
+        return nameA.localeCompare(nameB);
+    })
+
     return (
 
         <>{loading && (
@@ -103,7 +110,7 @@ export default function CardCompetitionDetail() {
                                 <Grid item xs={12} md={8}>
                                     <select onChange={handleFilterByCountry} label='Competitions'>
                                         <option value="">Alls</option>
-                                        {allCompetitions.map((competition, index) => (
+                                        {sortedCompetitions.map((competition, index) => (
                                             <option key={index} value={competition.league.id}>{competition.country.name} - {competition.league.name}</option>
                                             // <option>hola</option>
                                         ))}
@@ -175,13 +182,13 @@ export default function CardCompetitionDetail() {
                                                 // console.log(numRound);
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                                                            {partido.teams.home.name}
+                                                        <TableCell sx={{ textAlign:'right', display:'flex', flexDirection:'column', alignItems:'center', gap:1}}>
                                                             <img className="img_mini_logo" src={partido.teams.home.logo} />
+                                                            {partido.teams.home.name}
                                                         </TableCell>
-                                                        <TableCell>{partido.goals.home}</TableCell>
+                                                        <TableCell >{partido.goals.home}</TableCell>
                                                         <TableCell >{partido.goals.away}</TableCell>
-                                                        <TableCell sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                                        <TableCell sx={{ textAlign:'right', display:'flex',flexDirection:'column', alignItems:'center', gap:1 }}>
                                                             <img className="img_mini_logo" src={partido.teams.away.logo} />
                                                             {partido.teams.away.name}
                                                         </TableCell>

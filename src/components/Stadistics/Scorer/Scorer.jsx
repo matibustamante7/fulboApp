@@ -13,7 +13,7 @@ export default function Scorer({ idCompetition }) {
     const players = useSelector((state) => state.scorers)
     // console.log(players);
     return (
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ textAlign: 'center'}}>
                 <Typography variant="h4">Scorers</Typography>
                 <Table>
                     <TableHead>
@@ -25,7 +25,8 @@ export default function Scorer({ idCompetition }) {
                         {/* <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots</TableCell>
                         <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots on goal</TableCell> */}
                     </TableHead>
-                    {
+                    {   
+                        players.length===0 ? '' :
                         players?.map((player) => {
                             // console.log(player.statistics);
                             return (
