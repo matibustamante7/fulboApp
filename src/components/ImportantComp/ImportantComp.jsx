@@ -55,9 +55,9 @@ export default function ImportantComp() {
 
             filteredLeaguesByCountry[countryName].push(competition.league);
         }
+
     });
 
-    // console.log(filteredLeaguesByCountry);
 
     const [open, setOpen] = React.useState(true);
 
@@ -67,46 +67,43 @@ export default function ImportantComp() {
 
 
     return (
-        <Box sx={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <MenuIcon
-            cursor='pointer'
-            color='success'
-            onClick={()=>setOpen(true)}/>
+                cursor='pointer'
+                color='success'
+                onClick={() => setOpen(true)}
+            />
 
-            <Drawer 
-            open={open}
-            anchor='right'
-            onClose={()=>setOpen(false)}
-            // sx={{display:{}}}
-            component="div" id="nested-list-subheader"
-            onClick={handleClick}>
-            {Object.entries(filteredLeaguesByCountry).map(([country, competition]) => (
-                <List
-                    key={country} 
-                    sx={{ width: '100%', maxWidth: 360, bgcolor:theme.palette.menu.secondary }}
-                >
-                    <ListItemButton
-                    sx={{bgcolor:theme.palette.menu.primary}}>
+            <Drawer
+                open={open}
+                anchor='right'
+                onClose={() => setOpen(false)}
+                component="div" id="nested-list-subheader"
+                onClick={handleClick}
+            >
+                <ListSubheader sx={{ bgcolor:theme.palette.secondary.main }}>Principales ligas</ListSubheader>
 
-                        <ListItemText primary={country} sx={{ color:theme.palette.background.default}} />
-                        
-                    </ListItemButton>
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: theme.palette.menu.secondary }}>
+                    {Object.entries(filteredLeaguesByCountry).map(([country, competition]) => {
+                    return(
+                        <div key={country}> {/* Envolver cada iteración en un div */}
 
-                    {competition.map((comp) => (
-                        <ListItemButton key={comp.id}
-                        sx={{bgcolor:theme.palette.menu.secondary}}
-                        onClick={()=>setOpen(false)}>
-                            <Link href={`/competitions/${comp.id}`}
-                            sx={{textDecoration:'none'}}>
-                                <ListItemText secondary={comp.name}
-                                />
-                            </Link>
-                        </ListItemButton>
-                    ))}
+                            <ListItemButton sx={{ bgcolor: theme.palette.menu.primary }}>
+                                <ListItemText primary={country} sx={{ color: theme.palette.background.default }} />
+                            </ListItemButton>
+
+                            {competition.map((comp) => (
+                                <ListItemButton key={comp.id} sx={{ bgcolor: theme.palette.menu.secondary }} onClick={() => setOpen(false)}>
+                                    <Link href={`/competitions/${comp.id}`} sx={{ textDecoration: 'none' }}>
+                                        <ListItemText secondary={comp.name} />
+                                    </Link>
+                                </ListItemButton>
+                            ))}
+                        </div>
+                    )})}
                 </List>
-            ))}
             </Drawer>
-
         </Box>
     );
+
 }
