@@ -9,7 +9,7 @@ export default function Assists({ idCompetition }) {
         dispatch(getAssistsCompetition(idCompetition))
     }, [dispatch])
     const players = useSelector((state) => state.assists)
-    console.log(players);
+    // console.log(players);
     return (
             <TableContainer component={Paper} sx={{ textAlign: 'center'}}>
                 <Typography variant="h4">Assistants</Typography>

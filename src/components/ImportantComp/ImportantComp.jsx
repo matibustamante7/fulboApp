@@ -59,7 +59,7 @@ export default function ImportantComp() {
     });
 
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
         setOpen(!open);

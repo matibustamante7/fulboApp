@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useHistory } from "react-router-dom"
-import { filterCompByCountry, getAssistsCompetition, getCompetitionById, getFixtureByCompetition, getFixtureByCompetitionAllRounds, getScorersCompetition, getTableCompetition, handleChangeCompetition } from "../../redux/actions";
+import { filterCompByCountry, getAssistsCompetition, getCompetitionById, getCups, getFixtureByCompetition, getFixtureByCompetitionAllRounds, getScorersCompetition, getTableCompetition, handleChangeCompetition } from "../../redux/actions";
 import { Box, Container, Grid, Link, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import './CardCompetitionDetail.css'
 import { all } from "axios";
@@ -14,6 +14,7 @@ export default function CardCompetitionDetail() {
     const dispatch = useDispatch();
     // console.log(nameCompetition);
     const competition = useSelector((state) => state.tableCompetition)
+    // console.log(competition);
     //agregar filtro para cambiar competiciones con un select
     const allCompetitions = useSelector((state) => state.allCompetitions)
     // console.log(allCompetitions);
@@ -22,7 +23,6 @@ export default function CardCompetitionDetail() {
     const allRoundsFixture = useSelector((state) => state.fixtureCompetitionAllRounds)
     // console.log(allRoundsFixture); 
     const [selectedRound, setSelectedRound] = useState("");
-
     //loader
     const [loading, setLoading] = useState(true);
 
@@ -42,16 +42,25 @@ export default function CardCompetitionDetail() {
         const timer = setTimeout(() => {
             setLoading(false)
         }, 3000)
-
+        // handleFindCompByTypeCupById();
         dispatch(handleChangeCompetition(idCompetition));
         dispatch(getTableCompetition(idCompetition))
-        dispatch(getFixtureByCompetitionAllRounds(idCompetition))
-        dispatch(getFixtureByCompetition({ idCompetition, numRound: selectedRound }))
-        dispatch(getScorersCompetition(idCompetition))
-        dispatch(getAssistsCompetition(idCompetition))
+        // dispatch(getFixtureByCompetitionAllRounds(idCompetition))
+        // dispatch(getFixtureByCompetition({ idCompetition, numRound: selectedRound }))
+        // dispatch(getScorersCompetition(idCompetition))
+        // dispatch(getAssistsCompetition(idCompetition))
         return () => clearTimeout(timer);
     }, [dispatch, idCompetition, selectedRound])
 
+    // const arrCups = []
+    // const handleFindCompByTypeCupById = ()=>{
+    //     allCompetitions.forEach((compe)=>{
+    //         if (compe.league.type==='Cup') {
+    //             arrCups.push(compe.league)
+    //         }
+    //     })
+    //     competition = arrCups;
+    // }
 
     const handleFilterByCountry = (e) => {
         let competitionId = e.target.value;
@@ -63,10 +72,10 @@ export default function CardCompetitionDetail() {
         navigate(newLocation, { replace: true });
         dispatch(handleChangeCompetition(competitionId));
         dispatch(getTableCompetition(competitionId))
-        dispatch(getFixtureByCompetitionAllRounds(idCompetition))
-        dispatch(getFixtureByCompetition({ competitionId, numRound }))
-        dispatch(getScorersCompetition(competitionId))
-        dispatch(getAssistsCompetition(competitionId))
+        // dispatch(getFixtureByCompetitionAllRounds(idCompetition))
+        // dispatch(getFixtureByCompetition({ competitionId, numRound }))
+        // dispatch(getScorersCompetition(competitionId))
+        // dispatch(getAssistsCompetition(competitionId))
         // console.log(`cambie la competicioon a ${competitionId}`);
     };
 
@@ -115,54 +124,100 @@ export default function CardCompetitionDetail() {
                                             // <option>hola</option>
                                         ))}
                                     </select>
-                                    <Table component={Paper}>
-                                        <TableHead>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>MP</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>W</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>D</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>L</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goals</TableCell>
-                                        </TableHead>
-                                        {/* el contenido de la tabla va mapeado, este es hardcodeado*/}
-                                        {
-                                            comp.league.standings[0].map((teams) => {
-                                                // teams.map((team) => {
-                                                // console.log(comp.league.id);
-                                                return (
-                                                    <TableRow>
-                                                        {/* posicion */}
-                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>{teams.rank}</TableCell>
-                                                        {/* equipo */}
-                                                        <TableCell sx={{ display: 'flex', alignItems: 'center', p: 1, m: 0, gap: 1 }}>
-                                                            <img className="img_mini_logo" src={teams.team.logo} />
-                                                            <Link href={`/${comp.league.id}/${teams.team.name}/${teams.team.id}`}>
-                                                                {teams.team.name}
-                                                            </Link></TableCell>
-                                                        {/* puntos */}
-                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.points}</TableCell>
-                                                        {/* partidos jugados */}
-                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.played}</TableCell>
-                                                        {/* partidos ganados */}
-                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.win}</TableCell>
-                                                        {/* partidos empatados */}
-                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.draw}</TableCell>
-                                                        {/* partidos perdidos */}
-                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.lose}</TableCell>
-                                                        {/* ratio de goles a favor y contra */}
-                                                        <TableCell sx={{ p: 1, m: 0 }}>{teams.all.goals.for}:{teams.all.goals.against}</TableCell>
-                                                        {/* ultimos partidos */}
-                                                    </TableRow>
+                                    <Grid item xs={12} >
+                                        <Grid container columns={12} spacing={2}>
+                                            {
+                                                comp.league.standings.length > 1 ? (
+                                                    comp.league.standings.map((group) => {
+                                                        // console.log();
+                                                        return (
+                                                            <Grid item xs={12}sm={12} md={6}>
+                                                                <Typography variant="h6">{group[0].group}</Typography>
+
+                                                                <Table component={Paper} maxWidth='50%' >
+
+                                                                    <TableHead>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>MP</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>W</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>D</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>L</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goals</TableCell>
+                                                                    </TableHead>
+                                                                    {group.map((teams, teamIndex) => (
+                                                                        <TableRow key={teamIndex}>
+                                                                            {/* posicion */}
+                                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>{teams.rank}</TableCell>
+                                                                            {/* equipo */}
+                                                                            <TableCell sx={{ display: 'flex', alignItems: 'center', p: 1, m: 0, flexDirection:'column', textAlign:'center' }}>
+                                                                                <img className="img_mini_logo" src={teams.team.logo} />
+                                                                                <Link href={`/${comp.league.id}/${teams.team.name}/${teams.team.id}`}>
+                                                                                    {teams.team.name}
+                                                                                </Link></TableCell>
+                                                                            {/* puntos */}
+                                                                            <TableCell sx={{ p: 1, m: 0 }}>{teams.points}</TableCell>
+                                                                            {/* partidos jugados */}
+                                                                            <TableCell sx={{ p: 1, m: 0 }}>{teams.all.played}</TableCell>
+                                                                            {/* partidos ganados */}
+                                                                            <TableCell sx={{ p: 1, m: 0 }}>{teams.all.win}</TableCell>
+                                                                            {/* partidos empatados */}
+                                                                            <TableCell sx={{ p: 1, m: 0 }}>{teams.all.draw}</TableCell>
+                                                                            {/* partidos perdidos */}
+                                                                            <TableCell sx={{ p: 1, m: 0 }}>{teams.all.lose}</TableCell>
+                                                                            {/* ratio de goles a favor y contra */}
+                                                                            <TableCell sx={{ p: 1, m: 0 }}>{teams.all.goals.for}:{teams.all.goals.against}</TableCell>
+                                                                            {/* ultimos partidos */}
+                                                                        </TableRow>
+                                                                    ))}
+                                                                </Table>
+                                                            </Grid>)
+                                                    })
+
+                                                ) : (
+                                                    <Table component={Paper}>
+                                                        <TableHead>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>MP</TableCell>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>W</TableCell>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>D</TableCell>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>L</TableCell>
+                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goals</TableCell>
+                                                        </TableHead>
+                                                        {comp.league.standings[0].map((teams, teamIndex) => (
+                                                            <TableRow>
+                                                                {/* posicion */}
+                                                                <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>{teams.rank}</TableCell>
+                                                                {/* equipo */}
+                                                                <TableCell sx={{ display: 'flex', alignItems: 'center', p: 1, m: 0, gap: 1 }}>
+                                                                    <img className="img_mini_logo" src={teams.team.logo} />
+                                                                    <Link href={`/${comp.league.id}/${teams.team.name}/${teams.team.id}`}>
+                                                                        {teams.team.name}
+                                                                    </Link></TableCell>
+                                                                {/* puntos */}
+                                                                <TableCell sx={{ p: 1, m: 0 }}>{teams.points}</TableCell>
+                                                                {/* partidos jugados */}
+                                                                <TableCell sx={{ p: 1, m: 0 }}>{teams.all.played}</TableCell>
+                                                                {/* partidos ganados */}
+                                                                <TableCell sx={{ p: 1, m: 0 }}>{teams.all.win}</TableCell>
+                                                                {/* partidos empatados */}
+                                                                <TableCell sx={{ p: 1, m: 0 }}>{teams.all.draw}</TableCell>
+                                                                {/* partidos perdidos */}
+                                                                <TableCell sx={{ p: 1, m: 0 }}>{teams.all.lose}</TableCell>
+                                                                {/* ratio de goles a favor y contra */}
+                                                                <TableCell sx={{ p: 1, m: 0 }}>{teams.all.goals.for}:{teams.all.goals.against}</TableCell>
+                                                                {/* ultimos partidos */}
+                                                            </TableRow>
+                                                        ))}
+                                                    </Table>
                                                 )
-                                            })
-
-                                        }
-
-                                    </Table>
+                                            }
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
-
 
                                 <Grid item xs={12} md={4}>
                                     <select value={selectedRound} onChange={handleRoundChange}>
@@ -182,13 +237,13 @@ export default function CardCompetitionDetail() {
                                                 // console.log(numRound);
                                                 return (
                                                     <TableRow key={index}>
-                                                        <TableCell sx={{ textAlign:'right', display:'flex', flexDirection:'column', alignItems:'center', gap:1}}>
+                                                        <TableCell sx={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
                                                             <img className="img_mini_logo" src={partido.teams.home.logo} />
                                                             {partido.teams.home.name}
                                                         </TableCell>
                                                         <TableCell >{partido.goals.home}</TableCell>
                                                         <TableCell >{partido.goals.away}</TableCell>
-                                                        <TableCell sx={{ textAlign:'right', display:'flex',flexDirection:'column', alignItems:'center', gap:1 }}>
+                                                        <TableCell sx={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
                                                             <img className="img_mini_logo" src={partido.teams.away.logo} />
                                                             {partido.teams.away.name}
                                                         </TableCell>
