@@ -45,8 +45,8 @@ export default function CardCompetitionDetail() {
         // handleFindCompByTypeCupById();
         dispatch(handleChangeCompetition(idCompetition));
         dispatch(getTableCompetition(idCompetition))
-        // dispatch(getFixtureByCompetitionAllRounds(idCompetition))
-        // dispatch(getFixtureByCompetition({ idCompetition, numRound: selectedRound }))
+        dispatch(getFixtureByCompetitionAllRounds(idCompetition))
+        dispatch(getFixtureByCompetition({ idCompetition, numRound: selectedRound }))
         // dispatch(getScorersCompetition(idCompetition))
         // dispatch(getAssistsCompetition(idCompetition))
         return () => clearTimeout(timer);
@@ -72,11 +72,11 @@ export default function CardCompetitionDetail() {
         navigate(newLocation, { replace: true });
         dispatch(handleChangeCompetition(competitionId));
         dispatch(getTableCompetition(competitionId))
-        // dispatch(getFixtureByCompetitionAllRounds(idCompetition))
-        // dispatch(getFixtureByCompetition({ competitionId, numRound }))
-        // dispatch(getScorersCompetition(competitionId))
-        // dispatch(getAssistsCompetition(competitionId))
-        // console.log(`cambie la competicioon a ${competitionId}`);
+        dispatch(getFixtureByCompetitionAllRounds(idCompetition))
+        dispatch(getFixtureByCompetition({ competitionId, numRound }))
+        dispatch(getScorersCompetition(competitionId))
+        dispatch(getAssistsCompetition(competitionId))
+        console.log(`cambie la competicioon a ${competitionId}`);
     };
 
     const uniqueRounds = new Set();
