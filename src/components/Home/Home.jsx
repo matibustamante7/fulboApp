@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Box, Container, Grid, LinearProgress } from '@mui/material';
 import Matchs from '../Matchs/Matchs';
 import MatchsToday from './MatchsToday/MatchsToday';
-import ImportantComp from '../ImportantComp/ImportantComp';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Home() {
   // Estado para controlar si se muestra el indicador de progreso o no
@@ -10,20 +10,16 @@ export default function Home() {
 
   // Simulamos una carga inicial de 3 segundos para este ejemplo
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 4000);
+    // const timer = setTimeout(() => {
+    //   setLoading(false);
+    // }, 4000);
 
-    return () => clearTimeout(timer);
+    // return () => clearTimeout(timer);
   }, []);
 
   return (
     <div >
-      {loading ? (
-        <Box sx={{ width: '100%' }}>
-          <LinearProgress />
-        </Box>
-      ) : <Container>
+      <Container>
         <Grid container>
           <Grid item xs={12}>
             <Matchs />
@@ -33,7 +29,7 @@ export default function Home() {
           </Grid>
         </Grid>
       </Container>
-      }
+      
     </div>
   );
 }

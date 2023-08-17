@@ -34,7 +34,8 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
+    backgroundColor:'#fff',
+    color: theme.palette.primary.main,
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
@@ -56,13 +57,16 @@ export default function Headr() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        dispatch(searchBar())
-    },[])
+    // useEffect(()=>{
+    //     dispatch(searchBar())
+    // },[])
     const handleSearchBar = (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        setSearchTerm(searchTerm)
+        let value = (e.target.value.toLowerCase())
+        console.log(value);
+        setSearchTerm(value);
+        // setSearchTerm(searchTerm)
         dispatch(searchBar(searchTerm))
+        // setSearchTerm('')
     }
     const navHome = () => {
         navigate('/')
@@ -70,7 +74,7 @@ export default function Headr() {
     // console.log(resultadosBusqueda);
     return (
         <Grid container sx={{backgroundColor:theme.palette.primary.main, alignItems:'center'}}>
-            <Grid item xs={6} >
+            <Grid item xs={4} >
             <Typography variant="body" onClick={navHome}
                 sx={{display:'flex', justifyContent:'center', alignItems:'center',
                     color: theme.palette.success.main,
@@ -87,7 +91,7 @@ export default function Headr() {
                     // Puedes seguir agregando breakpoints según tus necesidades
                 }}>FulboApp</Typography>
             </Grid>
-            {/* <Grid item xs={6}> */}
+            <Grid item xs={4}>
             {/* <Search sx={{ width: 'xl' }}
                 onChange={handleSearchBar}>
                 <SearchIconWrapper>
@@ -121,14 +125,14 @@ export default function Headr() {
                 </ul>
             </Search> */}
             
-            {/* <StyledInputBase
+            <StyledInputBase
                     placeholder="Search competitions or countries..."
                     inputProps={{ 'aria-label': 'search' }}
                     value={searchTerm} // Agrega esto para mantener el valor del input controlado
                     onChange={handleSearchBar}
-                /> */}
-            {/* </Grid> */}
-            <Grid item xs={6}>
+                />
+            </Grid>
+            <Grid item xs={4}>
             <ImportantComp/>
             </Grid>
         </Grid>

@@ -98,7 +98,7 @@ export const getTableCompetition = (idCompetition) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.response);
+        // console.log(data.response);
         dispatch({ type: GET_TABLE_COMPETITION, payload: data.response })
       })
       .catch((error) => {
@@ -404,7 +404,7 @@ export const getCompetitionByCountry = (idCountry) => {
 export const searchBar = (nameCompetition) => {
   return async (dispatch) => {
     try {
-        await fetch(`https://api-football-v1.p.rapidapi.com/v3/leagues?name=${nameCompetition}`, {
+        await fetch(`https://api-football-v1.p.rapidapi.com/v3/leagues?search=${nameCompetition}`, {
       "method": "GET",
       "headers": {
         "X-RapidAPI-Host": host,
@@ -413,7 +413,7 @@ export const searchBar = (nameCompetition) => {
     })
       .then(response => response.json())
       .then((data) => {
-        // console.log(data.response);
+        console.log(data.response);
         dispatch({ type: GET_COMPETITION_SEARCHBAR, payload: data.response })
       })
     } catch (error) {
