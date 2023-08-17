@@ -7,7 +7,7 @@ export default function CountriesCard({nations}) {
     const navigate = useNavigate();
     const handleDetailLeaguesCountry =()=>{
         let idCountry = nations.code;
-        console.log(idCountry);
+        // console.log(idCountry);
         navigate(`/countries/${idCountry}`);
     }
     // const

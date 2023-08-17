@@ -33,24 +33,10 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
 }));
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    backgroundColor:'#fff',
-    color: theme.palette.primary.main,
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '50ch',
-        },
-    },
-}));
+
 
 export default function Headr() {
 
-    const [searchTerm, setSearchTerm] = useState('');
 
     const resultadosBusqueda = useSelector((state) => state.searchResults)
 
@@ -60,14 +46,7 @@ export default function Headr() {
     // useEffect(()=>{
     //     dispatch(searchBar())
     // },[])
-    const handleSearchBar = (e) => {
-        let value = (e.target.value.toLowerCase())
-        console.log(value);
-        setSearchTerm(value);
-        // setSearchTerm(searchTerm)
-        dispatch(searchBar(searchTerm))
-        // setSearchTerm('')
-    }
+    
     const navHome = () => {
         navigate('/')
     }
@@ -125,12 +104,7 @@ export default function Headr() {
                 </ul>
             </Search> */}
             
-            <StyledInputBase
-                    placeholder="Search competitions or countries..."
-                    inputProps={{ 'aria-label': 'search' }}
-                    value={searchTerm} // Agrega esto para mantener el valor del input controlado
-                    onChange={handleSearchBar}
-                />
+           
             </Grid>
             <Grid item xs={4}>
             <ImportantComp/>

@@ -13,7 +13,7 @@ export default function Countries() {
     },[dispatch])
     const allNations = useSelector((state)=> state.allNations)
 
-    console.log(allNations);
+    // console.log(allNations);
     return(
         <Container>
             {

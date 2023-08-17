@@ -169,9 +169,10 @@ const reducer = (state = initialState, { type, payload }) => {
                 competitions: payload
             }
         case GET_COMPETITION_SEARCHBAR:
-            let busqueda = allCompetitions.filter((comp)=> comp.name.includes(payload))
+            let busqueda = allCompetitions.filter((comp)=> comp.name.toLowerCase().includes(payload))
             return {
                 ...state,
+                competitions: busqueda,
                 allCompetitions: busqueda
             }
         // case SEARCH_BAR_COUNTRIES:

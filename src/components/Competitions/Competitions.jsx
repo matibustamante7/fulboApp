@@ -30,13 +30,13 @@ export default function Competitions() {
         <Container>
             <h1>Competitions</h1>
             {/* habrá filtros */}
-            <label>Select country:  </label>
+            {/* <label>Select country:  </label>
             <select onChange={handleFilterByCountry}>
                 <option value="">Alls</option>
                 {allCountries.map((country, index) => (
                     <option key={index} value={country.code}>{country.name}</option>
                 ))}
-            </select>
+            </select> */}
             <Leagues />
         </Container>
     );
