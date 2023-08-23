@@ -73,11 +73,17 @@ export default function Matchs() {
                           </Link>
                         </TableCell>
                       </TableHead>
-                      {matches.map((match) => (
+                      {matches.map((match) => { 
+                        // console.log(match);
+                      return(
                         <TableRow key={match.fixture.id} >
                           {/* tiempo de juego */}
-                          <TableCell sx={{ p: 1, width: '15%', backgroundColor: theme.palette.primary.main, color: theme.palette.background.default, fontWeight: 600 }}>
-                            {match.fixture.status.elapsed}'
+                          <TableCell sx={{ p: 1, 
+                            width: '15%',
+                            textAlign:'center',
+                            backgroundColor:match.fixture.status.short === 'NS' ? theme.palette.secondary.main : theme.palette.error.main,
+                            color: theme.palette.background.default, fontWeight: 600 }}>
+                            {match.fixture.status.elapsed ? match.fixture.status.elapsed : <p>Finish</p>}'
                           </TableCell>
 
                           <TableCell sx={{ p: 1, width: '30%', backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
@@ -112,7 +118,7 @@ export default function Matchs() {
                             </Link>
                           </TableCell>
                         </TableRow>
-                      ))}
+                      )})}
 
                       {/* Resto del contenido de la tabla */}
                     </Table>

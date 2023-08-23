@@ -8,6 +8,7 @@ import { all } from "axios";
 import Scorer from "../Stadistics/Scorer/Scorer";
 import Assists from "../Stadistics/Assists/Assists";
 import LinearProgress from '@mui/material/LinearProgress';
+import theme from "../../theme";
 
 export default function CardCompetitionDetail() {
     const { idCompetition } = useParams()
@@ -232,17 +233,20 @@ export default function CardCompetitionDetail() {
                                     </select>
                                     <Table component={Paper}>
                                         <TableBody>
+                                            
                                             {fixture?.map((partido, index) => {
                                                 // numRound = partido.league.round
-                                                // console.log(numRound);
+                                                console.log(partido);
                                                 return (
                                                     <TableRow key={index}>
+                                                        <TableCell sx={{ textAlign:'center',
+                                                        backgroundColor:partido.fixture.status.short === 'NS' ? theme.palette.secondary.main : theme.palette.error.main }}>{partido.fixture.status.short}</TableCell>
                                                         <TableCell sx={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
                                                             <img className="img_mini_logo" src={partido.teams.home.logo} />
                                                             {partido.teams.home.name}
                                                         </TableCell>
-                                                        <TableCell >{partido.goals.home}</TableCell>
-                                                        <TableCell >{partido.goals.away}</TableCell>
+                                                        <TableCell >{partido.goals.home ? partido.goals.home : '-'}</TableCell>
+                                                        <TableCell >{partido.goals.away ? partido.goals.away :'-'}</TableCell>
                                                         <TableCell sx={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
                                                             <img className="img_mini_logo" src={partido.teams.away.logo} />
                                                             {partido.teams.away.name}
