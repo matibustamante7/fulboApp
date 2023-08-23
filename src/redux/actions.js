@@ -317,7 +317,7 @@ export const getFixtureByCompetition = ({ idCompetition, numRound }) => {
 export const getLineUpsMatchDetail = (idMatch) => {
 
   return (dispatch) => {
-    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures/lineups?fixture=${idMatch}`, {
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?id=${idMatch}`, {
       "method": "GET",
       "headers": {
         "X-RapidAPI-Host": host,

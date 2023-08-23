@@ -8,6 +8,8 @@
       grid-template-columns: repeat(var(--player-col), 1fr);
       gap: 2px;
       padding: 10px;
+    width: '100%';
+    border: 1px solid #000;
 }
 .player{
   margin: auto;
