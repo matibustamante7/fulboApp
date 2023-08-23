@@ -23,18 +23,19 @@ export default function MatchDetail() {
     // matchDetail.map((teams) => {
     //     idTeam = teams.team.id;
     // })
-    const eventsMatch = useSelector((state) => state.eventsOnTheMatch)
-    // console.log(eventsMatch);
+    // console.log(matchDetail);
+    const boxDataHome = [];
+    const boxDataAway = [];
     return (
         <>
             {matchDetail.length === 0 ?
                 <Typography variant="h3" sx={{ textAlign: 'center' }}>No match data yet</Typography> :
                 matchDetail.map((detailMatch) => {
-                    // console.log(detailMatch);
+                    console.log(detailMatch);
                     // let idTeam = teams.team.id;
                     return (
                         <Grid container columns={12} spacing={1} gap={2} >
-                            <Grid item xs={12} sm={12} md={6}>
+                            <Grid item xs={12} sm={12} md={8} lg={6} xl={4} sx={{ margin: 'auto' }}>
                                 <Grid container component={Paper} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
                                     <Grid item xs={6} sx={{ display: "flex", justifyContent: 'space-evenly', alignItems: 'center', borderRight: 1, gap: 2 }}>
 
@@ -51,6 +52,30 @@ export default function MatchDetail() {
 
                                     </Grid>
                                 </Grid>
+                                {/* <Box> */}
+                                {detailMatch.events.map((event) => {
+                                    // event.team
+                                    return (
+                                        <Box key={event.id} >
+                                            {event.type === "Goal" ? (
+                                                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <b>{event.time.elapsed}'</b> {event.player.name}  <SportsSoccerSharpIcon sx={{ width: '12px' }} />;
+                                                </Typography>
+                                            ) : event.type === "Card" ? (
+                                                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <b>{event.time.elapsed}'</b> {event.player.name} <SimCardAlertIcon sx={{ width: '12px' }} />;
+                                                </Typography>
+                                            ) : event.type === "subst" ? (
+                                                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}> 
+                                                    <b>{event.time.elapsed}'</b> {event.player.name} <CompareArrowsSharpIcon sx={{ width: '12px' }} />
+                                                    {event.assist.name};
+                                                </Typography>
+                                            ) : ''}
+                                        </Box>
+                                    );
+                                })}
+                                {/* </Box> */}
+
                             </Grid>
 
 
@@ -58,17 +83,17 @@ export default function MatchDetail() {
 
                             {
                                 detailMatch.lineups?.map((teams) => {
-                                    console.log(teams);
+                                    // console.log(teams);
                                     return (
-                                        <Grid container columns={12} component={Paper} gap={2}>
+                                        <Grid container columns={12} component={Paper} margin={1}>
                                             <Grid item xs={12} >
                                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
                                                     <img className="img_cards" src={teams.team.logo} />
                                                     <Typography variant="h5">{teams.team.name}</Typography>
                                                 </Box>
                                             </Grid>
-                                            <Grid item>
-                                                <TableContainer component={Paper} sx={{ textAlign: 'center', }}>
+                                            <Grid item xs={6} sm={6} md={6} lg={4} xl={4} borderRight={1}>
+                                                <TableContainer sx={{ textAlign: 'center', margin: 'auto' }}>
                                                     <Typography variant="h5">Initial 11</Typography>
 
                                                     <Table>
@@ -94,8 +119,8 @@ export default function MatchDetail() {
                                                     </Table>
                                                 </TableContainer>
                                             </Grid>
-                                            <Grid item>
-                                                <TableContainer component={Paper} sx={{ textAlign: 'center' }}>
+                                            <Grid item xs={6} sm={6} md={6} lg={4} xl={4} sx={{ margin: 'auto' }}>
+                                                <TableContainer sx={{ textAlign: 'center' }}>
                                                     <Typography variant="h5">Subtitutes</Typography>
                                                     <Table>
                                                         <TableHead>
@@ -119,7 +144,7 @@ export default function MatchDetail() {
                                                         } </Table>
                                                 </TableContainer>
                                             </Grid>
-                                            <Grid item>
+                                            <Grid item xs={12} md={8} lg={4} sx={{ textAlign: 'center', margin: 'auto' }}>
                                                 <Typography variant="h6">Line up: {teams.formation}</Typography>
 
                                                 <div className={styles['field-background']}>
@@ -144,6 +169,7 @@ export default function MatchDetail() {
                                                         );
                                                     })}
                                                 </div>
+
                                             </Grid>
                                         </Grid>
 
@@ -152,58 +178,7 @@ export default function MatchDetail() {
                             }
 
                         </Grid >
-
-                        //         
-
-                        //         {/* formacion */}
-                        //         <Grid item xs={12} sm={6} md={4} sx={{textAlign:'center',mt:2, mb:2}} >
-                        //         <Typography variant="h6">Line up: {teams.formation}</Typography>
-
-                        //             <div className={styles['field-background']}>
-                        //                 {/* Jugadores */}
-
-                        //                 {teams?.startXI.map((player) => {
-                        //                     const gridCoordinates = player.player.grid.split(":");
-                        //                     const row = parseInt(gridCoordinates[0]);
-                        //                     const col = parseInt(gridCoordinates[1]);
-                        //                     // console.log(teams);
-                        //                     return (
-                        //                         <>
-                        //                         <div key={player.player.id}
-                        //                             className={styles['player']}
-                        //                             style={{
-                        //                                 gridArea: `${col} / ${row}`, // Usar gridArea en lugar de alig
-                        //                                 alignContent:'center'
-                        //                             }}
-                        //                         >{player.player.number}
-                        //                         </div>
-                        //                         </>
-
-                        //                     );
-                        //                 })}
-                        //             </div>
-
-
-                        //             {
-                        //                 eventsMatch.length === 0 ? '' :
-                        //                     eventsMatch.map((event) => {
-                        //                         console.log(eventsMatch)
-                        //                         if (event.team.id === idTeam) {
-                        //                             return (
-                        //                                 <Box component={Paper} sx={{ width: '100%', textAlign: 'center' }}>
-                        //                                     <Typography>incidencias</Typography>
-                        //                                     <Box sx={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', }}>
-                        //                                         <p>{event.time.elapsed}'</p> <p> {event.player.name}</p>
-                        //                                         <p>{event.type === 'subst' ? <CompareArrowsSharpIcon /> : 
-                        //                                             event.type === 'Goal' ? <SportsSoccerSharpIcon /> : 
-                        //                                             event.type === "Card" ? <SimCardAlertIcon /> : event.type}</p>
-                        //                                         <p>{event.assist.name}</p>
-                        //                                     </Box>
-                        //                                 </Box>
-                        //                             )
-                        //                         }
-                        //                     })
-                        //             }
+                        //             
                         //         </Grid>
                         //     </Grid>
                         // </Grid>
