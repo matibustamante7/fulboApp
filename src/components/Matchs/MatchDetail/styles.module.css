@@ -3,16 +3,15 @@
 .field-background{
     /* background-image: url(); */
     background-color: #2d9440;
-    width: 100%;
     display: grid;
       grid-template-rows: repeat(var(--player-row), 1fr);
       grid-template-columns: repeat(var(--player-col), 1fr);
-      gap: 10px;
-      height: 400px;
-      background-color: green;
+      gap: 2px;
       padding: 10px;
 }
 .player{
+  margin: auto;
+  width: 2rem;
+  text-align: center;
   background-color: #fff;
-  
 }

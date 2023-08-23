@@ -26,38 +26,41 @@ export default function MatchDetail() {
     const eventsMatch = useSelector((state) => state.eventsOnTheMatch)
     // console.log(eventsMatch);
     return (
-        <Container maxWidth>
+        <>
             {matchDetail.length === 0 ?
                 <Typography variant="h3" sx={{ textAlign: 'center' }}>No match data yet</Typography> :
                 matchDetail.map((teams) => {
                     // console.log(teams.team.id);
                     // let idTeam = teams.team.id;
                     return (
-                        <Container sx={{ gap: 4 }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', m: 4, alignItems: "center", backgroundColor: theme.palette.secondary.main, borderRadius: 4, gap: 2 }}>
+                        <Grid container columns={12} spacing={1} gap={2}>
+                            <Grid item xs={12} sm={6} md={4}
+                                sx={{
+                                    backgroundColor: "inherit", borderRadius: 4,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'
+                                }}>
 
-                                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', p: 3 }}>
-
+                                <Box sx={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column', alignItems: 'center' }}>
                                     <img className="img_cards" src={teams.team.logo} />
                                     <Typography variant="h5">{teams.team.name}</Typography>
 
                                 </Box>
 
-                                <Box>
+                                <Box >
                                     <Typography variant="h6">Coach: {teams.coach.name}</Typography>
                                     <Typography variant="h6">Line up: {teams.formation}</Typography>
                                 </Box>
-                            </Box>
+                            </Grid>
 
-                            <Box sx={{ display: 'flex', textAlign: 'center', gap: 3 }}>
-                                <TableContainer component={Paper}>
+                            <Grid item xs={12} sm={6} md={4} >
+                                <TableContainer component={Paper} sx={{ textAlign: 'center' }}>
                                     <Typography variant="h5">Initial 11</Typography>
 
                                     <Table>
                                         <TableHead>
-                                            <TableCell sx={{ fontWeight: 600 }}>Position</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Player</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Number</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m: 1, p: 1 }}>Position</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m: 1, p: 1 }}>Player</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m: 1, p: 1 }}>Number</TableCell>
                                         </TableHead>
 
                                         {
@@ -66,9 +69,9 @@ export default function MatchDetail() {
                                                 // console.log(players);
                                                 return (
                                                     <TableRow>
-                                                        <TableCell>{players.player.pos}</TableCell>
-                                                        <TableCell>{players.player.name}</TableCell>
-                                                        <TableCell>{players.player.number}</TableCell>
+                                                        <TableCell sx={{ m: 1, p: 1 }}>{players.player.pos}</TableCell>
+                                                        <TableCell sx={{ m: 1, p: 1 }}>{players.player.name}</TableCell>
+                                                        <TableCell sx={{ m: 1, p: 1 }}>{players.player.number}</TableCell>
                                                     </TableRow>
 
                                                     // <Typography variant="body">{players.player.name} {players.player.number}</Typography>
@@ -76,13 +79,13 @@ export default function MatchDetail() {
                                             })
                                         } </Table>
                                 </TableContainer>
-                                <TableContainer component={Paper}>
+                                <TableContainer component={Paper} sx={{ textAlign: 'center' }}>
                                     <Typography variant="h5">Subtitutes</Typography>
                                     <Table>
                                         <TableHead>
-                                            <TableCell sx={{ fontWeight: 600 }}>Position</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Player</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Number</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m: 1, p: 1 }}>Position</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m: 1, p: 1 }}>Player</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m: 1, p: 1 }}>Number</TableCell>
                                         </TableHead>
 
                                         {
@@ -91,9 +94,9 @@ export default function MatchDetail() {
                                                 // console.log(players);
                                                 return (
                                                     <TableRow>
-                                                        <TableCell>{players.player.pos}</TableCell>
-                                                        <TableCell>{players.player.name}</TableCell>
-                                                        <TableCell>{players.player.number}</TableCell>
+                                                        <TableCell sx={{ m: 1, p: 1 }}>{players.player.pos}</TableCell>
+                                                        <TableCell sx={{ m: 1, p: 1 }}>{players.player.name}</TableCell>
+                                                        <TableCell sx={{ m: 1, p: 1 }}>{players.player.number}</TableCell>
                                                     </TableRow>
 
                                                     // <Typography variant="body">{players.player.name} {players.player.number}</Typography>
@@ -102,53 +105,58 @@ export default function MatchDetail() {
                                         } </Table>
                                 </TableContainer>
 
-                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                                {/* formacion */}
+                                <Grid item xs={12} sm={6} md={4} sx={{textAlign:'center'}} >
+                                <Typography variant="h6" sx={{mt:2}}>Line up: {teams.formation}</Typography>
+
                                     <div className={styles['field-background']}>
-                                        {/* Representación del campo de fútbol */}
-                                        {/* Puedes poner aquí una imagen del campo de fútbol o dibujar el campo usando divs y CSS */}
-
-
                                         {/* Jugadores */}
+                                        
                                         {teams?.startXI.map((player) => {
                                             const gridCoordinates = player.player.grid.split(":");
                                             const row = parseInt(gridCoordinates[0]);
                                             const col = parseInt(gridCoordinates[1]);
-
+                                            console.log(teams);
                                             return (
+                                                <>
                                                 <div key={player.player.id}
                                                     className={styles['player']}
-                                                    style={{ gridRow: row, gridColumn: col }}>
-                                                    {/* Coloca aquí el contenido del jugador */}
-                                                    <p>{player.player.number}</p>
+                                                    style={{
+                                                        gridArea: `${col} / ${row}`, // Usar gridArea en lugar de alig
+                                                        alignContent:'center'
+                                                    }}
+                                                >{player.player.number}
                                                 </div>
+                                                </>
+                                                
                                             );
                                         })}
                                     </div>
 
-                                    {   
-                                    eventsMatch.length===0? '' :
-                                        eventsMatch.map((event) => {
-                                            if (event.team.id === idTeam) {
-                                                return (
-                                                    <Box component={Paper} sx={{ width: '100%', textAlign: 'center' }}>
-                                                        <Typography>incidencias</Typography>
-                                                        <Box sx={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', }}>
-                                                            <p>{event.time.elapsed}'</p> <p> {event.player.name}</p>
-                                                            <p>{event.type === 'subst' ? <CompareArrowsSharpIcon /> : event.type === 'Goal' ? <SportsSoccerSharpIcon /> : event.type === "Card" ? <SimCardAlertIcon /> : event.type}</p>
-                                                            <p>{event.assist.name}</p>
-                                                        </Box>
-                                                    </Box>
-                                                )
-                                            }
-                                        })
-                                    }
-                                </Box>
 
-                            </Box>
-                        </Container>
+                                    {
+                                        eventsMatch.length === 0 ? '' :
+                                            eventsMatch.map((event) => {
+                                                if (event.team.id === idTeam) {
+                                                    return (
+                                                        <Box component={Paper} sx={{ width: '100%', textAlign: 'center' }}>
+                                                            <Typography>incidencias</Typography>
+                                                            <Box sx={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', }}>
+                                                                <p>{event.time.elapsed}'</p> <p> {event.player.name}</p>
+                                                                <p>{event.type === 'subst' ? <CompareArrowsSharpIcon /> : event.type === 'Goal' ? <SportsSoccerSharpIcon /> : event.type === "Card" ? <SimCardAlertIcon /> : event.type}</p>
+                                                                <p>{event.assist.name}</p>
+                                                            </Box>
+                                                        </Box>
+                                                    )
+                                                }
+                                            })
+                                    }
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     )
                 })
             }
-        </Container>
+        </>
     )
 }

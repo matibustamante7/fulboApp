@@ -19,8 +19,8 @@ export default function Home() {
 
   return (
     <div >
-      <Container>
         <Grid container>
+          <Matchs/>
           <Grid item xs={12}>
             <Matchs />
           </Grid>
@@ -28,7 +28,6 @@ export default function Home() {
             <MatchsToday />
           </Grid>
         </Grid>
-      </Container>
       
     </div>
   );

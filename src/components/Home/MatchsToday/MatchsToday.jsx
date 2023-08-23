@@ -69,11 +69,13 @@ export default function MatchsToday() {
                               sx={{
                                 p: 1, width: '15%',
                                 textAlign: 'center',
-                                backgroundColor: theme.palette.primary.main,
-                                color: theme.palette.background.default, fontWeight: 600
+                                backgroundColor: match.fixture.status.short === 'FT' || match.fixture.status.short === 'NS' ? theme.palette.primary.main : theme.palette.error.main,
+                                color: theme.palette.background.default,
+                                textShadow:'2px 2px 2px 4px rgba(0, 0, 0, 0.5)',
+                                fontWeight: 600
                               }}
                             >
-                              {match.fixture.status.short === 'FT' ? <p>Finish</p> : match.fixture.status.short === 'NS' ? horaMinutos : match.fixture.status.elapsed}
+                              {match.fixture.status.short === 'FT' ? <p>Finish</p> : match.fixture.status.short === 'NS' ? horaMinutos : match.fixture.status.elapsed+"'"}
                             </TableCell>
 
                             <TableCell sx={{ p: 1, width: '30%', backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
