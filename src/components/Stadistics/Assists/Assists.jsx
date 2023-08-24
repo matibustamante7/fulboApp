@@ -12,14 +12,14 @@ export default function Assists({ idCompetition }) {
     // console.log(players);
     return (
             <TableContainer component={Paper} sx={{ textAlign: 'center'}}>
-                <Typography variant="h4">Assistants</Typography>
+                <Typography variant="h4">Asistidores</Typography>
                 <Table>
                     <TableHead>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Player</TableCell>
-                        <TableCell sx={{ fontWeight: 600 , p: 1, m: 0}}>Team</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Assists</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Jugador</TableCell>
+                        <TableCell sx={{ fontWeight: 600 , p: 1, m: 0}}>Equipo</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Asistencias</TableCell>
                         {/* <TableCell sx={{ fontWeight: 600 }}>Passes</TableCell> */}
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Passes key</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pases clave</TableCell>
                         {/* <TableCell sx={{ fontWeight: 600 }}>Passes accuracy</TableCell> */}
                     </TableHead>
                     {/* <TableBody> */}

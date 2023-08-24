@@ -43,7 +43,7 @@ export default function MatchDetail() {
             {matchDetail.length === 0 ?
                 <Typography variant="h3" sx={{ textAlign: 'center' }}>Sin datos del encuentro</Typography> :
                 matchDetail.map((detailMatch) => {
-                    // console.log(detailMatch);
+                    console.log(detailMatch.goals);
                     // let idTeam = teams.team.id;
                     return (
                         <Grid container columns={12} spacing={1} gap={2} >
@@ -53,7 +53,7 @@ export default function MatchDetail() {
                                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', borderBottom:1,m:1, gap:2}}>
                                             <img className="img_player" src={detailMatch.teams.home.logo} />
                                             <Typography variant="body">{detailMatch.teams.home.name}</Typography>
-                                            <Typography variant="body"><b>{detailMatch.goals.home}</b></Typography>
+                                            <Typography variant="body"><b>{detailMatch.goals?.home ? detailMatch.goals.home : detailMatch.goals.home === 0 ? 0 : detailMatch.goals.home !==0?  '-' : '-'}</b></Typography>
                                         </Box>
                                         <Box  sx={{ display: 'flex',flexDirection:'column',  justifyContent: 'space-evenly', margin:1 }} >
                                             {eventsOnTheMatchHome.map((event) => {
@@ -81,7 +81,7 @@ export default function MatchDetail() {
                                     </Grid>
                                     <Grid item xs={6} >
                                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly',m:1, borderBottom:1, gap:2}}>
-                                        <Typography variant="body"><b>{detailMatch.goals.away}</b></Typography>
+                                        <Typography variant="body"><b>{detailMatch.goals?.away ? detailMatch.goals.away : detailMatch.goals.away === 0 ? 0 : detailMatch.goals.away !==0?  '-' : '-'}</b></Typography>
                                             <Typography variant="body">{detailMatch.teams.away.name}</Typography>
                                             <img className="img_player" src={detailMatch.teams.away.logo} />
 
@@ -128,7 +128,7 @@ export default function MatchDetail() {
                                             </Grid>
                                             <Grid item xs={6} sm={6} md={6} lg={4} xl={4} borderRight={1}>
                                                 <TableContainer sx={{ textAlign: 'center', margin: 'auto' }}>
-                                                    <Typography variant="h5">Initial 11</Typography>
+                                                    <Typography variant="h5">Titulares</Typography>
 
                                                     <Table>
                                                         <TableHead>
@@ -155,7 +155,7 @@ export default function MatchDetail() {
                                             </Grid>
                                             <Grid item xs={6} sm={6} md={6} lg={4} xl={4} sx={{ margin: 'auto' }}>
                                                 <TableContainer sx={{ textAlign: 'center' }}>
-                                                    <Typography variant="h5">Subtitutes</Typography>
+                                                    <Typography variant="h5">Suplentes</Typography>
                                                     <Table>
                                                         <TableHead>
                                                             <TableCell sx={{ fontWeight: 600, m: 1, p: 1 }}>Pos</TableCell>
@@ -212,10 +212,6 @@ export default function MatchDetail() {
                             }
 
                         </Grid >
-                        //             
-                        //         </Grid>
-                        //     </Grid>
-                        // </Grid>
                     )
                 })
             }

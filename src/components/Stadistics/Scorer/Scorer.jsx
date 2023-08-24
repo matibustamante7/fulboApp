@@ -18,10 +18,10 @@ export default function Scorer({ idCompetition }) {
                 <Table>
                     <TableHead>
                         {/* <TableCell>Position</TableCell> */}
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Player</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Goals</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Penalty</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Jugador</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Equipo</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Goles</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Penal</TableCell>
                         {/* <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots</TableCell>
                         <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots on goal</TableCell> */}
                     </TableHead>

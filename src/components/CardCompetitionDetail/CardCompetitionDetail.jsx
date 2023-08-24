@@ -141,13 +141,13 @@ export default function CardCompetitionDetail() {
 
                                                                     <TableHead>
                                                                         <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Equipo</TableCell>
                                                                         <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>MP</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>W</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>D</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>L</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goals</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pj</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>G</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>E</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>P</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goles</TableCell>
                                                                     </TableHead>
                                                                     {group.map((teams, teamIndex) => (
                                                                         <TableRow key={teamIndex}>
@@ -181,14 +181,14 @@ export default function CardCompetitionDetail() {
                                                 ) : (
                                                     <Table component={Paper}>
                                                         <TableHead>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Team</TableCell>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>MP</TableCell>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>W</TableCell>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>D</TableCell>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>L</TableCell>
-                                                            <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goals</TableCell>
+                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Equipo</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pj</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>G</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>E</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>P</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goles</TableCell>
                                                         </TableHead>
                                                         {comp.league.standings[0].map((teams, teamIndex) => (
                                                             <TableRow>
