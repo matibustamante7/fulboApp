@@ -1,5 +1,5 @@
 
-import { SEARCH_BAR_COUNTRIES, CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR, GET_FIXTURE_TODAY_BY_COMPETITION, GET_TEAM_SQUAD, GET_TEAM_STADIUM, GET_TEAM_STADISTICS, GET_TEAM_COACH, GET_EVENTS_MATCH, GET_PLAYER, GET_SEASONS, GET_COMPETITION_SEARCHBAR, GET_CUPS, CHANGE_TIMEZONE } from "./actionsTypes";
+import { SEARCH_BAR_COUNTRIES, CHANGE_COMPETITION, FILTER_COMP_BY_COUNTRY, GET_ASSISTS, GET_COMPETITION_DETAIL, GET_FIXTURE_COMPETITION, GET_FIXTURE_COMPETITION_ALL_ROUNDS, GET_FIXTURE_LIVE, GET_FIXTURE_TODAY, GET_INFO_TEAM, GET_LEAGUES, GET_LINEUPS_ID_MATCH, GET_NATIONS, GET_SCORERS, GET_TABLE_COMPETITION, SEARCH_BAR, GET_FIXTURE_TODAY_BY_COMPETITION, GET_TEAM_SQUAD, GET_TEAM_STADIUM, GET_TEAM_STADISTICS, GET_TEAM_COACH, GET_EVENTS_MATCH, GET_PLAYER, GET_SEASONS, GET_COMPETITION_SEARCHBAR, GET_CUPS, CHANGE_TIMEZONE, GET_EVENTS_MATCH_HOME, GET_EVENTS_MATCH_AWAY } from "./actionsTypes";
 
 const initialState = {
     competitions: [],
@@ -27,7 +27,8 @@ const initialState = {
     //alineaciones del partido del dia o en vivo
     lineUpsByMatch: [],
     // eventos del partido
-    eventsOnTheMatch: [],
+    eventsOnTheMatchHome: [],
+    eventsOnTheMatchAway: [],
     // resultado de searchbar
     searchResults: [],
     // squad del equipo
@@ -41,9 +42,9 @@ const initialState = {
     // detalle del player
     player: [],
     // temporadas con datos
-    seasons:[],
+    seasons: [],
     // timezone
-    timezones:[]
+    timezones: []
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -56,10 +57,10 @@ const reducer = (state = initialState, { type, payload }) => {
                 allCompetitions: payload
             }
         case GET_CUPS:
-            return{
-            ...state,
-            competitions: payload
-        }
+            return {
+                ...state,
+                competitions: payload
+            }
         case GET_NATIONS:
             return {
                 ...state,
@@ -121,10 +122,16 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 lineUpsByMatch: payload
             }
-        case GET_EVENTS_MATCH:
+        case GET_EVENTS_MATCH_HOME:
+            // console.log(payload);
             return {
                 ...state,
-                eventsOnTheMatch: payload
+                eventsOnTheMatchHome: payload
+            }
+        case GET_EVENTS_MATCH_AWAY:
+            return {
+                ...state,
+                eventsOnTheMatchAway: payload
             }
         case GET_TEAM_SQUAD:
             return {
@@ -152,7 +159,7 @@ const reducer = (state = initialState, { type, payload }) => {
                 player: payload
             }
         case GET_SEASONS:
-            return{
+            return {
                 ...state,
                 seasons: payload
             }
@@ -171,14 +178,14 @@ const reducer = (state = initialState, { type, payload }) => {
                 competitions: payload
             }
         case GET_COMPETITION_SEARCHBAR:
-            let busqueda = allCompetitions.filter((comp)=> comp.name.toLowerCase().includes(payload))
+            let busqueda = allCompetitions.filter((comp) => comp.name.toLowerCase().includes(payload))
             return {
                 ...state,
                 competitions: busqueda,
                 allCompetitions: busqueda
             }
         case CHANGE_TIMEZONE:
-            return{
+            return {
                 ...state,
                 timezones: payload
             }

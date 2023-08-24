@@ -15,7 +15,8 @@ const theme = createTheme({
       main: "#2d9440", // Color césped de fútbol para los botones
     },
     error: {
-      main: "#ff0000", // Rojo para otros detalles
+      main: "#c24041", // Rojo para otros detalles
+      secondary: "#086fac"
     },
     menu: {
       primary:'#2f744b',

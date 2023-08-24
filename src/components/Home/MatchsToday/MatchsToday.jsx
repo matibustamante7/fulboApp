@@ -34,7 +34,7 @@ export default function MatchsToday() {
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <Grid container columns={12} spacing={1}>
             <Grid item xs={12}>
-              <Typography variant="h5" sx={{ textAlign: 'center', mt: 2 }}>Matches today</Typography>
+              <Typography variant="h5" sx={{ textAlign: 'center', mt: 2 }}>Partidos de hoy</Typography>
             </Grid>
 
             {Object.keys(matchesByCompetition).length === 0 ? (
@@ -56,7 +56,7 @@ export default function MatchsToday() {
                       </TableHead>
 
                       {matches.map((match) => {
-                        // console.log(match);
+                        console.log(match.fixture);
                         const fechayhoraPartido = match.fixture.date;
                         const fecha_hora_obj = new Date(fechayhoraPartido);
                         const hora = fecha_hora_obj.getHours();
@@ -69,13 +69,27 @@ export default function MatchsToday() {
                               sx={{
                                 p: 1, width: '15%',
                                 textAlign: 'center',
-                                backgroundColor: match.fixture.status.short === 'FT' || match.fixture.status.short === 'NS' ? theme.palette.primary.main : theme.palette.error.main,
+                                backgroundColor: match.fixture.status.short === 'FT' ? theme.palette.primary.main : 
+                                match.fixture.status.short === 'NS' ? theme.palette.primary.main : 
+                                match.fixture.status.short === 'HT' ? theme.palette.menu.secondary :
+                                match.fixture.status.short === 'TBD' ? theme.palette.primary.main :
+                                match.fixture.status.short === 'PST' ? theme.palette.primary.main :
+                                match.fixture.status.short === 'AWD' ? theme.palette.primary.main : 
+                                theme.palette.error.main,
+
+
                                 color: theme.palette.background.default,
                                 textShadow:'2px 2px 2px 4px rgba(0, 0, 0, 0.5)',
                                 fontWeight: 600
                               }}
                             >
-                              {match.fixture.status.short === 'FT' ? <p>Finish</p> : match.fixture.status.short === 'NS' ? horaMinutos : match.fixture.status.elapsed+"'"}
+                              { match.fixture.status.short === 'FT' ? <p>Final</p> :
+                                match.fixture.status.short === 'HT' ? <p>E.T</p> : 
+                                match.fixture.status.short === 'NS' ? horaMinutos :
+                                match.fixture.status.short === 'TBD' ? <p>Por definir</p> :
+                                match.fixture.status.short === 'PST' ? <p>Susp.</p> :
+                                match.fixture.status.short === 'AWD' ? <p>Sin datos</p> :
+                                match.fixture.status.elapsed+"'"}
                             </TableCell>
 
                             <TableCell sx={{ p: 1, width: '30%', backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
@@ -104,7 +118,7 @@ export default function MatchsToday() {
                               </Box>
                             </TableCell>
 
-                            <TableCell sx={{ p: 1, width: '10%', backgroundColor: theme.palette.success.main, textAlign: "center" }}>
+                            <TableCell sx={{ p: 1, width: '10%', backgroundColor: theme.palette.menu.primary, textAlign: "center" }}>
                               <Link href={`/${match.fixture?.id}`}>
                                 <TouchAppIcon />
                               </Link>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { getEventsOnMatch, getLineUpsMatchDetail } from "../../../redux/actions";
+import { getEventsOnMatchAway, getEventsOnMatchHome, getLineUpsMatchDetail } from "../../../redux/actions";
 import { useParams } from "react-router-dom";
 import { Box, Container, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import theme from "../../../theme";
@@ -15,67 +15,101 @@ export default function MatchDetail() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getLineUpsMatchDetail(idMatch))
-        dispatch(getEventsOnMatch(idMatch, idTeam))
-    }, [dispatch])
+        dispatch(getEventsOnMatchHome(idMatch, idTeamHome))
+        dispatch(getEventsOnMatchAway(idMatch, idTeamAway))
+    }, [])
 
     const matchDetail = useSelector((state) => state.lineUpsByMatch)
-    let idTeam = '';
-    // matchDetail.map((teams) => {
-    //     idTeam = teams.team.id;
+    const eventsOnTheMatchHome = useSelector((state) => state.eventsOnTheMatchHome)
+    const eventsOnTheMatchAway = useSelector((state) => state.eventsOnTheMatchAway)
+
+    let idTeamHome = '';
+    let idTeamAway = '';
+    matchDetail.map((teams) => {
+        idTeamHome = teams.teams.home.id
+        idTeamAway = teams.teams.away.id
+        // console.log(idTeamAway);
+        // console.log(idTeamHome  );
+    })
+
+    // eventsOnTheMatchHome.map((event)=>{
+    //     console.log("Home " +event.type);
     // })
-    // console.log(matchDetail);
-    const boxDataHome = [];
-    const boxDataAway = [];
+
+    // console.log(eventsOnTheMatchHome);
+    // console.log("Away "+ eventsOnTheMatchAway);
     return (
         <>
             {matchDetail.length === 0 ?
-                <Typography variant="h3" sx={{ textAlign: 'center' }}>No match data yet</Typography> :
+                <Typography variant="h3" sx={{ textAlign: 'center' }}>Sin datos del encuentro</Typography> :
                 matchDetail.map((detailMatch) => {
-                    console.log(detailMatch);
+                    // console.log(detailMatch);
                     // let idTeam = teams.team.id;
                     return (
                         <Grid container columns={12} spacing={1} gap={2} >
                             <Grid item xs={12} sm={12} md={8} lg={6} xl={4} sx={{ margin: 'auto' }}>
-                                <Grid container component={Paper} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                                    <Grid item xs={6} sx={{ display: "flex", justifyContent: 'space-evenly', alignItems: 'center', borderRight: 1, gap: 2 }}>
-
-                                        <img className="img_player" src={detailMatch.teams.home.logo} />
-                                        <Typography variant="body">{detailMatch.teams.home.name}</Typography>
-
-                                        <Typography variant="body">{detailMatch.goals.home}</Typography>
+                                <Grid container component={Paper} >
+                                    <Grid item xs={6} sx={{borderRight:1}}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', borderBottom:1,m:1, gap:2}}>
+                                            <img className="img_player" src={detailMatch.teams.home.logo} />
+                                            <Typography variant="body">{detailMatch.teams.home.name}</Typography>
+                                            <Typography variant="body"><b>{detailMatch.goals.home}</b></Typography>
+                                        </Box>
+                                        <Box  sx={{ display: 'flex',flexDirection:'column',  justifyContent: 'space-evenly', margin:1 }} >
+                                            {eventsOnTheMatchHome.map((event) => {
+                                                // console.log(event);
+                                                return (
+                                                    <>
+                                                        {event.type === "Goal" ? (
+                                                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' , borderBottom:1 }}>
+                                                                <b>{event.time.elapsed}'</b> {event.player.name}  <SportsSoccerSharpIcon sx={{ width: '12px' }} />;
+                                                            </Typography>
+                                                        ) : event.type === "Card" ? (
+                                                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', borderBottom:1  }}>
+                                                                <b>{event.time.elapsed}'</b> {event.player.name} <SimCardAlertIcon sx={{ width: '12px' }} />;
+                                                            </Typography>
+                                                        ) : event.type === "subst" ? (
+                                                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', borderBottom:1  }}>
+                                                                <b>{event.time.elapsed}'</b> {event.player.name} <CompareArrowsSharpIcon sx={{ width: '12px' }} />
+                                                                {event.assist.name};
+                                                            </Typography>
+                                                        ) : ''}
+                                                    </>
+                                                );
+                                            })}
+                                        </Box>
                                     </Grid>
-                                    <Grid item xs={6} sx={{ display: "flex", justifyContent: 'space-evenly', alignItems: 'center', gap: 2 }}>
-                                        <Typography variant="body">{detailMatch.goals.away}</Typography>
+                                    <Grid item xs={6} >
+                                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly',m:1, borderBottom:1, gap:2}}>
+                                        <Typography variant="body"><b>{detailMatch.goals.away}</b></Typography>
+                                            <Typography variant="body">{detailMatch.teams.away.name}</Typography>
+                                            <img className="img_player" src={detailMatch.teams.away.logo} />
 
-                                        <Typography variant="body">{detailMatch.teams.away.name}</Typography>
-                                        <img className="img_player" src={detailMatch.teams.away.logo} />
-
+                                        </Box>
+                                        <Box  sx={{ display: 'flex',flexDirection:'column',  justifyContent: 'space-evenly', margin:1 }} >
+                                            {eventsOnTheMatchAway.map((event) => {
+                                                // console.log(event);
+                                                return (
+                                                    <>
+                                                        {event.type === "Goal" ? (
+                                                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', borderBottom:1 }}>
+                                                                <b>{event.time.elapsed}'</b> {event.player.name}  <SportsSoccerSharpIcon sx={{ width: '12px' }} />;
+                                                            </Typography>
+                                                        ) : event.type === "Card" ? (
+                                                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', borderBottom:1  }}>
+                                                                <b>{event.time.elapsed}'</b> {event.player.name} <SimCardAlertIcon sx={{ width: '12px' }} />;
+                                                            </Typography>
+                                                        ) : event.type === "subst" ? (
+                                                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', borderBottom:1  }}>
+                                                                <b>{event.time.elapsed}'</b> {event.player.name}<CompareArrowsSharpIcon sx={{ width: '12px' }} />{event.assist.name};
+                                                            </Typography>
+                                                        ) : ''}
+                                                    </>
+                                                );
+                                            })}
+                                        </Box>
                                     </Grid>
                                 </Grid>
-                                {/* <Box> */}
-                                {detailMatch.events.map((event) => {
-                                    // event.team
-                                    return (
-                                        <Box key={event.id} >
-                                            {event.type === "Goal" ? (
-                                                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                                    <b>{event.time.elapsed}'</b> {event.player.name}  <SportsSoccerSharpIcon sx={{ width: '12px' }} />;
-                                                </Typography>
-                                            ) : event.type === "Card" ? (
-                                                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                                    <b>{event.time.elapsed}'</b> {event.player.name} <SimCardAlertIcon sx={{ width: '12px' }} />;
-                                                </Typography>
-                                            ) : event.type === "subst" ? (
-                                                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}> 
-                                                    <b>{event.time.elapsed}'</b> {event.player.name} <CompareArrowsSharpIcon sx={{ width: '12px' }} />
-                                                    {event.assist.name};
-                                                </Typography>
-                                            ) : ''}
-                                        </Box>
-                                    );
-                                })}
-                                {/* </Box> */}
-
                             </Grid>
 
 
