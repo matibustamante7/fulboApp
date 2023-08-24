@@ -52,8 +52,8 @@ export default function Headr() {
     }
     // console.log(resultadosBusqueda);
     return (
-            <Grid container sx={{ backgroundColor: theme.palette.primary.main, alignItems: 'center', height:'6rem' }}>
-                <Grid item xs={4} >
+            <Grid container columns={12} spacing={1} sx={{ backgroundColor: theme.palette.primary.main, alignItems: 'center', height:'6rem' }}>
+                <Grid item xs={6} >
                     <Typography variant="body" onClick={navHome}
                         sx={{
                             display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -63,51 +63,18 @@ export default function Headr() {
                             cursor: 'pointer',
                             fontSize: '1rem',  // Tamaño de fuente base
                             [theme.breakpoints.up('sm')]: {
-                                fontSize: '1.2rem',  // Tamaño de fuente para pantallas pequeñas (sm) y más grandes
+                                fontSize: '2.2rem',  // Tamaño de fuente para pantallas pequeñas (sm) y más grandes
                             },
                             [theme.breakpoints.up('md')]: {
                                 fontSize: '2.5rem',  // Tamaño de fuente para pantallas medianas (md) y más grandes
                             },
+                            [theme.breakpoints.up('xs')]: {
+                                fontSize: '1.9rem',  // Tamaño de fuente para pantallas medianas (md) y más grandes
+                            },
                             // Puedes seguir agregando breakpoints según tus necesidades
                         }}>FulboApp</Typography>
                 </Grid>
-                <Grid item xs={4}>
-                    {/* <Search sx={{ width: 'xl' }}
-                onChange={handleSearchBar}>
-                <SearchIconWrapper>
-                    <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                    placeholder="Search competitions or countries..."
-                    inputProps={{ 'aria-label': 'search' }}
-                />  
-                <ul className="results-searchbar show">
-                    {resultadosBusqueda.map((result) => {
-                        // console.log(result)
-                        const leagueId = result.league?.id || ''; // Validar si existe el id de la liga
-                        const countryCode = result.code || ''; // Validar si existe el código del país
-
-                        return (
-                            <li className="results-li" key={result.id}>
-                                <Link className="results-li"
-                                    href={
-                                        result.league?.name
-                                            ? `/competitions/${leagueId}`
-                                            : `/countries/${countryCode}`
-                                    }
-                                >
-                                    {result.league?.name ? result.league.name : result.name} -{' '}
-                                    {result.league?.name ? result.country.name : ''}
-                                </Link>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </Search> */}
-
-
-                </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                     <ImportantComp />
                 </Grid>
             </Grid>

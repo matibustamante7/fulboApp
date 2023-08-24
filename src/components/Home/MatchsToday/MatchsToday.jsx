@@ -41,7 +41,7 @@ export default function MatchsToday() {
             <Typography variant="body1" >No hay eventos para hoy</Typography>
           ) : (
             Object.entries(matchesByCompetition).map(([leagueId, matches]) => (
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} >
                 <TableContainer key={leagueId} component={Paper} sx={{ mt: 1 }}>
                   <Table >
                     <TableHead>

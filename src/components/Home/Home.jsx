@@ -19,15 +19,9 @@ export default function Home() {
 
   return (
     
-        <Grid container>
-          <Matchs/>
-          <Grid item xs={12}>
-            <Matchs />
-          </Grid>
-          <Grid item xs={12}>
+          <>
             <MatchsToday />
-          </Grid>
-        </Grid>
+          </>
 
   );
 }
