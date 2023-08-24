@@ -46,32 +46,33 @@ export default function Headr() {
     // useEffect(()=>{
     //     dispatch(searchBar())
     // },[])
-    
+
     const navHome = () => {
         navigate('/')
     }
     // console.log(resultadosBusqueda);
     return (
-        <Grid container sx={{backgroundColor:theme.palette.primary.main, alignItems:'center'}}>
-            <Grid item xs={4} >
-            <Typography variant="body" onClick={navHome}
-                sx={{display:'flex', justifyContent:'center', alignItems:'center',
-                    color: theme.palette.success.main,
-                    fontWeight: 600,
-                    margin:'auto',
-                    cursor:'pointer',
-                    fontSize: '1rem',  // Tamaño de fuente base
-                    [theme.breakpoints.up('sm')]: {
-                        fontSize: '1.2rem',  // Tamaño de fuente para pantallas pequeñas (sm) y más grandes
-                    },
-                    [theme.breakpoints.up('md')]: {
-                        fontSize: '2.5rem',  // Tamaño de fuente para pantallas medianas (md) y más grandes
-                    },
-                    // Puedes seguir agregando breakpoints según tus necesidades
-                }}>FulboApp</Typography>
-            </Grid>
-            <Grid item xs={4}>
-            {/* <Search sx={{ width: 'xl' }}
+            <Grid container sx={{ backgroundColor: theme.palette.primary.main, alignItems: 'center', height:'6rem' }}>
+                <Grid item xs={4} >
+                    <Typography variant="body" onClick={navHome}
+                        sx={{
+                            display: 'flex', justifyContent: 'center', alignItems: 'center',
+                            color: theme.palette.menu.secondary,
+                            fontWeight: 600,
+                            margin: 'auto',
+                            cursor: 'pointer',
+                            fontSize: '1rem',  // Tamaño de fuente base
+                            [theme.breakpoints.up('sm')]: {
+                                fontSize: '1.2rem',  // Tamaño de fuente para pantallas pequeñas (sm) y más grandes
+                            },
+                            [theme.breakpoints.up('md')]: {
+                                fontSize: '2.5rem',  // Tamaño de fuente para pantallas medianas (md) y más grandes
+                            },
+                            // Puedes seguir agregando breakpoints según tus necesidades
+                        }}>FulboApp</Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    {/* <Search sx={{ width: 'xl' }}
                 onChange={handleSearchBar}>
                 <SearchIconWrapper>
                     <SearchIcon />
@@ -103,13 +104,13 @@ export default function Headr() {
                     })}
                 </ul>
             </Search> */}
-            
-           
+
+
+                </Grid>
+                <Grid item xs={4}>
+                    <ImportantComp />
+                </Grid>
             </Grid>
-            <Grid item xs={4}>
-            <ImportantComp/>
-            </Grid>
-        </Grid>
-        
+
     )
 }

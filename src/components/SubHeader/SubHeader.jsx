@@ -11,12 +11,12 @@ import ImportantComp from "../ImportantComp/ImportantComp";
 
 
 export default function SubHeader() {
-    
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getLeagues())
-    },[])
+    }, [])
 
     const competitions = useSelector((state) => state.allCompetitions);
 
@@ -34,19 +34,20 @@ export default function SubHeader() {
         return nameA.localeCompare(nameB);
     })
     return (
-        <Grid container sx={{alignItems:'center', padding:2, gap:1}}>
+        <Container>
+            <Grid container sx={{ alignItems: 'center', padding: 2, gap: 1 }}>
 
-            <Grid item xs={12} sm={5} sx={{display:'flex', justifyContent:'space-evenly'}}>
-                
-                <Link href={'/competitions'} sx={{textDecoration:'none',  color:theme.palette.success.main}}>
-                    <Button variant="contained">Competitions</Button>
-                </Link>
-                <Link href={'/countries'} sx={{textDecoration:'none',  color:theme.palette.success.main}}>
-                    <Button variant="contained">Countries</Button>
-                </Link>
-            </Grid>
-            <Grid item xs={12} sm={5} md={3}>
-                
+                <Grid item xs={12} sm={5} sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+
+                    <Link href={'/competitions'} sx={{ textDecoration: 'none', color: theme.palette.success.main }}>
+                        <Button variant="contained">Competitions</Button>
+                    </Link>
+                    <Link href={'/countries'} sx={{ textDecoration: 'none', color: theme.palette.success.main }}>
+                        <Button variant="contained">Countries</Button>
+                    </Link>
+                </Grid>
+                <Grid item xs={12} sm={5} md={3}>
+
                     <select onChange={handleChange}>
                         <option value="">Alls</option>
                         {
@@ -56,7 +57,8 @@ export default function SubHeader() {
                         }
 
                     </select>
+                </Grid>
             </Grid>
-        </Grid>
+        </Container>
     )
 }

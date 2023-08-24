@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useHistory } from "react-router-dom"
 import { filterCompByCountry, getAssistsCompetition, getCompetitionById, getCups, getFixtureByCompetition, getFixtureByCompetitionAllRounds, getScorersCompetition, getTableCompetition, handleChangeCompetition } from "../../redux/actions";
-import { Box, Container, Grid, Link, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, CircularProgress, Container, Grid, Link, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import './CardCompetitionDetail.css'
 import { all } from "axios";
 import Scorer from "../Stadistics/Scorer/Scorer";
@@ -96,30 +96,33 @@ export default function CardCompetitionDetail() {
         return nameA.localeCompare(nameB);
     })
 
+    // console.log(competition);
+
     return (
 
-        <>{loading && (
-            <Box sx={{ width: '100%' }}>
-                <LinearProgress />
+        <>
+        {competition.length === 0 ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <CircularProgress />
             </Box>
-        )}
-
-            {
+        ) : (
+            
+            
                 competition?.map((comp) => {
                     return (
-                        <Container maxWidth='xl' margin='auto'>
+                        <Container  margin='auto'>
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                                     <img className="logo_title" src={comp.league.logo} />
                                 </Box>
-                                <Typography variant="h3" sx={{ fontWeight: 600, textAlign:'center' }}>{comp.league.name}</Typography>
+                                <Typography variant="h4" sx={{ fontWeight: 600, textAlign:'center' }}>{comp.league.name}</Typography>
 
                             </Box>
 
                             {/* {console.log(comp.league)} */}
                             <Grid container columns={12} spacing={2}>
 
-                                <Grid item xs={12} md={8}>
+                                <Grid item xs={12} md={8} sx={{mt:2}}>
                                     <select onChange={handleFilterByCountry} label='Competitions'>
                                         <option value="">Alls</option>
                                         {sortedCompetitions.map((competition, index) => (
@@ -139,15 +142,15 @@ export default function CardCompetitionDetail() {
 
                                                                 <Table component={Paper} maxWidth='50%' >
 
-                                                                    <TableHead>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Equipo</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pj</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>G</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>E</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>P</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goles</TableCell>
+                                                                    <TableHead sx={{backgroundColor:theme.palette.menu.primary }}>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>Pos</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,color:theme.palette.background.default}}>Equipo</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,color:theme.palette.background.default}}>Pts</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,color:theme.palette.background.default}}>Pj</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,color:theme.palette.background.default}}>G</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,color:theme.palette.background.default}}>E</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,color:theme.palette.background.default}}>P</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,color:theme.palette.background.default}}>Dif. goles</TableCell>
                                                                     </TableHead>
                                                                     {group.map((teams, teamIndex) => (
                                                                         <TableRow key={teamIndex}>
@@ -222,7 +225,7 @@ export default function CardCompetitionDetail() {
                                     </Grid>
                                 </Grid>
 
-                                <Grid item xs={12} md={4}>
+                                <Grid item xs={12} md={4} sx={{mt:2}}>
                                     <select value={selectedRound} onChange={handleRoundChange}>
                                         <option value=''>Seleccionar Ronda</option>
                                         {
@@ -233,7 +236,7 @@ export default function CardCompetitionDetail() {
                                             ))
                                         }
                                     </select>
-                                    <Table component={Paper}>
+                                    <Table component={Paper} sx={{mt:2}}>
                                         <TableBody>
 
                                             {fixture?.map((match, index) => {
@@ -323,6 +326,7 @@ export default function CardCompetitionDetail() {
                         </Container>
                     )
                 })
-            }</>
+        )}
+        </>
     )
 }

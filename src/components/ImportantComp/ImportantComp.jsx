@@ -1,22 +1,50 @@
-import { Box, Button, Container, Drawer, Link, List, Paper, Typography } from '@mui/material'
+import { Box, Button, Container, Drawer, Link, List, Paper, Typography, useMediaQuery } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLeagues } from '../../redux/actions';
 import "../../App.css"
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
-
+import "./import.css"
 import MenuIcon from '@mui/icons-material/Menu';
 import theme from '../../theme';
+import { UseMediaQuery } from '@mui/material';
+import styled from '@emotion/styled';
+
+const MyComponentWrapper = styled('div')(({ theme }) => ({
+    padding: '20px', // Estilo base
+
+    // Aplicar el estilo solo en pantallas más pequeñas que 'sm'
+    [theme.breakpoints.down('sm')]: {
+        padding: '10px',
+    },
+}));
+const HoverButton = styled(Button)({
+    '&:hover': {
+        backgroundColor: theme.palette.menu.secondary,
+        color: theme.palette.primary.main,
+    },
+});
+const ListLeagues = styled('div')(({ theme }) => ({
+    width: 600,
+    bgcolor: theme.palette.menu.secondary,
+    [theme.breakpoints.down('xl')]: {
+        width: 500, // Cambia el ancho para resoluciones medianas
+    },
+    [theme.breakpoints.down('lg')]: {
+        width: 380, // Cambia el ancho para resoluciones medianas
+    },
+    [theme.breakpoints.down('md')]: {
+        width: 200, // Cambia el ancho para resoluciones medianas
+    },
+    [theme.breakpoints.down('sm')]: {
+        width: 200, // Cambia el ancho para resoluciones pequeñas
+    },
+    [theme.breakpoints.down('xs')]: {
+        width: 100, // Cambia el ancho para resoluciones medianas
+    },
+}));
 export default function ImportantComp() {
 
     // Premier league 39
@@ -64,16 +92,25 @@ export default function ImportantComp() {
     const handleClick = () => {
         setOpen(!open);
     };
-
+    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <MenuIcon
-                cursor='pointer'
-                color='success'
-                onClick={() => setOpen(true)}
-            />
 
+            <MyComponentWrapper>
+                {isSmallScreen ? (
+                    <MenuIcon
+                        cursor='pointer'
+                        sx={{ color: theme.palette.menu.secondary }}
+                        onClick={() => setOpen(true)}
+                    />
+                ) : (
+                    <HoverButton variant="contained" onClick={() => setOpen(true)}
+                        sx={{ backgroundColor: theme.palette.menu.primary, color: theme.palette.background.default }}>
+                        Ligas destacadas
+                    </HoverButton>
+                )}
+            </MyComponentWrapper>
             <Drawer
                 open={open}
                 anchor='right'
@@ -81,27 +118,28 @@ export default function ImportantComp() {
                 component="div" id="nested-list-subheader"
                 onClick={handleClick}
             >
-                <ListSubheader sx={{ bgcolor:theme.palette.secondary.main }}>Principales ligas</ListSubheader>
+                <ListSubheader sx={{ bgcolor: theme.palette.secondary.main }}>Principales ligas</ListSubheader>
 
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: theme.palette.menu.secondary }}>
+                <ListLeagues>
                     {Object.entries(filteredLeaguesByCountry).map(([country, competition]) => {
-                    return(
-                        <div key={country}> {/* Envolver cada iteración en un div */}
+                        return (
+                            <div key={country}> {/* Envolver cada iteración en un div */}
 
-                            <ListItemButton sx={{ bgcolor: theme.palette.menu.primary }}>
-                                <ListItemText primary={country} sx={{ color: theme.palette.background.default }} />
-                            </ListItemButton>
-
-                            {competition.map((comp) => (
-                                <ListItemButton key={comp.id} sx={{ bgcolor: theme.palette.menu.secondary }} onClick={() => setOpen(false)}>
-                                    <Link href={`/competitions/${comp.id}`} sx={{ textDecoration: 'none' }}>
-                                        <ListItemText secondary={comp.name} />
-                                    </Link>
+                                <ListItemButton sx={{ bgcolor: theme.palette.menu.primary }}>
+                                    <ListItemText primary={country} sx={{ color: theme.palette.background.default }} />
                                 </ListItemButton>
-                            ))}
-                        </div>
-                    )})}
-                </List>
+
+                                {competition.map((comp) => (
+                                    <ListItemButton key={comp.id} sx={{ bgcolor: theme.palette.menu.secondary }} onClick={() => setOpen(false)}>
+                                        <Link href={`/competitions/${comp.id}`} sx={{ textDecoration: 'none' }}>
+                                            <ListItemText secondary={comp.name} />
+                                        </Link>
+                                    </ListItemButton>
+                                ))}
+                            </div>
+                        )
+                    })}
+                </ListLeagues>
             </Drawer>
         </Box>
     );
