@@ -120,9 +120,9 @@ export default function CardCompetitionDetail() {
                             </Box>
 
                             {/* {console.log(comp.league)} */}
-                            <Grid container columns={12} spacing={2}>
+                            <Grid container columns={12} spacing={1}>
 
-                                <Grid item xs={12} md={8} sx={{mt:2}}>
+                                <Grid item xs={12} sx={{mt:2}}>
                                     <select onChange={handleFilterByCountry} label='Competitions'>
                                         <option value="">Alls</option>
                                         {sortedCompetitions.map((competition, index) => (
@@ -137,10 +137,10 @@ export default function CardCompetitionDetail() {
                                                     comp.league.standings.map((group) => {
                                                         // console.log();
                                                         return (
-                                                            <Grid item xs={12} sm={12} md={6}>
+                                                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
                                                                 <Typography variant="h6">{group[0].group}</Typography>
 
-                                                                <Table component={Paper} maxWidth='50%' >
+                                                                <Table component={Paper} sx={{ border:1, borderColor:theme.palette.background.default}}>
 
                                                                     <TableHead sx={{backgroundColor:theme.palette.menu.primary }}>
                                                                         <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>Pos</TableCell>
@@ -225,7 +225,7 @@ export default function CardCompetitionDetail() {
                                     </Grid>
                                 </Grid>
 
-                                <Grid item xs={12} md={4} sx={{mt:2}}>
+                                <Grid item xs={12} sx={{mt:2}}>
                                     <select value={selectedRound} onChange={handleRoundChange}>
                                         <option value=''>Seleccionar Ronda</option>
                                         {
