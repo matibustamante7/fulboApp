@@ -1,6 +1,6 @@
 import { Box, Card, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import "../../App.css"
 export default function CardCompetition(competitions) {
     // console.log(competitions.competitions.league.name);
     const navigate = useNavigate();
@@ -11,25 +11,18 @@ export default function CardCompetition(competitions) {
 
     return (
         <Card
-        onClick={handleDetailCompetititon} sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            margin: 2,
-            padding: 2,
-            cursor:'pointer'
-        }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection:'column',
-                    justifyContent:'center'
-                }}>
-                <Typography variant="h4">{competitions.competitions.league.name}</Typography>
-                <Typography variant="h6">Country: {competitions.competitions.country.name}</Typography>
-            </Box>
+            onClick={handleDetailCompetititon} sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                minHeight: '5rem',
+                alignItems:'center',
+                padding:1 ,
+            }}>
 
-            <img className="img_cards" src={competitions.competitions.league.logo} alt={competitions.competitions.league.name} />
+            <Typography variant="h5">{competitions.competitions.league.name}</Typography>
+            <img className="img_player" src={competitions.competitions.league.logo} alt={competitions.competitions.league.name} />
 
         </Card>
     )

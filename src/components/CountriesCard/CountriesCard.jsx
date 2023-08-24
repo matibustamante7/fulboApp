@@ -19,8 +19,7 @@ export default function CountriesCard({nations}) {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems:'center',
-                margin: 2,
-                padding: 2,
+                padding:1 ,
                 cursor: 'pointer',
                 backgroundColor:theme.palette.secondary.main
             }}>
