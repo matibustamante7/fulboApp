@@ -19,7 +19,7 @@ export default function Countries() {
             <Grid container columns={12} spacing={1} sx={{ mt: 10 }}>
                 {
                     allNations.length === 0 ? (
-                        <Box xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',margin:'auto' }}>
+                        <Box xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin:'auto' }}>
                             <CircularProgress />
                         </Box>
                     ) : (

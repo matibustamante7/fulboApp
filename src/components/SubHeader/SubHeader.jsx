@@ -39,7 +39,7 @@ export default function SubHeader() {
     //     navigate('/competitions');
     // }
     return (
-        <Grid container fullWidth columns={12} spacing={1} sx={{alignItems: 'center', height:'5rem', backgroundColor:theme.palette.secondary.main }} >
+        <Grid container fullWidth columns={12} spacing={1} sx={{alignItems: 'center',  backgroundColor:theme.palette.secondary.main}} >
             <Grid item xs={12} sm={12} md={6} lg={6}>
                 <Grid container columns={12} spacing={1} >
                     <Grid item xs={6}>
@@ -54,7 +54,7 @@ export default function SubHeader() {
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} sx={{mb:2}}>
                 <FormControl fullWidth >
                     <InputLabel id="select-competition">Competiciones</InputLabel>
                     <Select
