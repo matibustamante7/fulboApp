@@ -1,5 +1,6 @@
 import { Card, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import theme from "../../theme";
 
 export default function CountriesCard({nations}) {
     console.log(nations);
@@ -17,13 +18,15 @@ export default function CountriesCard({nations}) {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                alignItems:'center',
                 margin: 2,
                 padding: 2,
-                cursor: 'pointer'
+                cursor: 'pointer',
+                backgroundColor:theme.palette.secondary.main
             }}>
-            <Typography variant="h4">{nations.name}</Typography>
+            <Typography variant="h5" >{nations.name}</Typography>
             {/* <p>{nations.code}</p> */}
-            <img className="img_cards" src={nations.flag} alt='bandera pais' />
+            <img className="img_cards" src={nations.flag} alt={`Bandera de ${nations.name}`} />
 
         </Card>
     )

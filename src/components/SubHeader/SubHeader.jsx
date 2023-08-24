@@ -1,19 +1,18 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { Link } from '@mui/material';
 import theme from "../../theme";
 import * as React from 'react';
-import FormControl from '@mui/material/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getFixtureInlive, getFixtureTodayByCompetition, getLeagues } from '../../redux/actions';
-import ImportantComp from "../ImportantComp/ImportantComp";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function SubHeader() {
 
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     useEffect(() => {
         dispatch(getLeagues())
     }, [])
@@ -33,32 +32,46 @@ export default function SubHeader() {
         const nameB = `${b.country.name.toLowerCase()} - ${b.league.name.toLowerCase()}`;
         return nameA.localeCompare(nameB);
     })
+    // const navigateComp = (e) => {
+    //     navigate('/competitions');
+    // }
+    // const navigateCountries = (e) => {
+    //     navigate('/competitions');
+    // }
     return (
-        <Container>
-            <Grid container sx={{ alignItems: 'center', padding: 2, gap: 1 }}>
-
-                <Grid item xs={12} sm={5} sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-
-                    <Link href={'/competitions'} sx={{ textDecoration: 'none', color: theme.palette.success.main }}>
-                        <Button variant="contained">Competitions</Button>
-                    </Link>
-                    <Link href={'/countries'} sx={{ textDecoration: 'none', color: theme.palette.success.main }}>
-                        <Button variant="contained">Countries</Button>
-                    </Link>
+        <Grid container fullWidth columns={12} spacing={1} sx={{alignItems: 'center', height:'5rem', backgroundColor:theme.palette.secondary.main }} >
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+                <Grid container columns={12} spacing={1} >
+                    <Grid item xs={6}>
+                        <Link href={'/competitions'} sx={{ textDecoration: 'none', color: theme.palette.success.main }}>
+                            <Button variant="outlined" sx={{ fontSize: 12, }}>Todas las competiciones</Button>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Link href={'/countries'} sx={{ textDecoration: 'none', color: theme.palette.success.main }}>
+                            <Button variant="outlined" sx={{ fontSize: 12 }}>Competiciones por pais</Button>
+                        </Link>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} sm={5} md={3}>
-
-                    <select onChange={handleChange}>
-                        <option value="">Alls</option>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+                <FormControl fullWidth >
+                    <InputLabel id="select-competition">Competiciones</InputLabel>
+                    <Select
+                        labelId="select-competition"
+                        id="demo-simple-select"
+                        label="Age"
+                        onChange={handleChange}>
+                        <MenuItem value="">Alls</MenuItem>
                         {
                             sortedCompetitions?.map((competition, index) => (
-                                <option key={index} value={competition.league.id}>{competition.country.name} - {competition.league.name}</option>
+                                <MenuItem key={index} value={competition.league.id}>{competition.country.name} - {competition.league.name}</MenuItem>
                             ))
                         }
 
-                    </select>
-                </Grid>
+                    </Select>
+                </FormControl>
             </Grid>
-        </Container>
+        </Grid>
     )
 }
