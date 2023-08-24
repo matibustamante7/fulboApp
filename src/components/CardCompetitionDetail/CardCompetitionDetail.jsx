@@ -179,16 +179,16 @@ export default function CardCompetitionDetail() {
                                                     })
 
                                                 ) : (
-                                                    <Table component={Paper}>
-                                                        <TableHead>
-                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pos</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Equipo</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pts</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pj</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>G</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>E</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>P</TableCell>
-                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Dif. goles</TableCell>
+                                                    <Table component={Paper} sx={{mt:4,}} >
+                                                        <TableHead sx={{backgroundColor:theme.palette.menu.primary }}>
+                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>Pos</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>Equipo</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>Pts</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>Pj</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>G</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>E</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>P</TableCell>
+                                                                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,color:theme.palette.background.default }}>Dif. goles</TableCell>
                                                         </TableHead>
                                                         {comp.league.standings[0].map((teams, teamIndex) => (
                                                             <TableRow>

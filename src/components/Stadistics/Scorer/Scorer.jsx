@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import "../../../App.css"
 import { getScorersCompetition } from "../../../redux/actions";
+import theme from "../../../theme";
 export default function Scorer({ idCompetition }) {
     // console.log(idCompetition);
     const dispatch = useDispatch();
@@ -14,14 +15,19 @@ export default function Scorer({ idCompetition }) {
     // console.log(players);
     return (
             <TableContainer component={Paper} sx={{ textAlign: 'center'}}>
-                <Typography variant="h4">Scorers</Typography>
+                <Typography variant="h4" sx={{backgroundColor:theme.palette.menu.primary,
+                    color:theme.palette.background.default}}>Scorers</Typography>
                 <Table>
                     <TableHead>
                         {/* <TableCell>Position</TableCell> */}
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Jugador</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Equipo</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Goles</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Penal</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,
+                    color:theme.palette.background.default, backgroundColor:theme.palette.menu.primary }}>Jugador</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,
+                    color:theme.palette.background.default , backgroundColor:theme.palette.menu.primary}}>Equipo</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,
+                    color:theme.palette.background.default , backgroundColor:theme.palette.menu.primary}}>Goles</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,
+                    color:theme.palette.background.default , backgroundColor:theme.palette.menu.primary}}>Penal</TableCell>
                         {/* <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots</TableCell>
                         <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Shots on goal</TableCell> */}
                     </TableHead>

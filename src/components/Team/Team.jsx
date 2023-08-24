@@ -30,31 +30,31 @@ export default function Team() {
                         return (
                             <Box component={Paper} sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', padding:'1rem' }}>
-                                    <Typography variant='h3'>{team.team.name}</Typography>
-                                    <img src={team.team.logo} alt={team.team.name} />
+                                    <Typography variant='h4'>{team.team.name}</Typography>
+                                    <img className='img_cards' src={team.team.logo} alt={team.team.name} />
                                 </Box>
                                 <TableContainer>
                                     <Table>
                                         <TableHead>
-                                            <TableCell sx={{ fontWeight: 600 }}> </TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Name</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Position</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Number</TableCell>
-                                            <TableCell sx={{ fontWeight: 600 }}>Age</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}> </TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Name</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Position</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Number</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Age</TableCell>
                                         </TableHead>
                                         {
                                             team.players.map((player) => {
                                                 return (
                                                     <TableRow>
-                                                        <TableCell><img img className="img_player" src={player.photo} /></TableCell>
-                                                        <TableCell>
+                                                        <TableCell sx={{m:1, p:1}}><img img className="img_player" src={player.photo} /></TableCell>
+                                                        <TableCell sx={{m:1, p:1}}>
                                                             <Link href={`/${idCompetition}/${nameTeam}/${idTeam}/${player.id}`}>
                                                                 {player.name}
                                                             </Link>
                                                         </TableCell>
-                                                        <TableCell>{player.position}</TableCell>
-                                                        <TableCell>{player.number ? player.number : '-'}</TableCell>
-                                                        <TableCell>{player.age ? player.age : '-'}</TableCell>
+                                                        <TableCell sx={{m:1, p:1}}>{player.position}</TableCell>
+                                                        <TableCell sx={{m:1, p:1}}>{player.number ? player.number : '-'}</TableCell>
+                                                        <TableCell sx={{m:1, p:1}}>{player.age ? player.age : '-'}</TableCell>
                                                     </TableRow>
                                                 )
                                             })
@@ -66,22 +66,22 @@ export default function Team() {
                     })
                 )}
 
-            <Box component={Paper} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', mt: 10, mb: 10, p: 2, gap: 4 }}>
+            
                 {
                     teamStadium.map((stadium) => {
                         return (
-                            <>
+                            <Box component={Paper} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', mt: 10, mb: 10, p: 2, gap: 4, textAlign:'center' }}>
                                 <Typography variant='h4'>Stadium: <b>{stadium.venue.name}</b></Typography>
                                 <Typography variant='h5'>Capacity: <b>{stadium.venue.capacity}</b></Typography>
                                 <img className='img_stadium' src={stadium.venue.image} alt={stadium.venue.name} />
                                 <Typography variant='h5'>City: <b>{stadium.venue.city}</b></Typography>
                                 <Typography variant='h5'>Country: <b>{stadium.team.country}</b></Typography>
                                 <Typography variant='h5'>Address: <b>{stadium.venue.address}</b></Typography>
-                            </>
+                            </Box>
                         )
                     })
                 }
-            </Box>
+            
         </Container>
     )
 }

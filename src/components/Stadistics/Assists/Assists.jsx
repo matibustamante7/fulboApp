@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getAssistsCompetition} from "../../../redux/actions";
 import { Container, Paper, Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import "../../../App.css"
+import theme from "../../../theme";
 export default function Assists({ idCompetition }) {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -12,14 +13,19 @@ export default function Assists({ idCompetition }) {
     // console.log(players);
     return (
             <TableContainer component={Paper} sx={{ textAlign: 'center'}}>
-                <Typography variant="h4">Asistidores</Typography>
+                <Typography variant="h4"sx={{backgroundColor:theme.palette.menu.primary,
+                    color:theme.palette.background.default}} >Asistidores</Typography>
                 <Table>
-                    <TableHead>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Jugador</TableCell>
-                        <TableCell sx={{ fontWeight: 600 , p: 1, m: 0}}>Equipo</TableCell>
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Asistencias</TableCell>
+                    <TableHead sx={{backgroundColor:theme.palette.menu.primary}}>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,
+                    color:theme.palette.background.default }}>Jugador</TableCell>
+                        <TableCell sx={{ fontWeight: 600 , p: 1, m: 0,
+                    color:theme.palette.background.default}}>Equipo</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 ,
+                    color:theme.palette.background.default}}>Asistencias</TableCell>
                         {/* <TableCell sx={{ fontWeight: 600 }}>Passes</TableCell> */}
-                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>Pases clave</TableCell>
+                        <TableCell sx={{ fontWeight: 600, p: 1, m: 0,
+                    color:theme.palette.background.default }}>Pases clave</TableCell>
                         {/* <TableCell sx={{ fontWeight: 600 }}>Passes accuracy</TableCell> */}
                     </TableHead>
                     {/* <TableBody> */}
