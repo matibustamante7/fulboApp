@@ -24,7 +24,7 @@ export default function Player() {
         <>
             {
                 dataPlayer.length === 0 ?
-                    <Typography variant='h4'>No data in this season</Typography> :
+                    <Typography variant='h4'>No hay data del jugador</Typography> :
                     dataPlayer.map((player) => {
                         return (
                             <Container>
@@ -89,26 +89,11 @@ export default function Player() {
                                                                 <TableCell sx={{ fontWeight: 600 }}>Punt</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Goles</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Goles concedidos</TableCell>
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Tiros total</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Tiros al arco</TableCell> */}
                                                                 <TableCell sx={{ fontWeight: 600 }}>Asistencias</TableCell>
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Passes total</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Passes key</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Passes accuracy</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Tackles total</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Duels total</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Duels won</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Dribbles attempts</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Dribbles success</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Fouls drawn</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Fouls committed</TableCell> */}
                                                                 <TableCell sx={{ fontWeight: 600 }}>Yellow cards</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Double yelllow cards</TableCell>
                                                                 <TableCell sx={{ fontWeight: 600 }}>Red cards</TableCell>
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Penalty won</TableCell> */}
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Penalty commited</TableCell> */}
                                                                 <TableCell sx={{ fontWeight: 600 }}>Penalty scored</TableCell>
-                                                                {/* <TableCell sx={{ fontWeight: 600 }}>Penalty missed</TableCell> */}
                                                                 <TableCell sx={{ fontWeight: 600 }}>Penalty saved</TableCell>
                                                             </TableHead>
                                                             <TableRow>
@@ -118,25 +103,11 @@ export default function Player() {
                                                                 <TableCell sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}><StarIcon /> {statis.games.rating ? statis.games.rating : '-'}</TableCell>
                                                                 <TableCell>{statis.goals.total ? statis.goals.total : '-'}</TableCell>
                                                                 <TableCell>{statis.goals.conceded ? statis.shots.conceded : '-'}</TableCell>
-                                                                {/* <TableCell>{statis.shots.total ? statis.shots.total : '-'}</TableCell> */}
-                                                                {/* <TableCell>{statis.shots.on ? statis.shots.on : '-'}</TableCell> */}
-                                                                <TableCell>{statis.goals.assists ? statis.goals.assists : '-'}</TableCell>
-                                                                {/* <TableCell>{statis.passes.total ? statis.passes.total : '-'}</TableCell>
-                                                                <TableCell>{statis.passes.key ? statis.passes.key : '-'}</TableCell>
-                                                                <TableCell>{statis.passes.accuracy ? statis.passes.accuracy : '-'}</TableCell>
-                                                                <TableCell>{statis.duels.total ? statis.duels.total : '-'}</TableCell>
-                                                                <TableCell>{statis.duels.won ? statis.duels.won : '-'}</TableCell>
-                                                                <TableCell>{statis.dribbles.attempts ? statis.dribbles.attempts : '-'}</TableCell>
-                                                                <TableCell>{statis.dribbles.success ? statis.dribbles.success : '-'}</TableCell>
-                                                                <TableCell>{statis.fouls.drawn ? statis.fouls.drawn : '-'}</TableCell>
-                                                                <TableCell>{statis.fouls.committed ? statis.fouls.committed : '-'}</TableCell> */}
+                                                                <TableCell>{statis.goals.assists ? statis.goals.assists : '-'}</TableCell> 
                                                                 <TableCell>{statis.cards.yellow ? statis.cards.yellow : '-'}</TableCell>
                                                                 <TableCell>{statis.cards.yellowred ? statis.cards.yellowred : '-'}</TableCell>
                                                                 <TableCell>{statis.cards.red ? statis.cards.red : '-'}</TableCell>
-                                                                {/* <TableCell>{statis.penalty.won ? statis.penalty.won : '-'}</TableCell>
-                                                                <TableCell>{statis.penalty.committed ? statis.penalty.committed : '-'}</TableCell> */}
                                                                 <TableCell>{statis.penalty.scored ? statis.penalty.scored : '-'}</TableCell>
-                                                                {/* <TableCell>{statis.penalty.missed ? statis.penalty.missed : '-'}</TableCell> */}
                                                                 <TableCell>{statis.penalty?.saved ? statis.penalty?.saved : '-'}</TableCell>
                                                             </TableRow>
                                                         </Table>

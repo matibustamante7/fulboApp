@@ -2,7 +2,7 @@ import { Box, Container, Link, Paper, Table, TableCell, TableContainer, TableHea
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getCoachByTeam, getTeamSquad, getTeamStadistics, getTeamStadium } from '../../redux/actions'
+import { getTeamSquad, getTeamStadium } from '../../redux/actions'
 import "../../App.css"
 export default function Team() {
     const { idCompetition, nameTeam, idTeam } = useParams()
@@ -37,10 +37,10 @@ export default function Team() {
                                     <Table>
                                         <TableHead>
                                             <TableCell sx={{ fontWeight: 600, m:1, p:1 }}> </TableCell>
-                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Name</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Position</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Number</TableCell>
-                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Age</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Jugador</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Pos</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Num</TableCell>
+                                            <TableCell sx={{ fontWeight: 600, m:1, p:1 }}>Edad</TableCell>
                                         </TableHead>
                                         {
                                             team.players.map((player) => {
@@ -71,12 +71,12 @@ export default function Team() {
                     teamStadium.map((stadium) => {
                         return (
                             <Box component={Paper} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', mt: 10, mb: 10, p: 2, gap: 4, textAlign:'center' }}>
-                                <Typography variant='h4'>Stadium: <b>{stadium.venue.name}</b></Typography>
-                                <Typography variant='h5'>Capacity: <b>{stadium.venue.capacity}</b></Typography>
+                                <Typography variant='h4'>Estadio: <b>{stadium.venue.name}</b></Typography>
+                                <Typography variant='h5'>Capacidad: <b>{stadium.venue.capacity}</b></Typography>
                                 <img className='img_stadium' src={stadium.venue.image} alt={stadium.venue.name} />
-                                <Typography variant='h5'>City: <b>{stadium.venue.city}</b></Typography>
-                                <Typography variant='h5'>Country: <b>{stadium.team.country}</b></Typography>
-                                <Typography variant='h5'>Address: <b>{stadium.venue.address}</b></Typography>
+                                <Typography variant='h5'>Ciudad: <b>{stadium.venue.city}</b></Typography>
+                                <Typography variant='h5'>Pais: <b>{stadium.team.country}</b></Typography>
+                                <Typography variant='h5'>Calle: <b>{stadium.venue.address}</b></Typography>
                             </Box>
                         )
                     })

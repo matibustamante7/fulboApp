@@ -52,14 +52,14 @@ export default function Headr() {
     }
     // console.log(resultadosBusqueda);
     return (
-            <Grid container columns={12} spacing={1} sx={{ backgroundColor: theme.palette.primary.main, alignItems: 'center', height:'6rem' }}>
-                <Grid item xs={6} >
+            <Grid container columns={12} spacing={1} sx={{ backgroundColor: theme.palette.primary.main,  alignItems: 'center', height:'6rem' }}>
+                <Grid item xs={4} >
                     <Typography variant="body" onClick={navHome}
                         sx={{
                             display: 'flex', justifyContent: 'center', alignItems: 'center',
                             color: theme.palette.menu.secondary,
                             fontWeight: 600,
-                            margin: 'auto',
+                            marginLeft: 10,
                             cursor: 'pointer',
                             fontSize: '1rem',  // Tamaño de fuente base
                             [theme.breakpoints.up('sm')]: {
@@ -74,7 +74,10 @@ export default function Headr() {
                             // Puedes seguir agregando breakpoints según tus necesidades
                         }}>FulboApp</Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
+                    {/* <ImportantComp /> */}
+                </Grid>
+                <Grid item xs={4}>
                     <ImportantComp />
                 </Grid>
             </Grid>

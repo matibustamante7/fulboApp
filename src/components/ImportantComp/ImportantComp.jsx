@@ -1,4 +1,4 @@
-import { Box, Button, Container, Drawer, Link, List, Paper, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Drawer, Link, useMediaQuery } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLeagues } from '../../redux/actions';
@@ -9,7 +9,6 @@ import ListItemText from '@mui/material/ListItemText';
 // import "./import.css"
 import MenuIcon from '@mui/icons-material/Menu';
 import theme from '../../theme';
-import { UseMediaQuery } from '@mui/material';
 import styled from '@emotion/styled';
 
 const MyComponentWrapper = styled('div')(({ theme }) => ({
@@ -47,21 +46,6 @@ const ListLeagues = styled('div')(({ theme }) => ({
 }));
 export default function ImportantComp() {
 
-    // Premier league 39
-    // Serie A 135
-    // La Liga 140
-    // Bundesliga 78
-    // Francia 61
-    // Portugal 94
-    // Liga Profesional argentina 128
-    // Primera nacional 129
-    // copa de la liga 483
-    // copa argentina 130
-    // libertadores 13
-    // sudamericana 11
-    // champions 2
-    // europa league 3
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -80,10 +64,8 @@ export default function ImportantComp() {
             if (!filteredLeaguesByCountry[countryName]) {
                 filteredLeaguesByCountry[countryName] = [];
             }
-
             filteredLeaguesByCountry[countryName].push(competition.league);
         }
-
     });
 
 
@@ -101,7 +83,7 @@ export default function ImportantComp() {
                 {isSmallScreen ? (
                     <MenuIcon
                         cursor='pointer'
-                        sx={{ color: theme.palette.menu.secondary }}
+                        sx={{ color: theme.palette.menu.secondary}}
                         onClick={() => setOpen(true)}
                     />
                 ) : (
@@ -123,8 +105,7 @@ export default function ImportantComp() {
                 <ListLeagues>
                     {Object.entries(filteredLeaguesByCountry).map(([country, competition]) => {
                         return (
-                            <div key={country}> {/* Envolver cada iteración en un div */}
-
+                            <div key={country}>
                                 <ListItemButton sx={{ bgcolor: theme.palette.menu.primary }}>
                                     <ListItemText primary={country} sx={{ color: theme.palette.background.default }} />
                                 </ListItemButton>
