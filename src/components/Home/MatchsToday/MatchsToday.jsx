@@ -71,11 +71,11 @@ export default function MatchsToday() {
                               textAlign: 'center',
                               backgroundColor: match.fixture.status.short === 'FT' ? theme.palette.primary.main :
                                 match.fixture.status.short === 'NS' ? theme.palette.primary.main :
-                                  match.fixture.status.short === 'HT' ? theme.palette.menu.secondary :
+                                  match.fixture.status.short === 'HT' ? theme.palette.error.main :
                                     match.fixture.status.short === 'TBD' ? theme.palette.primary.main :
                                       match.fixture.status.short === 'PST' ? theme.palette.primary.main :
                                         match.fixture.status.short === 'AWD' ? theme.palette.primary.main :
-                                          theme.palette.error.main,
+                                          theme.palette.menu.secondary,
 
 
                               color: theme.palette.background.default,
