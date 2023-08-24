@@ -9,6 +9,8 @@ import Scorer from "../Stadistics/Scorer/Scorer";
 import Assists from "../Stadistics/Assists/Assists";
 import LinearProgress from '@mui/material/LinearProgress';
 import theme from "../../theme";
+import TouchAppIcon from '@mui/icons-material/TouchApp';
+
 
 export default function CardCompetitionDetail() {
     const { idCompetition } = useParams()
@@ -110,7 +112,7 @@ export default function CardCompetitionDetail() {
                                 <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                                     <img className="logo_title" src={comp.league.logo} />
                                 </Box>
-                                <Typography variant="h3" sx={{ fontWeight: 600 }}>{comp.league.name}</Typography>
+                                <Typography variant="h3" sx={{ fontWeight: 600, textAlign:'center' }}>{comp.league.name}</Typography>
 
                             </Box>
 
@@ -132,7 +134,7 @@ export default function CardCompetitionDetail() {
                                                     comp.league.standings.map((group) => {
                                                         // console.log();
                                                         return (
-                                                            <Grid item xs={12}sm={12} md={6}>
+                                                            <Grid item xs={12} sm={12} md={6}>
                                                                 <Typography variant="h6">{group[0].group}</Typography>
 
                                                                 <Table component={Paper} maxWidth='50%' >
@@ -152,7 +154,7 @@ export default function CardCompetitionDetail() {
                                                                             {/* posicion */}
                                                                             <TableCell sx={{ fontWeight: 600, p: 1, m: 0 }}>{teams.rank}</TableCell>
                                                                             {/* equipo */}
-                                                                            <TableCell sx={{ display: 'flex', alignItems: 'center', p: 1, m: 0, flexDirection:'column', textAlign:'center' }}>
+                                                                            <TableCell sx={{ display: 'flex', alignItems: 'center', p: 1, m: 0, flexDirection: 'column', textAlign: 'center' }}>
                                                                                 <img className="img_mini_logo" src={teams.team.logo} />
                                                                                 <Link href={`/${comp.league.id}/${teams.team.name}/${teams.team.id}`}>
                                                                                     {teams.team.name}
@@ -233,23 +235,75 @@ export default function CardCompetitionDetail() {
                                     </select>
                                     <Table component={Paper}>
                                         <TableBody>
-                                            
-                                            {fixture?.map((partido, index) => {
+
+                                            {fixture?.map((match, index) => {
                                                 // numRound = partido.league.round
-                                                console.log(partido);
+                                                // console.log(match);
+                                                const fechayhoraPartido = match.fixture.date;
+                                                const fecha_hora_obj = new Date(fechayhoraPartido);
+                                                const hora = fecha_hora_obj.getHours();
+                                                const minutos = fecha_hora_obj.getMinutes();
+
+                                                const horaMinutos = hora + ":" + (minutos < 10 ? "0" : "") + minutos;
                                                 return (
-                                                    <TableRow key={index}>
-                                                        <TableCell sx={{ textAlign:'center',
-                                                        backgroundColor:partido.fixture.status.short === 'NS' ? theme.palette.secondary.main : theme.palette.error.main }}>{partido.fixture.status.short}</TableCell>
-                                                        <TableCell sx={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-                                                            <img className="img_mini_logo" src={partido.teams.home.logo} />
-                                                            {partido.teams.home.name}
+                                                    <TableRow key={match.fixture.id} sx={{ height: '5px' }}>
+                                                        <TableCell
+                                                            sx={{
+                                                                p: 1, width: '15%',
+                                                                textAlign: 'center',
+                                                                backgroundColor: match.fixture.status.short === 'FT' ? theme.palette.primary.main :
+                                                                    match.fixture.status.short === 'NS' ? theme.palette.primary.main :
+                                                                        match.fixture.status.short === 'HT' ? theme.palette.menu.secondary :
+                                                                            match.fixture.status.short === 'TBD' ? theme.palette.primary.main :
+                                                                                match.fixture.status.short === 'PST' ? theme.palette.primary.main :
+                                                                                    match.fixture.status.short === 'AWD' ? theme.palette.primary.main :
+                                                                                        theme.palette.error.main,
+
+
+                                                                color: theme.palette.background.default,
+                                                                textShadow: '2px 2px 2px 4px rgba(0, 0, 0, 0.5)',
+                                                                fontWeight: 600
+                                                            }}
+                                                        >
+                                                            {match.fixture.status.short === 'FT' ? <p>Final</p> :
+                                                                match.fixture.status.short === 'HT' ? <p>E.T</p> :
+                                                                    match.fixture.status.short === 'NS' ? horaMinutos :
+                                                                        match.fixture.status.short === 'TBD' ? <p>Por definir</p> :
+                                                                            match.fixture.status.short === 'PST' ? <p>Susp.</p> :
+                                                                                match.fixture.status.short === 'AWD' ? <p>Sin datos</p> :
+                                                                                    match.fixture.status.elapsed + "'"}
                                                         </TableCell>
-                                                        <TableCell >{partido.goals.home ? partido.goals.home : '-'}</TableCell>
-                                                        <TableCell >{partido.goals.away ? partido.goals.away :'-'}</TableCell>
-                                                        <TableCell sx={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-                                                            <img className="img_mini_logo" src={partido.teams.away.logo} />
-                                                            {partido.teams.away.name}
+
+                                                        <TableCell sx={{ p: 1, width: '30%', backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                                                                <img className="team_logo" src={match.teams.home.logo} />
+                                                                <Link href={`/team/${match.teams.home.name}/${match.teams.home.id}`}>
+                                                                    {match.teams.home.name}
+                                                                </Link>
+                                                            </Box>
+                                                        </TableCell>
+
+                                                        <TableCell sx={{ p: 1, width: '7%', borderRight: 1, textAlign: "center" }}>
+                                                            {match.goals?.home ? match.goals.home : 0}
+                                                        </TableCell>
+
+                                                        <TableCell sx={{ p: 1, width: '7%', textAlign: "center" }}>
+                                                            {match.goals?.away ? match.goals.away : 0}
+                                                        </TableCell>
+
+                                                        <TableCell sx={{ p: 1, width: '30%', backgroundColor: theme.palette.secondary.main, textAlign: "center" }}>
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                                                                <img className="team_logo" src={match.teams.away.logo} />
+                                                                <Link href={`/team/${match.teams.away.name}/${match.teams.away.id}`}>
+                                                                    {match.teams.away.name}
+                                                                </Link>
+                                                            </Box>
+                                                        </TableCell>
+
+                                                        <TableCell sx={{ p: 1, width: '10%', backgroundColor: theme.palette.menu.primary, textAlign: "center" }}>
+                                                            <Link href={`/${match.fixture?.id}`}>
+                                                                <TouchAppIcon />
+                                                            </Link>
                                                         </TableCell>
                                                     </TableRow>
                                                 )

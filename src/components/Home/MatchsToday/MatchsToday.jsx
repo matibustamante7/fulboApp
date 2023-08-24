@@ -56,7 +56,7 @@ export default function MatchsToday() {
                       </TableHead>
 
                       {matches.map((match) => {
-                        console.log(match.fixture);
+                        // console.log(match.fixture);
                         const fechayhoraPartido = match.fixture.date;
                         const fecha_hora_obj = new Date(fechayhoraPartido);
                         const hora = fecha_hora_obj.getHours();

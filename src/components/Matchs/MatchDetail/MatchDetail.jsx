@@ -122,7 +122,7 @@ export default function MatchDetail() {
                                         <Grid container columns={12} component={Paper} margin={1}>
                                             <Grid item xs={12} >
                                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
-                                                    <img className="img_cards" src={teams.team.logo} />
+                                                    <img className="img_player" src={teams.team.logo} />
                                                     <Typography variant="h5">{teams.team.name}</Typography>
                                                 </Box>
                                             </Grid>
