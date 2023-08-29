@@ -52,7 +52,7 @@ export default function ImportantComp() {
         dispatch(getLeagues())
     }, [])
     const allCompetitions = useSelector((state) => state.allCompetitions);
-    const idsCompetitions = [39, 135, 140, 61, 94, 128, 129, 483, 130, 13, 11, 2, 3];
+    const idsCompetitions = [39, 1032, 135, 140, 61, 94, 128, 129, 483, 130, 13, 11, 2, 3, ];
     const filteredLeaguesByCountry = {};
 
     // Supongamos que "competitions" es tu objeto inicial

@@ -43,7 +43,7 @@ export default function MatchDetail() {
             {matchDetail.length === 0 ?
                 <Typography variant="h3" sx={{ textAlign: 'center' }}>Sin datos del encuentro</Typography> :
                 matchDetail.map((detailMatch) => {
-                    console.log(detailMatch.goals);
+                    // console.log(detailMatch.goals);
                     // let idTeam = teams.team.id;
                     return (
                         <Grid container columns={12} spacing={1} gap={2} >
@@ -56,7 +56,7 @@ export default function MatchDetail() {
                                             <Typography variant="body"><b>{detailMatch.goals?.home ? detailMatch.goals.home : detailMatch.goals.home === 0 ? 0 : detailMatch.goals.home !==0?  '-' : '-'}</b></Typography>
                                         </Box>
                                         <Box  sx={{ display: 'flex',flexDirection:'column',  justifyContent: 'space-evenly', margin:1 }} >
-                                            {eventsOnTheMatchHome.map((event) => {
+                                            {eventsOnTheMatchHome?.map((event) => {
                                                 // console.log(event);
                                                 return (
                                                     <>
@@ -87,7 +87,7 @@ export default function MatchDetail() {
 
                                         </Box>
                                         <Box  sx={{ display: 'flex',flexDirection:'column',  justifyContent: 'space-evenly', margin:1 }} >
-                                            {eventsOnTheMatchAway.map((event) => {
+                                            {eventsOnTheMatchAway?.map((event) => {
                                                 // console.log(event);
                                                 return (
                                                     <>

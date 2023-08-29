@@ -370,7 +370,7 @@ export const getEventsOnMatchHome = (idMatch, idTeamHome) => {
     })
       .then(response => response.json())
       .then((data) => {
-        // console.log(data.response);
+        console.log(data.response);
         dispatch({ type: GET_EVENTS_MATCH_HOME, payload: data.response })
       })
       .catch(err => {
