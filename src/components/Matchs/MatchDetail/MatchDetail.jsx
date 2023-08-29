@@ -119,7 +119,7 @@ export default function MatchDetail() {
                                 detailMatch.lineups?.map((teams) => {
                                     // console.log(teams);
                                     return (
-                                        <Grid container columns={12} component={Paper} margin={1}>
+                                        <Grid container columns={12} component={Paper} margin='5px' padding={1}>
                                             <Grid item xs={12} >
                                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
                                                     <img className="img_player" src={teams.team.logo} />
@@ -173,8 +173,7 @@ export default function MatchDetail() {
                                                                         <TableCell sx={{ m: 1, p: 1 }}>{players.player.name}</TableCell>
                                                                         <TableCell sx={{ m: 1, p: 1 }}>{players.player.number}</TableCell>
                                                                     </TableRow>
-                                                                )
-                                                            })
+                                                                )})
                                                         } </Table>
                                                 </TableContainer>
                                             </Grid>
